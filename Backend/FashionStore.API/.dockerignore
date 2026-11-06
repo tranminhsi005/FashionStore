@@ -1,0 +1,26 @@
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build output
+bin/
+obj/
+publish/
+artifacts/
+
+# Environment
+.env
+.env.*
+docker.env
+
+# Secrets
+secrets.json
+
+# Development configuration
+appsettings.Development.json
+
+# Operating system
+.DS_Store
+Thumbs.db
