@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* =========================================
+   FOCUS ACCESSIBILITY
+========================================= */
+
+:focus-visible {
+    outline: 2px solid var(--color-accent-dark);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   GLOBAL LAYOUT
+========================================= */
+
+.container-shell {
+    width: min(100% - 48px, 1440px);
+    margin-inline: auto;
+}
+
+.section-spacing {
+    padding-block: 96px;
+}
+
+.section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+}
+
+/* =========================================
+   EDITORIAL TYPOGRAPHY
+========================================= */
+
+.editorial-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 800;
+    line-height: 0.86;
+    letter-spacing: -0.09em;
+}
+
+.eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   BUTTON INTERACTION
+========================================= */
+
+.interactive-transition {
+    transition:
+        color 250ms ease,
+        background-color 250ms ease,
+        border-color 250ms ease,
+        transform 250ms ease;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c9c7bd transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #c9c7bd;
+    border-radius: 20px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+    .container-shell {
+        width: min(100% - 32px, 1440px);
+    }
+
+    .section-spacing {
+        padding-block: 64px;
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,51 @@
+@theme {
+    /* =====================================
+       COLORS
+    ===================================== */
+
+    --color-paper: #f5f4ef;
+    --color-paper-dark: #eceae2;
+
+    --color-ink: #171717;
+    --color-ink-light: #292929;
+
+    --color-muted: #77766f;
+    --color-muted-light: #a3a198;
+
+    --color-line: #e5e2d9;
+
+    --color-accent: #c8f169;
+    --color-accent-dark: #8caf35;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    --color-danger: #dc2626;
+    --color-success: #15803d;
+    --color-warning: #d97706;
+
+    /* =====================================
+       TYPOGRAPHY
+    ===================================== */
+
+    --font-body: "DM Sans", sans-serif;
+    --font-display: "Manrope", sans-serif;
+
+    /* =====================================
+       BORDER RADIUS
+    ===================================== */
+
+    --radius-editorial: 2px;
+    --radius-control: 8px;
+    --radius-pill: 999px;
+
+    /* =====================================
+       SHADOW
+    ===================================== */
+
+    --shadow-soft:
+        0 10px 35px rgba(0, 0, 0, 0.06);
+
+    --shadow-dialog:
+        0 25px 80px rgba(0, 0, 0, 0.16);
+}

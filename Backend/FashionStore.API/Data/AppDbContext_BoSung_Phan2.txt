@@ -1,0 +1,613 @@
+// =====================================================
+// 5. GIO HANG
+// =====================================================
+modelBuilder.Entity<GioHang>(entity =>
+{
+    entity.ToTable("gio_hang");
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.NguoiDungId)
+        .HasColumnName("nguoi_dung_id");
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => x.NguoiDungId)
+        .IsUnique()
+        .HasDatabaseName("gio_hang_nguoi_dung_id_key");
+
+    entity.HasOne(x => x.NguoiDung)
+        .WithOne(x => x.GioHang)
+        .HasForeignKey<GioHang>(x => x.NguoiDungId)
+        .OnDelete(DeleteBehavior.Cascade);
+});
+
+// =====================================================
+// 6. CHI TIET GIO HANG
+// =====================================================
+modelBuilder.Entity<GioHangChiTiet>(entity =>
+{
+    entity.ToTable("gio_hang_chi_tiet", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_gio_hang_so_luong",
+            "so_luong > 0"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.GioHangId)
+        .HasColumnName("gio_hang_id");
+
+    entity.Property(x => x.BienTheSanPhamId)
+        .HasColumnName("bien_the_san_pham_id");
+
+    entity.Property(x => x.SoLuong)
+        .HasColumnName("so_luong");
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => new { x.GioHangId, x.BienTheSanPhamId })
+        .IsUnique()
+        .HasDatabaseName("uq_gio_hang_bien_the");
+
+    entity.HasIndex(x => x.GioHangId)
+        .HasDatabaseName("ix_gio_hang_chi_tiet_gio_hang");
+
+    entity.HasOne(x => x.GioHang)
+        .WithMany(x => x.GioHangChiTiets)
+        .HasForeignKey(x => x.GioHangId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    entity.HasOne(x => x.BienTheSanPham)
+        .WithMany(x => x.GioHangChiTiets)
+        .HasForeignKey(x => x.BienTheSanPhamId)
+        .OnDelete(DeleteBehavior.Restrict);
+});
+
+// =====================================================
+// 7. MA GIAM GIA
+// =====================================================
+modelBuilder.Entity<MaGiamGia>(entity =>
+{
+    entity.ToTable("ma_giam_gia", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_loai",
+            "loai_giam_gia IN ('phan_tram', 'so_tien')"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_gia_tri",
+            "gia_tri > 0"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_toi_thieu",
+            "don_hang_toi_thieu >= 0"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_toi_da",
+            "tien_giam_toi_da IS NULL OR tien_giam_toi_da >= 0"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_so_luot",
+            "(so_luot_su_dung_toi_da IS NULL OR so_luot_su_dung_toi_da > 0) " +
+            "AND so_luot_da_su_dung >= 0 AND moi_nguoi_su_dung_toi_da > 0"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_thoi_gian",
+            "ket_thuc_luc > bat_dau_luc"
+        );
+        table.HasCheckConstraint(
+            "ck_ma_giam_gia_phan_tram",
+            "loai_giam_gia <> 'phan_tram' OR gia_tri <= 100"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.Ma)
+        .HasColumnName("ma")
+        .HasMaxLength(80)
+        .IsRequired();
+
+    entity.Property(x => x.Ten)
+        .HasColumnName("ten")
+        .HasMaxLength(200)
+        .IsRequired();
+
+    entity.Property(x => x.LoaiGiamGia)
+        .HasColumnName("loai_giam_gia")
+        .HasMaxLength(20)
+        .IsRequired();
+
+    entity.Property(x => x.GiaTri)
+        .HasColumnName("gia_tri")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.DonHangToiThieu)
+        .HasColumnName("don_hang_toi_thieu")
+        .HasPrecision(18, 2)
+        .HasDefaultValue(0m);
+
+    entity.Property(x => x.TienGiamToiDa)
+        .HasColumnName("tien_giam_toi_da")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.SoLuotSuDungToiDa)
+        .HasColumnName("so_luot_su_dung_toi_da");
+
+    entity.Property(x => x.SoLuotDaSuDung)
+        .HasColumnName("so_luot_da_su_dung")
+        .HasDefaultValue(0);
+
+    entity.Property(x => x.MoiNguoiSuDungToiDa)
+        .HasColumnName("moi_nguoi_su_dung_toi_da")
+        .HasDefaultValue(1);
+
+    entity.Property(x => x.BatDauLuc)
+        .HasColumnName("bat_dau_luc")
+        .HasColumnType("timestamp with time zone");
+
+    entity.Property(x => x.KetThucLuc)
+        .HasColumnName("ket_thuc_luc")
+        .HasColumnType("timestamp with time zone");
+
+    entity.Property(x => x.DangHoatDong)
+        .HasColumnName("dang_hoat_dong")
+        .HasDefaultValue(true);
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    // SQL dung unique index tren LOWER(ma), khong tao unique index thuong o EF.
+});
+
+// =====================================================
+// 8. DON HANG
+// =====================================================
+modelBuilder.Entity<DonHang>(entity =>
+{
+    entity.ToTable("don_hang", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_don_hang_trang_thai",
+            "trang_thai IN ('cho_xac_nhan', 'da_xac_nhan', 'dang_chuan_bi', 'dang_giao', 'da_giao', 'da_huy')"
+        );
+        table.HasCheckConstraint(
+            "ck_don_hang_thanh_toan",
+            "trang_thai_thanh_toan IN ('cho_thanh_toan', 'da_thanh_toan', 'that_bai', 'da_hoan_tien', 'hoan_tien_mot_phan')"
+        );
+        table.HasCheckConstraint(
+            "ck_don_hang_phuong_thuc",
+            "phuong_thuc_thanh_toan IN ('cod', 'chuyen_khoan', 'cong_thanh_toan')"
+        );
+        table.HasCheckConstraint(
+            "ck_don_hang_tien_te",
+            "tien_te = 'VND'"
+        );
+        table.HasCheckConstraint(
+            "ck_don_hang_tien",
+            "tong_tien_hang >= 0 AND tien_giam_gia >= 0 " +
+            "AND tien_giam_gia <= tong_tien_hang AND phi_van_chuyen >= 0 " +
+            "AND tong_thanh_toan = tong_tien_hang - tien_giam_gia + phi_van_chuyen"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.MaDonHang)
+        .HasColumnName("ma_don_hang")
+        .HasMaxLength(60)
+        .IsRequired();
+
+    entity.Property(x => x.NguoiDungId)
+        .HasColumnName("nguoi_dung_id");
+
+    entity.Property(x => x.MaGiamGiaId)
+        .HasColumnName("ma_giam_gia_id");
+
+    entity.Property(x => x.MaGiamGiaDaApDung)
+        .HasColumnName("ma_giam_gia_da_ap_dung")
+        .HasMaxLength(80);
+
+    entity.Property(x => x.TrangThai)
+        .HasColumnName("trang_thai")
+        .HasMaxLength(30)
+        .HasDefaultValue("cho_xac_nhan");
+
+    entity.Property(x => x.TrangThaiThanhToan)
+        .HasColumnName("trang_thai_thanh_toan")
+        .HasMaxLength(30)
+        .HasDefaultValue("cho_thanh_toan");
+
+    entity.Property(x => x.PhuongThucThanhToan)
+        .HasColumnName("phuong_thuc_thanh_toan")
+        .HasMaxLength(30)
+        .HasDefaultValue("cod");
+
+    entity.Property(x => x.TongTienHang)
+        .HasColumnName("tong_tien_hang")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.TienGiamGia)
+        .HasColumnName("tien_giam_gia")
+        .HasPrecision(18, 2)
+        .HasDefaultValue(0m);
+
+    entity.Property(x => x.PhiVanChuyen)
+        .HasColumnName("phi_van_chuyen")
+        .HasPrecision(18, 2)
+        .HasDefaultValue(0m);
+
+    entity.Property(x => x.TongThanhToan)
+        .HasColumnName("tong_thanh_toan")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.TienTe)
+        .HasColumnName("tien_te")
+        .HasMaxLength(3)
+        .HasDefaultValue("VND");
+
+    entity.Property(x => x.TenNguoiNhan)
+        .HasColumnName("ten_nguoi_nhan")
+        .HasMaxLength(150)
+        .IsRequired();
+
+    entity.Property(x => x.SoDienThoaiNhan)
+        .HasColumnName("so_dien_thoai_nhan")
+        .HasMaxLength(30)
+        .IsRequired();
+
+    entity.Property(x => x.TinhThanhNhan)
+        .HasColumnName("tinh_thanh_nhan")
+        .HasMaxLength(150)
+        .IsRequired();
+
+    entity.Property(x => x.QuanHuyenNhan)
+        .HasColumnName("quan_huyen_nhan")
+        .HasMaxLength(150);
+
+    entity.Property(x => x.PhuongXaNhan)
+        .HasColumnName("phuong_xa_nhan")
+        .HasMaxLength(150)
+        .IsRequired();
+
+    entity.Property(x => x.DiaChiChiTietNhan)
+        .HasColumnName("dia_chi_chi_tiet_nhan")
+        .HasMaxLength(300)
+        .IsRequired();
+
+    entity.Property(x => x.GhiChuKhachHang)
+        .HasColumnName("ghi_chu_khach_hang");
+
+    entity.Property(x => x.LyDoHuy)
+        .HasColumnName("ly_do_huy");
+
+    entity.Property(x => x.KhoaIdempotent)
+        .HasColumnName("khoa_idempotent");
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => x.MaDonHang)
+        .IsUnique()
+        .HasDatabaseName("don_hang_ma_don_hang_key");
+
+    entity.HasIndex(x => new { x.NguoiDungId, x.KhoaIdempotent })
+        .IsUnique()
+        .HasFilter("khoa_idempotent IS NOT NULL")
+        .HasDatabaseName("ux_don_hang_idempotent");
+
+    entity.HasIndex(x => new { x.NguoiDungId, x.NgayTao })
+        .IsDescending(false, true)
+        .HasDatabaseName("ix_don_hang_nguoi_dung_ngay_tao");
+
+    entity.HasIndex(x => new { x.TrangThai, x.NgayTao })
+        .IsDescending(false, true)
+        .HasDatabaseName("ix_don_hang_trang_thai_ngay_tao");
+
+    entity.HasOne(x => x.NguoiDung)
+        .WithMany(x => x.DonHangs)
+        .HasForeignKey(x => x.NguoiDungId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+    entity.HasOne(x => x.MaGiamGia)
+        .WithMany(x => x.DonHangs)
+        .HasForeignKey(x => x.MaGiamGiaId)
+        .OnDelete(DeleteBehavior.SetNull);
+});
+
+// =====================================================
+// 9. CHI TIET DON HANG
+// =====================================================
+modelBuilder.Entity<ChiTietDonHang>(entity =>
+{
+    entity.ToTable("chi_tiet_don_hang", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_chi_tiet_don_hang_so_luong",
+            "so_luong > 0"
+        );
+        table.HasCheckConstraint(
+            "ck_chi_tiet_don_hang_tien",
+            "don_gia >= 0 AND tien_giam_gia >= 0 " +
+            "AND tien_giam_gia <= so_luong * don_gia " +
+            "AND thanh_tien = so_luong * don_gia - tien_giam_gia"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.DonHangId)
+        .HasColumnName("don_hang_id");
+
+    entity.Property(x => x.SanPhamId)
+        .HasColumnName("san_pham_id");
+
+    entity.Property(x => x.BienTheSanPhamId)
+        .HasColumnName("bien_the_san_pham_id");
+
+    entity.Property(x => x.TenSanPham)
+        .HasColumnName("ten_san_pham")
+        .HasMaxLength(250)
+        .IsRequired();
+
+    entity.Property(x => x.Sku)
+        .HasColumnName("sku")
+        .HasMaxLength(100)
+        .IsRequired();
+
+    entity.Property(x => x.TenKichCo)
+        .HasColumnName("ten_kich_co")
+        .HasMaxLength(50);
+
+    entity.Property(x => x.TenMauSac)
+        .HasColumnName("ten_mau_sac")
+        .HasMaxLength(80);
+
+    entity.Property(x => x.SoLuong)
+        .HasColumnName("so_luong");
+
+    entity.Property(x => x.DonGia)
+        .HasColumnName("don_gia")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.TienGiamGia)
+        .HasColumnName("tien_giam_gia")
+        .HasPrecision(18, 2)
+        .HasDefaultValue(0m);
+
+    entity.Property(x => x.ThanhTien)
+        .HasColumnName("thanh_tien")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => x.DonHangId)
+        .HasDatabaseName("ix_chi_tiet_don_hang_don_hang");
+
+    entity.HasOne(x => x.DonHang)
+        .WithMany(x => x.ChiTietDonHangs)
+        .HasForeignKey(x => x.DonHangId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    entity.HasOne(x => x.SanPham)
+        .WithMany(x => x.ChiTietDonHangs)
+        .HasForeignKey(x => x.SanPhamId)
+        .OnDelete(DeleteBehavior.SetNull);
+
+    entity.HasOne(x => x.BienTheSanPham)
+        .WithMany(x => x.ChiTietDonHangs)
+        .HasForeignKey(x => x.BienTheSanPhamId)
+        .OnDelete(DeleteBehavior.SetNull);
+});
+
+// =====================================================
+// 10. THANH TOAN
+// =====================================================
+modelBuilder.Entity<ThanhToan>(entity =>
+{
+    entity.ToTable("thanh_toan", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_thanh_toan_so_tien",
+            "so_tien >= 0"
+        );
+        table.HasCheckConstraint(
+            "ck_thanh_toan_trang_thai",
+            "trang_thai IN ('cho_thanh_toan', 'dang_xu_ly', 'thanh_cong', 'that_bai', 'da_hoan_tien')"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.DonHangId)
+        .HasColumnName("don_hang_id");
+
+    entity.Property(x => x.CongThanhToan)
+        .HasColumnName("cong_thanh_toan")
+        .HasMaxLength(80);
+
+    entity.Property(x => x.PhuongThuc)
+        .HasColumnName("phuong_thuc")
+        .HasMaxLength(30)
+        .IsRequired();
+
+    entity.Property(x => x.SoTien)
+        .HasColumnName("so_tien")
+        .HasPrecision(18, 2);
+
+    entity.Property(x => x.TienTe)
+        .HasColumnName("tien_te")
+        .HasMaxLength(3)
+        .HasDefaultValue("VND");
+
+    entity.Property(x => x.TrangThai)
+        .HasColumnName("trang_thai")
+        .HasMaxLength(30)
+        .HasDefaultValue("cho_thanh_toan");
+
+    entity.Property(x => x.MaGiaoDichNhaCungCap)
+        .HasColumnName("ma_giao_dich_nha_cung_cap")
+        .HasMaxLength(200);
+
+    entity.Property(x => x.KhoaIdempotent)
+        .HasColumnName("khoa_idempotent")
+        .HasMaxLength(200);
+
+    entity.Property(x => x.ThoiDiemThanhToan)
+        .HasColumnName("thoi_diem_thanh_toan")
+        .HasColumnType("timestamp with time zone");
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => x.DonHangId)
+        .HasDatabaseName("ix_thanh_toan_don_hang");
+
+    entity.HasIndex(x => x.KhoaIdempotent)
+        .IsUnique()
+        .HasFilter("khoa_idempotent IS NOT NULL")
+        .HasDatabaseName("ux_thanh_toan_idempotent");
+
+    entity.HasIndex(x => new { x.CongThanhToan, x.MaGiaoDichNhaCungCap })
+        .IsUnique()
+        .HasFilter("ma_giao_dich_nha_cung_cap IS NOT NULL")
+        .HasDatabaseName("ux_thanh_toan_ma_giao_dich");
+
+    entity.HasOne(x => x.DonHang)
+        .WithMany(x => x.ThanhToans)
+        .HasForeignKey(x => x.DonHangId)
+        .OnDelete(DeleteBehavior.Restrict);
+});
+
+// =====================================================
+// 11. VAN CHUYEN
+// =====================================================
+modelBuilder.Entity<VanChuyen>(entity =>
+{
+    entity.ToTable("van_chuyen", table =>
+    {
+        table.HasCheckConstraint(
+            "ck_van_chuyen_trang_thai",
+            "trang_thai IN ('cho_xu_ly', 'da_lay_hang', 'dang_giao', 'da_giao', 'giao_that_bai', 'da_huy')"
+        );
+    });
+
+    entity.HasKey(x => x.Id);
+
+    entity.Property(x => x.Id)
+        .HasColumnName("id")
+        .HasDefaultValueSql("gen_random_uuid()");
+
+    entity.Property(x => x.DonHangId)
+        .HasColumnName("don_hang_id");
+
+    entity.Property(x => x.DonViVanChuyen)
+        .HasColumnName("don_vi_van_chuyen")
+        .HasMaxLength(150);
+
+    entity.Property(x => x.MaVanDon)
+        .HasColumnName("ma_van_don")
+        .HasMaxLength(150);
+
+    entity.Property(x => x.TrangThai)
+        .HasColumnName("trang_thai")
+        .HasMaxLength(30)
+        .HasDefaultValue("cho_xu_ly");
+
+    entity.Property(x => x.ThoiDiemGuiHang)
+        .HasColumnName("thoi_diem_gui_hang")
+        .HasColumnType("timestamp with time zone");
+
+    entity.Property(x => x.ThoiDiemGiaoHang)
+        .HasColumnName("thoi_diem_giao_hang")
+        .HasColumnType("timestamp with time zone");
+
+    entity.Property(x => x.GhiChu)
+        .HasColumnName("ghi_chu");
+
+    entity.Property(x => x.NgayTao)
+        .HasColumnName("ngay_tao")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.Property(x => x.NgayCapNhat)
+        .HasColumnName("ngay_cap_nhat")
+        .HasColumnType("timestamp with time zone")
+        .HasDefaultValueSql("now()");
+
+    entity.HasIndex(x => x.DonHangId)
+        .IsUnique()
+        .HasDatabaseName("van_chuyen_don_hang_id_key");
+
+    entity.HasOne(x => x.DonHang)
+        .WithOne(x => x.VanChuyen)
+        .HasForeignKey<VanChuyen>(x => x.DonHangId)
+        .OnDelete(DeleteBehavior.Restrict);
+});
