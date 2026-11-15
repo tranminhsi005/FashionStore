@@ -1,840 +1,378 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowRight, ArrowUpRight, Zap, Star, TrendingUp } from "lucide-react";
-import { ParticlesCanvas } from "../../components/ui";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Sparkles,
+  Zap,
+  Star,
+  ShieldCheck,
+  Flame,
+  Layers,
+  Cpu,
+} from "lucide-react";
+import { ParticlesCanvas, SpotlightCard } from "../../components/ui";
 
-/* ─── Keyframe injection ─── */
-const STYLES = `
-@keyframes ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes float-y {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50%       { transform: translateY(-18px) rotate(2deg); }
-}
-@keyframes spin-slow {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
-}
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1; }
-}
-@keyframes underline-grow {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-`;
-
-function InjectStyles() {
-  return <style>{STYLES}</style>;
-}
-
-/* ─── Ambient orb helper ─── */
-function Orb({ color, size, top, left, right, bottom, opacity = 1 }) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: color,
-        filter: "blur(120px)",
-        top,
-        left,
-        right,
-        bottom,
-        opacity,
-        pointerEvents: "none",
-      }}
-    />
-  );
-}
-
-/* ─── Gradient text span ─── */
-function GradientText({ children, from = "#00d9ff", to = "#7c3aed" }) {
-  return (
-    <span
-      style={{
-        background: `linear-gradient(135deg, ${from}, ${to})`,
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
+const SHOWCASE_CARDS = [
+  {
+    title: "Cyber Streetwear",
+    tag: "FEATURED",
+    desc: "Thiết kế năng động giao thoa giữa thời trang đường phố và công nghệ tương lai.",
+    gradient: "from-purple-500/20 to-indigo-500/10",
+    color: "#a855f7",
+    icon: Flame,
+    href: "/san-pham",
+  },
+  {
+    title: "Minimalist Matrix",
+    tag: "SIGNATURE",
+    desc: "Đường cắt may tối giản, form dáng thanh lịch với chất liệu sợi dệt thế hệ mới.",
+    gradient: "from-indigo-500/20 to-fuchsia-500/10",
+    color: "#818cf8",
+    icon: Layers,
+    href: "/san-pham",
+  },
+  {
+    title: "Techwear Obsidian",
+    tag: "INNOVATION",
+    desc: "Kháng nước, co giãn 4 chiều và tích hợp túi tiện ích chuẩn phong cách vị lai.",
+    gradient: "from-fuchsia-500/20 to-purple-500/10",
+    color: "#c084fc",
+    icon: Cpu,
+    href: "/san-pham",
+  },
+];
 
 export default function HomePage() {
   const TICKER_TEXT =
-    "MODERN FASHION \u2022 FIND YOUR STYLE \u2022 2026 COLLECTION \u2022 FASHIONSTORE \u2022 MODERN FASHION \u2022 FIND YOUR STYLE \u2022 2026 COLLECTION \u2022 FASHIONSTORE \u2022 ";
+    "✦ CYBER FASHION • REACTBITS DESIGN • 2026 COLLECTION • FASHIONSTORE • ELEVATE YOUR STYLE • TECHWEAR • MINIMALIST LUXURY • ";
 
   return (
-    <div style={{ background: "#030303", color: "#f0f0f5", overflowX: "hidden" }}>
-      <InjectStyles />
-
-      {/* ══════════════════════════════════════════
-          SECTION 1 — HERO
-      ══════════════════════════════════════════ */}
-      <section
+    <div className="relative min-h-screen overflow-x-hidden bg-[#060608] text-[#f3f0fa] selection:bg-purple-600 selection:text-white">
+      {/* =========================================================================
+          REACTBITS SIGNATURE: GIANT PURPLE AURORA RADIAL GLOW & DOT GRID
+      ========================================================================= */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
         style={{
-          position: "relative",
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          overflow: "hidden",
+          background:
+            "radial-gradient(circle at 50% 12%, rgba(168, 85, 247, 0.22) 0%, rgba(99, 102, 241, 0.1) 35%, transparent 65%)",
         }}
-      >
-        {/* Ambient orbs */}
-        <Orb color="rgba(0,217,255,0.12)"  size="600px" top="-100px"  right="-120px" />
-        <Orb color="rgba(124,58,237,0.15)" size="700px" bottom="-200px" left="-180px" />
-        <Orb color="rgba(163,230,53,0.06)" size="400px" top="40%"    right="30%" />
+      />
 
-        {/* 3D Interactive Particles Canvas (Lusion & ReactBits style) */}
-        <ParticlesCanvas particleCount={45} speed={0.5} />
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-25"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-        {/* Subtle grid overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            pointerEvents: "none",
-          }}
+      {/* =========================================================================
+          SECTION 1 — HERO SECTION (REACTBITS STYLE)
+      ========================================================================= */}
+      <section className="relative z-10 flex min-h-[92vh] items-center overflow-hidden py-16 md:py-24">
+        {/* Interactive 3D Particles */}
+        <ParticlesCanvas
+          particleCount={40}
+          speed={0.4}
+          glowColor="rgba(168, 85, 247, 0.7)"
+          lineColor="rgba(168, 85, 247, 0.12)"
+          secondaryColor="rgba(99, 102, 241, 0.7)"
         />
 
-        <div
-          className="container-shell"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "3rem",
-            alignItems: "center",
-            padding: "6rem 1.5rem",
-            width: "100%",
-          }}
-        >
-          {/* ── LEFT CONTENT ── */}
+        <div className="container-shell grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* LEFT CONTENT */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-start"
           >
-            {/* Eyebrow */}
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "2rem" }}>
-              <span
-                style={{
-                  display: "block",
-                  width: "40px",
-                  height: "1px",
-                  background: "#00d9ff",
-                  boxShadow: "0 0 8px #00d9ff",
-                }}
-              />
-              <span
-                style={{
-                  color: "#00d9ff",
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.3em",
-                  textTransform: "uppercase",
-                }}
-              >
-                MODERN FASHION — 2026
-              </span>
-            </div>
-
-            {/* H1 */}
-            <h1
-              style={{
-                fontFamily: "var(--font-display, 'Manrope', sans-serif)",
-                fontSize: "clamp(3.5rem, 10vw, 9rem)",
-                fontWeight: 800,
-                lineHeight: 0.95,
-                letterSpacing: "-0.04em",
-                color: "#ffffff",
-                margin: 0,
-              }}
+            {/* Top Pill Announcement */}
+            <Link
+              to="/san-pham"
+              className="group mb-8 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1.5 text-xs font-semibold text-purple-200 backdrop-blur-xl transition-all duration-300 hover:border-purple-400 hover:bg-purple-500/20 hover:shadow-[0_0_20px_rgba(168,85,247,0.35)]"
             >
+              <Sparkles size={13} className="text-purple-400" />
+              <span>COLLECTION 2026 ĐÃ RA MẮT</span>
+              <ArrowRight
+                size={13}
+                className="transition-transform group-hover:translate-x-1 text-purple-400"
+              />
+            </Link>
+
+            {/* H1 Heading */}
+            <h1 className="font-display text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-7xl lg:text-8xl">
               FIND YOUR
               <br />
-              OWN
-              <br />
-              <GradientText>STYLE.</GradientText>
+              OWN{" "}
+              <span className="bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(168,85,247,0.4)]">
+                STYLE.
+              </span>
             </h1>
 
-            {/* Description */}
-            <p
-              style={{
-                marginTop: "2rem",
-                maxWidth: "420px",
-                fontSize: "0.95rem",
-                lineHeight: 1.8,
-                color: "rgba(240,240,245,0.5)",
-              }}
-            >
-              Khám phá phong cách riêng của bạn thông qua những thiết kế thời trang hiện đại, tối giản và đầy cá tính.
+            {/* Paragraph */}
+            <p className="mt-6 max-w-lg text-base leading-8 text-white/60 md:text-lg">
+              Khám phá bản sắc độc bản của bạn qua ngôn ngữ thời trang hiện đại,
+              tối giản và đầy tính công nghệ vị lai.
             </p>
 
-            {/* CTAs */}
-            <div style={{ marginTop: "2.5rem", display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+            {/* ReactBits CTA Buttons */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/san-pham"
-                style={{ textDecoration: "none" }}
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-[0_0_30px_rgba(168,85,247,0.45)] transition-all duration-300 hover:from-purple-500 hover:to-indigo-500 hover:shadow-[0_0_45px_rgba(168,85,247,0.7)]"
               >
-                <motion.span
-                  whileHover={{ boxShadow: "0 0 32px rgba(0,217,255,0.5), 0 0 60px rgba(0,217,255,0.2)" }}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "14px 28px",
-                    border: "1px solid rgba(0,217,255,0.5)",
-                    background: "rgba(0,217,255,0.08)",
-                    backdropFilter: "blur(16px)",
-                    borderRadius: "4px",
-                    color: "#00d9ff",
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    cursor: "pointer",
-                    boxShadow: "0 0 20px rgba(0,217,255,0.2)",
-                    transition: "box-shadow 0.3s ease",
-                  }}
-                >
-                  KHÁM PHÁ BỘ SƯU TẬP
-                  <ArrowRight size={16} />
-                </motion.span>
+                <span>Khám phá bộ sưu tập</span>
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
               </Link>
 
               <Link
-                to="/san-pham"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  color: "rgba(240,240,245,0.4)",
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  textDecoration: "none",
-                }}
+                to="/#about"
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-4 text-xs font-semibold uppercase tracking-widest text-white/80 backdrop-blur-xl transition-all duration-300 hover:border-purple-500/40 hover:bg-white/[0.08] hover:text-white"
               >
-                EXPLORE YOUR IDENTITY
-                <ArrowUpRight size={14} />
+                <span>Về thương hiệu</span>
+                <ArrowUpRight size={15} />
               </Link>
+            </div>
+
+            {/* Trust Metrics */}
+            <div className="mt-12 flex items-center gap-8 border-t border-white/10 pt-6 text-xs text-white/50">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-purple-400" />
+                <span>Chính hãng 100%</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap size={16} className="text-purple-400" />
+                <span>Giao hàng thần tốc</span>
+              </div>
             </div>
           </motion.div>
 
-          {/* ── RIGHT VISUAL: 3D-ish Card ── */}
+          {/* RIGHT 3D SHOWCASE VISUAL */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut", delay: 0.3 }}
-            style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="relative flex items-center justify-center"
           >
-            {/* Floating badge: top-left */}
+            {/* Floating Tag Top Left */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                position: "absolute",
-                top: "5%",
-                left: "-5%",
-                zIndex: 10,
-                background: "rgba(13,13,20,0.8)",
-                backdropFilter: "blur(16px)",
-                border: "1px solid rgba(0,217,255,0.3)",
-                borderRadius: "8px",
-                padding: "10px 16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
+              className="absolute -top-4 -left-4 z-20 flex items-center gap-2 rounded-xl border border-purple-500/40 bg-[#0e0a1a]/90 px-4 py-2.5 text-xs font-bold text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-xl"
             >
-              <Zap size={14} style={{ color: "#00d9ff" }} />
-              <span style={{ color: "#00d9ff", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em" }}>
-                NEW ARRIVAL
-              </span>
+              <Zap size={14} className="text-purple-400" />
+              <span>LIMITED EDITION</span>
             </motion.div>
 
-            {/* Floating badge: bottom-right */}
+            {/* Floating Tag Bottom Right */}
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              style={{
-                position: "absolute",
-                bottom: "8%",
-                right: "-5%",
-                zIndex: 10,
-                background: "rgba(124,58,237,0.15)",
-                backdropFilter: "blur(16px)",
-                border: "1px solid rgba(124,58,237,0.4)",
-                borderRadius: "8px",
-                padding: "10px 16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
+              className="absolute -bottom-4 -right-4 z-20 flex items-center gap-2 rounded-xl border border-indigo-500/40 bg-[#0a0a16]/90 px-4 py-2.5 text-xs font-bold text-indigo-300 shadow-[0_0_20px_rgba(99,102,241,0.3)] backdrop-blur-xl"
             >
-              <Star size={14} style={{ color: "#a3e635" }} />
-              <span style={{ color: "#a3e635", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em" }}>
-                2026 COLLECTION
-              </span>
+              <Star size={14} className="text-indigo-400" />
+              <span>VERIFIED CYBER</span>
             </motion.div>
 
-            {/* Main 3D card */}
+            {/* 3D Geometric Rotating Cube / Showcase Frame */}
             <motion.div
               animate={{
                 rotateY: [0, 8, -8, 0],
-                rotateX: [0, 3, -3, 0],
+                rotateX: [0, 4, -4, 0],
               }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
               style={{
                 transformStyle: "preserve-3d",
-                perspective: "800px",
-                width: "320px",
-                height: "420px",
-                position: "relative",
+                perspective: "1000px",
               }}
+              className="relative h-[440px] w-full max-w-[360px] rounded-3xl border border-purple-500/30 bg-gradient-to-b from-purple-950/40 via-[#0c0a18]/80 to-[#06060a]/90 p-8 shadow-[0_0_60px_rgba(168,85,247,0.2)] backdrop-blur-2xl md:h-[480px] md:max-w-[390px]"
             >
-              {/* Card face */}
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
-                  backdropFilter: "blur(24px)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "16px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                  overflow: "hidden",
-                  boxShadow: "0 0 60px rgba(0,217,255,0.08), 0 0 100px rgba(124,58,237,0.08), inset 0 1px 0 rgba(255,255,255,0.1)",
-                }}
-              >
-                {/* Gradient border glow */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: "-1px",
-                    borderRadius: "16px",
-                    background: "linear-gradient(135deg, rgba(0,217,255,0.4), rgba(124,58,237,0.4), rgba(163,230,53,0.2))",
-                    zIndex: -1,
-                    opacity: 0.6,
-                  }}
-                />
+              {/* Outer Glow Halo */}
+              <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-tr from-purple-600/20 via-indigo-600/20 to-transparent blur-xl" />
 
-                {/* Top label */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "20px",
-                    left: "20px",
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.25em",
-                    color: "rgba(240,240,245,0.4)",
-                  }}
-                >
-                  F/S — EDITION 001
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "20px",
-                    right: "20px",
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.2em",
-                    color: "rgba(240,240,245,0.4)",
-                  }}
-                >
-                  NEW PERSPECTIVE
+              <div className="flex h-full flex-col justify-between">
+                <div className="flex items-center justify-between text-[11px] font-bold tracking-widest text-purple-300/60">
+                  <span>F/S — EDITION 001</span>
+                  <span>NEW PERSPECTIVE</span>
                 </div>
 
-                {/* Main text */}
-                <div style={{ textAlign: "center" }}>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display, 'Manrope', sans-serif)",
-                      fontSize: "5rem",
-                      fontWeight: 800,
-                      lineHeight: 1,
-                      letterSpacing: "-0.05em",
-                      background: "linear-gradient(135deg, #00d9ff, #7c3aed)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      filter: "drop-shadow(0 0 20px rgba(0,217,255,0.5))",
-                    }}
-                  >
-                    F/S
+                <div className="flex flex-col items-center justify-center py-8 text-center">
+                  <div className="relative font-display text-8xl font-black tracking-tighter sm:text-9xl">
+                    <span className="bg-gradient-to-b from-white via-purple-200 to-purple-600 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(168,85,247,0.6)]">
+                      F
+                    </span>
+                    <span className="text-purple-500">.</span>
                   </div>
-                  <div
-                    style={{
-                      marginTop: "8px",
-                      fontSize: "0.6rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.4em",
-                      color: "rgba(240,240,245,0.3)",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    FASHIONSTORE
-                  </div>
+                  <p className="mt-3 text-xs font-bold tracking-[0.3em] text-white/50">
+                    FASHIONSTORE 2026
+                  </p>
                 </div>
 
-                {/* Decorative corner lines */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "20px",
-                    left: "20px",
-                    width: "40px",
-                    height: "40px",
-                    borderLeft: "1px solid rgba(0,217,255,0.4)",
-                    borderBottom: "1px solid rgba(0,217,255,0.4)",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "20px",
-                    right: "20px",
-                    width: "40px",
-                    height: "40px",
-                    borderRight: "1px solid rgba(124,58,237,0.4)",
-                    borderBottom: "1px solid rgba(124,58,237,0.4)",
-                  }}
-                />
-
-                {/* Inner ambient */}
-                <div
-                  style={{
-                    position: "absolute",
-                    width: "200px",
-                    height: "200px",
-                    borderRadius: "50%",
-                    background: "rgba(0,217,255,0.06)",
-                    filter: "blur(60px)",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%,-50%)",
-                    animation: "glow-pulse 3s ease-in-out infinite",
-                  }}
-                />
+                <div className="flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-bold tracking-wider text-white/40">
+                  <span>INDEPENDENT DESIGN</span>
+                  <span className="text-purple-400">REACTBITS V2.0</span>
+                </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          SECTION 2 — MARQUEE / TICKER
-      ══════════════════════════════════════════ */}
-      <div
-        style={{
-          background: "#0a0a0f",
-          borderTop: "1px solid rgba(0,217,255,0.15)",
-          borderBottom: "1px solid rgba(0,217,255,0.15)",
-          padding: "18px 0",
-          overflow: "hidden",
-          position: "relative",
-        }}
-      >
-        {/* Left/right fade masks */}
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: "80px",
-            background: "linear-gradient(to right, #0a0a0f, transparent)",
-            zIndex: 1,
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: "80px",
-            background: "linear-gradient(to left, #0a0a0f, transparent)",
-            zIndex: 1,
-            pointerEvents: "none",
-          }}
-        />
-
-        <div
-          style={{
-            display: "flex",
-            whiteSpace: "nowrap",
-            animation: "ticker-scroll 20s linear infinite",
-          }}
-        >
-          {[TICKER_TEXT, TICKER_TEXT].map((t, i) => (
-            <span
-              key={i}
-              style={{
-                color: "#00d9ff",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                textShadow: "0 0 12px rgba(0,217,255,0.6)",
-                flexShrink: 0,
-                paddingRight: "0",
-              }}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ══════════════════════════════════════════
-          SECTION 3 — ABOUT
-      ══════════════════════════════════════════ */}
-      <section
-        id="about"
-        style={{
-          position: "relative",
-          padding: "7rem 1.5rem",
-          overflow: "hidden",
-        }}
-      >
-        <Orb color="rgba(124,58,237,0.1)" size="500px" top="0" right="-100px" />
-        <Orb color="rgba(0,217,255,0.07)" size="400px" bottom="-100px" left="-80px" />
-
-        <div
-          className="container-shell"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "4rem",
-            alignItems: "center",
-          }}
-        >
-          {/* Left heading */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span
-              style={{
-                color: "#00d9ff",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "1.5rem",
-              }}
-            >
-              ABOUT FASHIONSTORE
-            </span>
-
-            <h2
-              style={{
-                fontFamily: "var(--font-display, 'Manrope', sans-serif)",
-                fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
-                fontWeight: 800,
-                lineHeight: 0.95,
-                letterSpacing: "-0.04em",
-                color: "#ffffff",
-                margin: 0,
-              }}
-            >
-              NOT JUST
-              <br />
-              WHAT YOU
-              <br />
-              <GradientText>WEAR.</GradientText>
-            </h2>
-          </motion.div>
-
-          {/* Right glass card */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-          >
-            <div
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(24px)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: "16px",
-                padding: "2.5rem",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {/* Inner ambient glow */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-60px",
-                  right: "-60px",
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "50%",
-                  background: "rgba(124,58,237,0.12)",
-                  filter: "blur(60px)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              <p
-                style={{
-                  fontSize: "0.95rem",
-                  lineHeight: 1.85,
-                  color: "rgba(240,240,245,0.55)",
-                  position: "relative",
-                }}
-              >
-                FashionStore hướng đến một trải nghiệm thời trang hiện đại, nơi mỗi thiết kế giúp bạn thể hiện bản sắc và cá tính riêng của mình.
-              </p>
-
-              {/* Stats row */}
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                  gap: "1rem",
-                  marginTop: "2rem",
-                  paddingTop: "2rem",
-                  borderTop: "1px solid rgba(255,255,255,0.06)",
-                  position: "relative",
-                }}
-              >
-                {[
-                  { value: "100+", label: "Sản phẩm" },
-                  { value: "2026", label: "Collection" },
-                  { value: "∞", label: "Phong cách" },
-                ].map(({ value, label }) => (
-                  <div key={label} style={{ textAlign: "center" }}>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-display, 'Manrope', sans-serif)",
-                        fontSize: "1.8rem",
-                        fontWeight: 800,
-                        background: "linear-gradient(135deg, #00d9ff, #7c3aed)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                    >
-                      {value}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "0.65rem",
-                        fontWeight: 600,
-                        letterSpacing: "0.15em",
-                        color: "rgba(240,240,245,0.35)",
-                        textTransform: "uppercase",
-                        marginTop: "4px",
-                      }}
-                    >
-                      {label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <Link
-                to="/san-pham"
-                style={{ textDecoration: "none" }}
-              >
-                <motion.span
-                  whileHover={{ gap: "16px" }}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    marginTop: "2rem",
-                    color: "#00d9ff",
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                    textShadow: "0 0 10px rgba(0,217,255,0.5)",
-                    position: "relative",
-                    cursor: "pointer",
-                  }}
-                >
-                  KHÁM PHÁ NGAY
-                  <ArrowUpRight size={16} />
-                </motion.span>
-              </Link>
-            </div>
-          </motion.div>
+      {/* =========================================================================
+          SECTION 2 — MARQUEE TICKER (REACTBITS CYBER STYLE)
+      ========================================================================= */}
+      <section className="relative z-10 overflow-hidden border-y border-purple-500/20 bg-purple-950/20 py-4 backdrop-blur-md">
+        <div className="marquee-track flex whitespace-nowrap text-xs font-bold uppercase tracking-[0.25em] text-purple-300">
+          <span>{TICKER_TEXT}</span>
+          <span>{TICKER_TEXT}</span>
+          <span>{TICKER_TEXT}</span>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          SECTION 4 — BRAND STATEMENT
-      ══════════════════════════════════════════ */}
-      <section
-        style={{
-          position: "relative",
-          padding: "7rem 1.5rem",
-          overflow: "hidden",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-        }}
-      >
-        {/* Giant background glow behind text */}
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            width: "900px",
-            height: "400px",
-            background:
-              "radial-gradient(ellipse at center, rgba(0,217,255,0.07) 0%, rgba(124,58,237,0.08) 50%, transparent 70%)",
-            pointerEvents: "none",
-            filter: "blur(40px)",
-          }}
-        />
-
-        <div
-          className="container-shell"
-          style={{ position: "relative", zIndex: 1 }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <span
-              style={{
-                color: "rgba(240,240,245,0.35)",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "2rem",
-              }}
-            >
-              YOUR OWN IDENTITY
-            </span>
-
-            <div style={{ position: "relative", display: "inline-block" }}>
-              <h2
-                style={{
-                  fontFamily: "var(--font-display, 'Manrope', sans-serif)",
-                  fontSize: "clamp(3rem, 9vw, 8rem)",
-                  fontWeight: 800,
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.04em",
-                  color: "#ffffff",
-                  margin: 0,
-                  textShadow: "0 0 60px rgba(0,217,255,0.15)",
-                }}
-              >
-                STYLE IS
-                <br />
-                <GradientText>PERSONAL.</GradientText>
-              </h2>
-
-              {/* Animated underline */}
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
-                style={{
-                  height: "2px",
-                  background: "linear-gradient(90deg, #00d9ff, #7c3aed, transparent)",
-                  marginTop: "12px",
-                  borderRadius: "2px",
-                  boxShadow: "0 0 12px rgba(0,217,255,0.5)",
-                }}
-              />
+      {/* =========================================================================
+          SECTION 3 — COMPONENT SHOWCASE (REACTBITS SPOTLIGHT GRID)
+      ========================================================================= */}
+      <section className="relative z-10 py-24 md:py-32">
+        <div className="container-shell">
+          <div className="mb-14 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-1 text-[11px] font-bold tracking-widest text-purple-300">
+              <Sparkles size={12} />
+              CURATED SELECTION
             </div>
-          </motion.div>
-
-          {/* Bottom row */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: "4rem",
-              paddingTop: "2rem",
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-              flexWrap: "wrap",
-              gap: "1rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                letterSpacing: "0.3em",
-                color: "rgba(240,240,245,0.25)",
-                textTransform: "uppercase",
-              }}
-            >
-              FASHIONSTORE / 001
-            </span>
-
-            <Link
-              to="/san-pham"
-              style={{ textDecoration: "none" }}
-            >
-              <motion.span
-                whileHover={{ boxShadow: "0 0 24px rgba(0,217,255,0.4)" }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  padding: "12px 24px",
-                  border: "1px solid rgba(0,217,255,0.3)",
-                  background: "rgba(0,217,255,0.06)",
-                  backdropFilter: "blur(12px)",
-                  borderRadius: "4px",
-                  color: "#00d9ff",
-                  fontSize: "0.72rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  transition: "box-shadow 0.3s ease",
-                }}
-              >
-                XEM SẢN PHẨM
-                <TrendingUp size={15} />
-              </motion.span>
-            </Link>
+            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
+              Bộ Sưu Tập Tiêu Biểu
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">
+              Từng tác phẩm được sáng tạo để mang đến cảm giác thoải mái tối đa và
+              khẳng định phong cách riêng của bạn.
+            </p>
           </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {SHOWCASE_CARDS.map((card) => {
+              const Icon = card.icon;
+              return (
+                <Link key={card.title} to={card.href} className="group block">
+                  <SpotlightCard
+                    spotlightColor="rgba(168, 85, 247, 0.25)"
+                    hoverBorderColor="rgba(168, 85, 247, 0.6)"
+                    className="p-8"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div
+                        className="flex h-12 w-12 items-center justify-center rounded-2xl border"
+                        style={{
+                          background: `${card.color}15`,
+                          borderColor: `${card.color}40`,
+                          color: card.color,
+                        }}
+                      >
+                        <Icon size={22} />
+                      </div>
+                      <span className="rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-[10px] font-bold text-purple-300">
+                        {card.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-6 text-xl font-bold text-white transition-colors group-hover:text-purple-300">
+                      {card.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-6 text-white/55">
+                      {card.desc}
+                    </p>
+
+                    <div className="mt-8 flex items-center gap-2 text-xs font-bold text-purple-400 group-hover:text-purple-300">
+                      <span>Xem ngay</span>
+                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </SpotlightCard>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 4 — ABOUT & BRAND STATS (REACTBITS GLASS METRICS)
+      ========================================================================= */}
+      <section id="about" className="relative z-10 border-t border-white/10 bg-[#08070e]/80 py-24 backdrop-blur-2xl md:py-32">
+        <div className="container-shell">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-400">
+                ABOUT FASHIONSTORE
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl">
+                NOT JUST WHAT
+                <br />
+                YOU <span className="text-purple-400">WEAR.</span>
+              </h2>
+              <p className="mt-6 text-base leading-8 text-white/60">
+                FashionStore hướng đến trải nghiệm mua sắm hiện đại, nơi mỗi
+                thiết kế thời trang là một tuyên ngôn cá tính độc lập, mang tinh
+                thần vị lai và thẩm mỹ đỉnh cao.
+              </p>
+            </div>
+
+            {/* Metrics Glass Box */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { number: "100+", label: "Sản phẩm chọn lọc" },
+                { number: "100%", label: "Vải dệt cao cấp" },
+                { number: "2026", label: "Kỷ nguyên vị lai" },
+                { number: "∞", label: "Cảm hứng phong cách" },
+              ].map((stat, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl transition-all duration-300 hover:border-purple-500/40 hover:bg-purple-950/20"
+                >
+                  <p className="font-display text-3xl font-extrabold text-purple-400 sm:text-4xl">
+                    {stat.number}
+                  </p>
+                  <p className="mt-2 text-xs font-medium text-white/50">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 5 — BRAND STATEMENT & BOTTOM CTA
+      ========================================================================= */}
+      <section className="relative z-10 py-24 text-center md:py-32">
+        <div className="container-shell flex flex-col items-center">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-purple-400">
+            YOUR OWN IDENTITY
+          </p>
+          <h2 className="mt-4 font-display text-4xl font-extrabold tracking-tight text-white sm:text-7xl">
+            STYLE IS{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-indigo-400 bg-clip-text text-transparent">
+              PERSONAL.
+            </span>
+          </h2>
+          <p className="mt-4 max-w-md text-sm text-white/60">
+            Sẵn sàng nâng tầm phong cách cùng bộ sưu tập thời trang công nghệ cao
+            mới nhất của chúng tôi.
+          </p>
+
+          <Link
+            to="/san-pham"
+            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 hover:from-purple-500 hover:to-indigo-500 hover:shadow-[0_0_45px_rgba(168,85,247,0.6)]"
+          >
+            <span>Bắt đầu mua sắm</span>
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
     </div>

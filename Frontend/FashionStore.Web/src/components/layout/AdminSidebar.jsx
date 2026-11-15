@@ -76,12 +76,12 @@ function AdminSidebar() {
         <div>
           <p className="font-display text-xl font-extrabold tracking-[-0.07em]">
             FASHIONSTORE
-            <span className="text-[#00d9ff]">.</span>
+            <span className="text-purple-400">.</span>
           </p>
 
           <div className="mt-1 flex items-center gap-1.5">
-            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#00d9ff]" />
-            <p className="text-[9px] font-bold tracking-[0.22em] text-[#00d9ff]">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-purple-400" />
+            <p className="text-[9px] font-bold tracking-[0.22em] text-purple-400">
               ADMIN CONSOLE
             </p>
           </div>
@@ -106,9 +106,9 @@ function AdminSidebar() {
               to={item.path}
               end={item.end}
               className={function ({ isActive }) {
-                return `group flex shrink-0 items-center gap-3 whitespace-nowrap rounded-lg px-3.5 py-3 text-xs font-semibold transition-all duration-300 ${
+                return `group flex shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-3.5 py-3 text-xs font-semibold transition-all duration-300 ${
                   isActive
-                    ? "border border-[#00d9ff]/30 bg-gradient-to-r from-[#00d9ff]/20 via-[#7c3aed]/10 to-transparent text-white shadow-[0_0_20px_rgba(0,217,255,0.15)]"
+                    ? "border border-purple-500/40 bg-gradient-to-r from-purple-600/25 via-fuchsia-600/15 to-transparent text-white shadow-[0_0_20px_rgba(168,85,247,0.2)]"
                     : "text-white/60 hover:bg-white/[0.05] hover:text-white"
                 }`;
               }}
@@ -119,7 +119,7 @@ function AdminSidebar() {
                     size={17}
                     className={`transition-colors duration-300 ${
                       isActive
-                        ? "text-[#00d9ff] drop-shadow-[0_0_8px_rgba(0,217,255,0.8)]"
+                        ? "text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]"
                         : "text-white/40 group-hover:text-white"
                     }`}
                   />
@@ -133,12 +133,12 @@ function AdminSidebar() {
 
       {/* FOOTER */}
       <div className="mt-auto hidden shrink-0 border-t border-white/10 p-5 lg:block">
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 backdrop-blur-md">
+        <div className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-3 backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <Sparkles size={14} className="text-[#00d9ff]" />
+            <Sparkles size={14} className="text-purple-400" />
             <span className="text-[11px] font-bold text-white">ReactBits Engine</span>
           </div>
-          <p className="mt-1 text-[10px] text-white/40">
+          <p className="mt-1 text-[10px] text-purple-300/50">
             UI Version 2.0 • Cyber Active
           </p>
         </div>

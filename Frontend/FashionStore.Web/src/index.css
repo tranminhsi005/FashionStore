@@ -57,7 +57,7 @@ img {
 ========================================= */
 
 :focus-visible {
-    outline: 2px solid var(--color-cyan);
+    outline: 2px solid var(--color-purple);
     outline-offset: 3px;
 }
 
@@ -67,21 +67,21 @@ img {
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    scrollbar-color: rgba(168, 85, 247, 0.25) transparent;
 }
 
 *::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(168, 85, 247, 0.2);
     border-radius: 20px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 217, 255, 0.4);
+    background: rgba(168, 85, 247, 0.5);
 }
 
 /* =========================================
@@ -102,7 +102,7 @@ img {
     font-size: clamp(2rem, 4vw, 4rem);
     font-weight: 800;
     line-height: 0.98;
-    letter-spacing: -0.065em;
+    letter-spacing: -0.04em;
     color: var(--color-text);
 }
 
@@ -114,8 +114,8 @@ img {
     font-family: var(--font-display);
     font-size: clamp(3.5rem, 10vw, 9rem);
     font-weight: 800;
-    line-height: 0.86;
-    letter-spacing: -0.09em;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
     color: var(--color-text);
 }
 
@@ -124,7 +124,7 @@ img {
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--color-cyan);
+    color: var(--color-purple-light);
 }
 
 /* =========================================
@@ -132,14 +132,14 @@ img {
 ========================================= */
 
 .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--color-border);
 }
 
 .glass-bright {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--color-border-bright);
@@ -149,31 +149,31 @@ img {
    GLOW UTILITIES
 ========================================= */
 
-.glow-cyan {
-    box-shadow: var(--shadow-glow-cyan);
-}
-
 .glow-purple {
     box-shadow: var(--shadow-glow-purple);
 }
 
-.glow-lime {
-    box-shadow: var(--shadow-glow-lime);
+.glow-indigo {
+    box-shadow: var(--shadow-glow-indigo);
+}
+
+.glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
 }
 
 /* =========================================
-   GRADIENT TEXT
+   GRADIENT TEXT (ReactBits Purple Signature)
 ========================================= */
 
 .gradient-text {
-    background: linear-gradient(135deg, #00d9ff, #7c3aed);
+    background: linear-gradient(135deg, #ffffff 10%, #e9d5ff 45%, #a855f7 75%, #6366f1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.gradient-text-lime {
-    background: linear-gradient(135deg, #a3e635, #00d9ff);
+.gradient-text-purple {
+    background: linear-gradient(135deg, #f3e8ff 0%, #c084fc 50%, #9333ea 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -303,8 +303,8 @@ main select option {
 main input:focus,
 main select:focus,
 main textarea:focus {
-    border-color: #00d9ff !important;
-    box-shadow: 0 0 16px rgba(0, 217, 255, 0.25) !important;
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25) !important;
     outline: none !important;
 }
 
@@ -325,27 +325,28 @@ main tbody tr {
 }
 
 main tbody tr:hover {
-    background-color: rgba(0, 217, 255, 0.04) !important;
+    background-color: rgba(168, 85, 247, 0.05) !important;
 }
 
 /* Admin primary buttons */
 main button.bg-ink,
 main a.bg-ink,
 main .bg-black {
-    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%) !important;
-    border: 1px solid rgba(0, 217, 255, 0.4) !important;
-    color: #00d9ff !important;
-    border-radius: 8px !important;
-    box-shadow: 0 0 15px rgba(0, 217, 255, 0.15) !important;
+    background: linear-gradient(135deg, #9333ea 0%, #6366f1 100%) !important;
+    border: 1px solid rgba(168, 85, 247, 0.5) !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.35) !important;
     transition: all 0.3s ease !important;
 }
 
 main button.bg-ink:hover,
 main a.bg-ink:hover,
 main .bg-black:hover {
-    background: #00d9ff !important;
-    color: #030303 !important;
-    box-shadow: 0 0 25px rgba(0, 217, 255, 0.45) !important;
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.55) !important;
+    transform: scale(1.02);
 }
 
 /* Modals & Dialogs */

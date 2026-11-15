@@ -3,9 +3,9 @@ import { useRef, useState } from "react";
 export default function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(0, 217, 255, 0.15)",
+  spotlightColor = "rgba(168, 85, 247, 0.2)",
   borderColor = "rgba(255, 255, 255, 0.08)",
-  hoverBorderColor = "rgba(0, 217, 255, 0.4)",
+  hoverBorderColor = "rgba(168, 85, 247, 0.5)",
   onClick,
   ...props
 }) {
@@ -37,11 +37,11 @@ export default function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={`relative overflow-hidden rounded-xl border bg-[#0d0d14]/80 backdrop-blur-xl transition-all duration-300 ${className}`}
+      className={`relative overflow-hidden rounded-2xl border bg-[#0c0a14]/90 backdrop-blur-xl transition-all duration-300 ${className}`}
       style={{
         borderColor: opacity ? hoverBorderColor : borderColor,
         boxShadow: opacity
-          ? "0 0 30px rgba(0, 217, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.4)"
+          ? "0 0 35px rgba(168, 85, 247, 0.15), 0 20px 40px rgba(0, 0, 0, 0.5)"
           : "0 10px 30px rgba(0, 0, 0, 0.3)",
       }}
       {...props}

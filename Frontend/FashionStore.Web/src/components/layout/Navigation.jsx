@@ -7,17 +7,19 @@ const navigationItems = [
     end: true,
   },
   {
-    label: "Bộ sưu tập",
+    label: "Sản phẩm",
     to: "/san-pham",
   },
   {
-    label: "Về chúng tôi",
+    label: "Về thương hiệu",
     to: "/#about",
   },
 ];
 
 function Navigation({ mobile = false, onNavigate }) {
-  const baseClass = mobile ? "flex flex-col gap-5" : "flex items-center gap-9";
+  const baseClass = mobile
+    ? "flex flex-col gap-4"
+    : "flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-xl";
 
   return (
     <nav aria-label="Điều hướng chính" className={baseClass}>
@@ -28,14 +30,9 @@ function Navigation({ mobile = false, onNavigate }) {
               key={item.to}
               to={item.to}
               onClick={onNavigate}
-              className={`
-                                text-sm
-                                font-semibold
-                                text-muted
-                                transition
-                                hover:text-ink
-                                ${mobile ? "text-lg" : ""}
-                            `}
+              className={`rounded-full px-4 py-2 text-xs font-semibold text-white/60 transition-all duration-300 hover:text-white ${
+                mobile ? "text-base py-2.5" : ""
+              }`}
             >
               {item.label}
             </Link>
@@ -49,14 +46,14 @@ function Navigation({ mobile = false, onNavigate }) {
             end={item.end}
             onClick={onNavigate}
             className={({ isActive }) => `
-                            relative
-                            text-sm
-                            font-semibold
-                            transition
-                            hover:text-ink
-                            ${isActive ? "text-ink" : "text-muted"}
-                            ${mobile ? "text-lg" : ""}
-                        `}
+              relative rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300
+              ${
+                isActive
+                  ? "bg-purple-600/20 text-purple-300 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.25)]"
+                  : "text-white/60 hover:text-white hover:bg-white/[0.04]"
+              }
+              ${mobile ? "text-base py-2.5" : ""}
+            `}
           >
             {item.label}
           </NavLink>

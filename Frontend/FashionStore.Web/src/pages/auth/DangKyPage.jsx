@@ -99,8 +99,8 @@ export default function DangKyPage() {
   };
 
   function handleInputFocus(e) {
-    e.target.style.borderColor = "#00d9ff";
-    e.target.style.boxShadow = "0 0 0 3px rgba(0,217,255,0.1)";
+    e.target.style.borderColor = "#a855f7";
+    e.target.style.boxShadow = "0 0 0 3px rgba(168,85,247,0.15)";
   }
 
   function handleInputBlur(e) {
@@ -188,7 +188,7 @@ export default function DangKyPage() {
               fontSize: "18px",
               fontWeight: 900,
               letterSpacing: "0.18em",
-              background: "linear-gradient(135deg, #00d9ff, #7c3aed)",
+              background: "linear-gradient(135deg, #c084fc, #a855f7, #6366f1)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -201,7 +201,7 @@ export default function DangKyPage() {
               width: "7px",
               height: "7px",
               borderRadius: "50%",
-              backgroundColor: "#00d9ff",
+              backgroundColor: "#a855f7",
               flexShrink: 0,
             }}
           />
@@ -386,7 +386,7 @@ export default function DangKyPage() {
                   transition: "color 0.2s",
                   padding: 0,
                 }}
-                onMouseEnter={(e) => (e.target.style.color = "#00d9ff")}
+                onMouseEnter={(e) => (e.target.style.color = "#a855f7")}
                 onMouseLeave={(e) =>
                   (e.target.style.color = "rgba(240,240,245,0.4)")
                 }
@@ -418,9 +418,9 @@ export default function DangKyPage() {
               marginTop: "8px",
               background: dangGui
                 ? "rgba(255,255,255,0.05)"
-                : "linear-gradient(135deg, #7c3aed 0%, #00d9ff 100%)",
+                : "linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #6366f1 100%)",
               border: "none",
-              borderRadius: "8px",
+              borderRadius: "9999px",
               color: dangGui ? "rgba(240,240,245,0.4)" : "#fff",
               fontSize: "13px",
               fontWeight: 700,
@@ -428,11 +428,11 @@ export default function DangKyPage() {
               textTransform: "uppercase",
               cursor: dangGui ? "not-allowed" : "pointer",
               opacity: dangGui ? 0.6 : 1,
-              transition: "opacity 0.2s",
-              boxShadow: dangGui ? "none" : "0 0 24px rgba(124,58,237,0.3)",
+              transition: "opacity 0.2s, transform 0.15s",
+              boxShadow: dangGui ? "none" : "0 0 28px rgba(168,85,247,0.4)",
             }}
             onMouseEnter={(e) => {
-              if (!dangGui) e.target.style.opacity = "0.85";
+              if (!dangGui) e.target.style.opacity = "0.9";
             }}
             onMouseLeave={(e) => {
               if (!dangGui) e.target.style.opacity = "1";
@@ -455,7 +455,7 @@ export default function DangKyPage() {
           <Link
             to="/dang-nhap"
             style={{
-              color: "#00d9ff",
+              color: "#c084fc",
               textDecoration: "none",
               fontWeight: 600,
               transition: "opacity 0.2s",

@@ -2,11 +2,11 @@ import { useEffect, useRef } from "react";
 
 export default function ParticlesCanvas({
   particleCount = 50,
-  speed = 0.6,
+  speed = 0.5,
   interactive = true,
-  glowColor = "rgba(0, 217, 255, 0.6)",
-  lineColor = "rgba(0, 217, 255, 0.12)",
-  secondaryColor = "rgba(124, 58, 237, 0.6)",
+  glowColor = "rgba(168, 85, 247, 0.7)",
+  lineColor = "rgba(168, 85, 247, 0.12)",
+  secondaryColor = "rgba(99, 102, 241, 0.7)",
 }) {
   const canvasRef = useRef(null);
 

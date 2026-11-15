@@ -76,8 +76,7 @@ function Footer() {
         >
           <div>
             <p
-              className="eyebrow"
-              style={{ color: "rgba(0,217,255,0.6)", letterSpacing: "0.2em" }}
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-400"
             >
               MODERN FASHION
             </p>
@@ -88,7 +87,7 @@ function Footer() {
               OWN{" "}
               <span
                 style={{
-                  background: "linear-gradient(135deg, #00d9ff 0%, #7c3aed 100%)",
+                  background: "linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #a855f7 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -110,11 +109,10 @@ function Footer() {
 
             <Link
               to="/san-pham"
-              className="mt-6 inline-flex items-center gap-3 text-sm font-semibold transition-all duration-200"
-              style={{ color: "#00d9ff" }}
+              className="mt-6 inline-flex items-center gap-3 text-sm font-semibold text-purple-400 transition-all duration-200 hover:text-purple-300"
               onMouseEnter={function (e) {
                 e.currentTarget.style.gap = "20px";
-                e.currentTarget.style.textShadow = "0 0 12px rgba(0,217,255,0.5)";
+                e.currentTarget.style.textShadow = "0 0 16px rgba(168,85,247,0.6)";
               }}
               onMouseLeave={function (e) {
                 e.currentTarget.style.gap = "12px";
@@ -135,7 +133,7 @@ function Footer() {
               FASHIONSTORE
               <span
                 style={{
-                  background: "linear-gradient(135deg, #00d9ff, #7c3aed)",
+                  background: "linear-gradient(135deg, #a855f7, #6366f1)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -166,28 +164,16 @@ function Footer() {
             <div className="mt-5 flex flex-col gap-3 text-sm">
               <Link
                 to="/"
-                className="transition-colors duration-150"
+                className="transition-colors duration-150 hover:text-purple-400"
                 style={{ color: "rgba(240,240,245,0.6)" }}
-                onMouseEnter={function (e) {
-                  e.currentTarget.style.color = "#00d9ff";
-                }}
-                onMouseLeave={function (e) {
-                  e.currentTarget.style.color = "rgba(240,240,245,0.6)";
-                }}
               >
                 Trang chủ
               </Link>
 
               <Link
                 to="/san-pham"
-                className="transition-colors duration-150"
+                className="transition-colors duration-150 hover:text-purple-400"
                 style={{ color: "rgba(240,240,245,0.6)" }}
-                onMouseEnter={function (e) {
-                  e.currentTarget.style.color = "#00d9ff";
-                }}
-                onMouseLeave={function (e) {
-                  e.currentTarget.style.color = "rgba(240,240,245,0.6)";
-                }}
               >
                 Sản phẩm
               </Link>
@@ -205,28 +191,16 @@ function Footer() {
             <div className="mt-5 flex flex-col gap-3 text-sm">
               <Link
                 to="/dang-nhap"
-                className="transition-colors duration-150"
+                className="transition-colors duration-150 hover:text-purple-400"
                 style={{ color: "rgba(240,240,245,0.6)" }}
-                onMouseEnter={function (e) {
-                  e.currentTarget.style.color = "#00d9ff";
-                }}
-                onMouseLeave={function (e) {
-                  e.currentTarget.style.color = "rgba(240,240,245,0.6)";
-                }}
               >
                 Đăng nhập
               </Link>
 
               <Link
                 to="/gio-hang"
-                className="transition-colors duration-150"
+                className="transition-colors duration-150 hover:text-purple-400"
                 style={{ color: "rgba(240,240,245,0.6)" }}
-                onMouseEnter={function (e) {
-                  e.currentTarget.style.color = "#00d9ff";
-                }}
-                onMouseLeave={function (e) {
-                  e.currentTarget.style.color = "rgba(240,240,245,0.6)";
-                }}
               >
                 Giỏ hàng
               </Link>
@@ -244,14 +218,12 @@ function Footer() {
             <button
               type="button"
               onClick={veDauTrang}
-              className="mt-5 inline-flex items-center gap-3 text-sm transition-colors duration-150"
+              className="mt-5 inline-flex items-center gap-3 text-sm transition-colors duration-150 hover:text-purple-400"
               style={{ color: "rgba(240,240,245,0.6)" }}
               onMouseEnter={function (e) {
-                e.currentTarget.style.color = "#00d9ff";
-                e.currentTarget.style.textShadow = "0 0 10px rgba(0,217,255,0.4)";
+                e.currentTarget.style.textShadow = "0 0 12px rgba(168,85,247,0.5)";
               }}
               onMouseLeave={function (e) {
-                e.currentTarget.style.color = "rgba(240,240,245,0.6)";
                 e.currentTarget.style.textShadow = "none";
               }}
             >

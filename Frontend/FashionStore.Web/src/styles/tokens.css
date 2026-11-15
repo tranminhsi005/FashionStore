@@ -1,86 +1,95 @@
 @theme {
     /* =====================================
-       DARK BASE
+       REACTBITS DARK THEME BASE
     ===================================== */
 
-    --color-void: #030303;
-    --color-surface: #0d0d14;
-    --color-surface-2: #13131f;
-    --color-surface-3: #1a1a2e;
+    --color-void: #060608;
+    --color-surface: #0c0a14;
+    --color-surface-2: #120e20;
+    --color-surface-3: #1a152e;
 
     /* =====================================
-       BORDERS
+       BORDERS (ReactBits Ultra-thin Glass)
     ===================================== */
 
     --color-border: rgba(255, 255, 255, 0.08);
-    --color-border-bright: rgba(255, 255, 255, 0.15);
+    --color-border-bright: rgba(168, 85, 247, 0.35);
 
     /* =====================================
        TEXT
     ===================================== */
 
-    --color-text: #f0f0f5;
-    --color-text-muted: rgba(240, 240, 245, 0.5);
-    --color-text-dim: rgba(240, 240, 245, 0.3);
+    --color-text: #f3f0fa;
+    --color-text-muted: rgba(243, 240, 250, 0.55);
+    --color-text-dim: rgba(243, 240, 250, 0.35);
 
     /* =====================================
-       NEON ACCENTS
+       REACTBITS PURPLE / VIOLET SIGNATURE
     ===================================== */
 
-    --color-cyan: #00d9ff;
-    --color-cyan-glow: rgba(0, 217, 255, 0.15);
-    --color-purple: #7c3aed;
-    --color-purple-glow: rgba(124, 58, 237, 0.2);
+    --color-purple: #a855f7;
+    --color-purple-light: #c084fc;
+    --color-purple-dark: #7e22ce;
+    --color-purple-glow: rgba(168, 85, 247, 0.35);
+
+    --color-indigo: #6366f1;
+    --color-indigo-glow: rgba(99, 102, 241, 0.3);
+
+    --color-cyan: #38bdf8;
+    --color-cyan-glow: rgba(56, 189, 248, 0.25);
+
     --color-lime: #a3e635;
-    --color-lime-glow: rgba(163, 230, 53, 0.15);
+    --color-lime-glow: rgba(163, 230, 53, 0.2);
 
     /* =====================================
-       LEGACY ALIASES (preserve admin compatibility)
+       LEGACY ALIASES
     ===================================== */
 
-    --color-paper: #0d0d14;
-    --color-paper-dark: #13131f;
+    --color-paper: #0c0a14;
+    --color-paper-dark: #120e20;
 
-    --color-ink: #f0f0f5;
-    --color-ink-light: #d0d0da;
+    --color-ink: #f3f0fa;
+    --color-ink-light: #d8b4fe;
 
-    --color-muted: rgba(240, 240, 245, 0.5);
-    --color-muted-light: rgba(240, 240, 245, 0.35);
+    --color-muted: rgba(243, 240, 250, 0.55);
+    --color-muted-light: rgba(243, 240, 250, 0.35);
 
     --color-line: rgba(255, 255, 255, 0.08);
 
-    --color-accent: #a3e635;
-    --color-accent-dark: #7cb305;
+    --color-accent: #a855f7;
+    --color-accent-dark: #9333ea;
 
     --color-white: #ffffff;
     --color-black: #000000;
 
     --color-danger: #ef4444;
-    --color-success: #22c55e;
+    --color-success: #10b981;
     --color-warning: #f59e0b;
 
     /* =====================================
-       TYPOGRAPHY
+       TYPOGRAPHY (ReactBits Font Stack)
     ===================================== */
 
-    --font-body: "DM Sans", sans-serif;
-    --font-display: "Manrope", sans-serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
 
     /* =====================================
        BORDER RADIUS
     ===================================== */
 
-    --radius-editorial: 2px;
-    --radius-control: 8px;
-    --radius-pill: 999px;
+    --radius-editorial: 6px;
+    --radius-control: 12px;
+    --radius-pill: 9999px;
 
     /* =====================================
-       SHADOW
+       SHADOWS & GLOWS (ReactBits Purple Glow)
     ===================================== */
 
-    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.4);
-    --shadow-dialog: 0 25px 80px rgba(0, 0, 0, 0.6);
-    --shadow-glow-cyan: 0 0 30px rgba(0, 217, 255, 0.25);
-    --shadow-glow-purple: 0 0 30px rgba(124, 58, 237, 0.3);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.5);
+    --shadow-dialog: 0 25px 80px rgba(0, 0, 0, 0.8);
+    --shadow-glow-purple: 0 0 35px rgba(168, 85, 247, 0.35);
+    --shadow-glow-indigo: 0 0 35px rgba(99, 102, 241, 0.3);
+    --shadow-glow-cyan: 0 0 30px rgba(56, 189, 248, 0.25);
     --shadow-glow-lime: 0 0 30px rgba(163, 230, 53, 0.2);
 }

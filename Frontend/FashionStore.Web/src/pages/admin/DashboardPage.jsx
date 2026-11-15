@@ -17,7 +17,7 @@ const dashboardItems = [
     title: "Sản phẩm",
     description: "Quản lý danh mục & phân loại",
     icon: Package,
-    color: "#00d9ff",
+    color: "#a855f7",
     href: "/admin-preview/san-pham",
     tag: "CATALOG",
   },
@@ -25,7 +25,7 @@ const dashboardItems = [
     title: "Đơn hàng",
     description: "Theo dõi & xử lý đơn mua",
     icon: ClipboardList,
-    color: "#7c3aed",
+    color: "#c084fc",
     href: "/admin-preview/don-hang",
     tag: "ORDERS",
   },
@@ -33,7 +33,7 @@ const dashboardItems = [
     title: "Vận chuyển",
     description: "Trạng thái giao nhận hàng",
     icon: Truck,
-    color: "#a3e635",
+    color: "#818cf8",
     href: "/admin-preview/van-chuyen",
     tag: "LOGISTICS",
   },
@@ -41,7 +41,7 @@ const dashboardItems = [
     title: "Tồn kho",
     description: "Kiểm soát số lượng tồn & nhập",
     icon: Warehouse,
-    color: "#f59e0b",
+    color: "#ec4899",
     href: "/admin-preview/ton-kho",
     tag: "STOCK",
   },
@@ -54,8 +54,8 @@ function DashboardPage() {
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-6 rounded-full bg-[#00d9ff] shadow-[0_0_8px_#00d9ff]" />
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#00d9ff]">
+            <span className="h-1.5 w-6 rounded-full bg-purple-500 shadow-[0_0_10px_#a855f7]" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-purple-400">
               ADMIN DASHBOARD
             </p>
           </div>
@@ -69,16 +69,16 @@ function DashboardPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/70 backdrop-blur-md">
-          <Activity size={15} className="animate-pulse text-[#00d9ff]" />
+        <div className="flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-semibold text-purple-300 backdrop-blur-md">
+          <Activity size={15} className="animate-pulse text-purple-400" />
           <span>Realtime Metrics • 2026</span>
         </div>
       </div>
 
       {/* NOTICE BANNER */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-transparent p-6 backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-purple-600/15 via-fuchsia-600/10 to-transparent p-6 backdrop-blur-xl">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#00d9ff]/30 bg-[#00d9ff]/10 text-[#00d9ff]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/15 text-purple-300">
             <Shield size={20} />
           </div>
           <div>
@@ -86,8 +86,12 @@ function DashboardPage() {
               Giao diện quản trị phong cách ReactBits đã kích hoạt
             </h3>
             <p className="mt-1 text-xs leading-6 text-white/60">
-              Hệ thống được thiết kế tối ưu với hiệu ứng Spotlight Card, Dark Glassmorphism và Neon Accents.
+              Hệ thống được thiết kế tối ưu với hiệu ứng Spotlight Card, Dark Glassmorphism và Neon Violet Accents.
               Các chỉ số thống kê sẽ đồng bộ realtime từ cơ sở dữ liệu backend.
+            </p>
+          </div>
+        </div>
+      </div>
             </p>
           </div>
         </div>
@@ -172,19 +176,19 @@ function DashboardPage() {
                 time: "Vừa xong",
                 desc: "Hệ thống bảo mật API đã kích hoạt chính sách CORS linh hoạt",
                 badge: "SECURITY",
-                color: "text-[#00d9ff]",
+                color: "text-purple-400",
               },
               {
                 time: "5 phút trước",
                 desc: "Bộ sưu tập 2026 Collection sẵn sàng phục vụ người dùng",
                 badge: "CATALOG",
-                color: "text-[#7c3aed]",
+                color: "text-fuchsia-400",
               },
               {
                 time: "10 phút trước",
                 desc: "Database PostgreSQL kết nối ổn định",
                 badge: "DATABASE",
-                color: "text-[#a3e635]",
+                color: "text-emerald-400",
               },
             ].map((act, index) => (
               <div key={index} className="flex items-center justify-between py-4 text-xs">
@@ -211,10 +215,10 @@ function DashboardPage() {
             <div>
               <div className="flex justify-between text-xs">
                 <span className="text-white/60">Bộ nhớ Cache</span>
-                <span className="font-bold text-[#00d9ff]">94% Tối ưu</span>
+                <span className="font-bold text-purple-400">94% Tối ưu</span>
               </div>
               <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-[94%] bg-gradient-to-r from-[#00d9ff] to-[#7c3aed]" />
+                <div className="h-full w-[94%] bg-gradient-to-r from-purple-500 to-indigo-500" />
               </div>
             </div>
 

@@ -150,11 +150,11 @@ export default function CartPage() {
 
   if (dangTaiGioHang) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#030303] text-[#f0f0f5]">
+      <main className="flex min-h-[70vh] items-center justify-center bg-[#060608] text-[#f0f0f5]">
         <div className="text-center">
-          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-white/10 border-t-[#00d9ff]"></div>
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-white/10 border-t-purple-500"></div>
 
-          <p className="mt-4 text-sm text-white/50">Đang tải giỏ hàng...</p>
+          <p className="mt-4 text-sm text-purple-300/60">Đang tải giỏ hàng...</p>
         </div>
       </main>
     );
@@ -166,7 +166,7 @@ export default function CartPage() {
 
   if (!gioHang && loiTaiGioHang) {
     return (
-      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#030303] px-5 text-center text-[#f0f0f5]">
+      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#060608] px-5 text-center text-[#f0f0f5]">
         <h2 className="text-2xl font-bold">Không thể tải giỏ hàng</h2>
 
         <p className="mt-3 text-sm text-white/50">{loiTaiGioHang}</p>
@@ -176,7 +176,7 @@ export default function CartPage() {
           onClick={function () {
             taiGioHang().catch(() => {});
           }}
-          className="mt-6 rounded border border-[#00d9ff]/50 bg-[#00d9ff]/10 px-7 py-4 text-xs font-semibold uppercase tracking-widest text-[#00d9ff] transition-all hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_25px_rgba(0,217,255,0.4)]"
+          className="mt-6 rounded-full border border-purple-500/50 bg-purple-500/10 px-7 py-3 text-xs font-semibold uppercase tracking-widest text-purple-300 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_25px_rgba(168,85,247,0.4)]"
         >
           Thử tải lại
         </button>
@@ -197,16 +197,16 @@ export default function CartPage() {
   // =============================================
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#030303] text-[#f0f0f5]">
-      {/* Ambient glow orbs */}
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[rgba(0,217,255,0.08)] blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-[rgba(124,58,237,0.1)] blur-[140px]" />
+    <main className="relative min-h-screen overflow-hidden bg-[#060608] text-[#f0f0f5]">
+      {/* Top purple aurora glow */}
+      <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-[450px] w-full max-w-5xl bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.18)_0%,transparent_70%)] blur-[100px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-[rgba(139,92,246,0.1)] blur-[140px]" />
 
       <div className="relative z-10 mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
         {/* BREADCRUMB */}
 
         <div className="mb-8 flex items-center gap-2 text-xs text-white/40">
-          <Link to="/" className="transition-colors hover:text-[#00d9ff]">
+          <Link to="/" className="transition-colors hover:text-purple-400">
             Trang chủ
           </Link>
 
@@ -218,7 +218,8 @@ export default function CartPage() {
         {/* TIÊU ĐỀ */}
 
         <div className="mb-10 border-b border-white/10 pb-8">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#00d9ff]">
+          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-400">
+            <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse" />
             Your selection
           </p>
 
@@ -227,7 +228,7 @@ export default function CartPage() {
               Giỏ hàng
             </h1>
 
-            <p className="text-sm text-white/50">
+            <p className="text-sm text-purple-300/60">
               {gioHang?.tongSoLuong || 0} sản phẩm
             </p>
           </div>
@@ -236,7 +237,7 @@ export default function CartPage() {
         {/* THÔNG BÁO LỖI */}
 
         {loi && (
-          <div className="mb-6 flex items-center justify-between gap-4 rounded-lg border border-red-500/30 bg-red-950/40 px-5 py-4 text-sm text-red-300 backdrop-blur-md">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-red-500/30 bg-red-950/40 px-5 py-4 text-sm text-red-300 backdrop-blur-md">
             <span>{loi}</span>
 
             <button
@@ -252,7 +253,7 @@ export default function CartPage() {
         {/* THÔNG BÁO THÀNH CÔNG */}
 
         {thongBao && (
-          <div className="mb-6 flex items-center justify-between gap-4 rounded-lg border border-emerald-500/30 bg-emerald-950/40 px-5 py-4 text-sm text-emerald-300 backdrop-blur-md">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-emerald-500/30 bg-emerald-950/40 px-5 py-4 text-sm text-emerald-300 backdrop-blur-md">
             <span>{thongBao}</span>
 
             <button
@@ -270,8 +271,8 @@ export default function CartPage() {
                 ================================= */}
 
         {!dangCoSanPham && (
-          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#0d0d14]/70 p-12 text-center backdrop-blur-xl">
-            <div className="text-7xl font-extralight text-white/20">0</div>
+          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#0c0a14]/80 p-12 text-center backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+            <div className="text-7xl font-extralight text-purple-500/30">0</div>
 
             <h2 className="mt-6 text-2xl font-bold text-white">Giỏ hàng đang trống</h2>
 
@@ -282,7 +283,7 @@ export default function CartPage() {
 
             <Link
               to="/san-pham"
-              className="mt-8 rounded border border-[#00d9ff]/50 bg-[#00d9ff]/10 px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#00d9ff] transition-all hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_25px_rgba(0,217,255,0.4)]"
+              className="mt-8 rounded-full border border-purple-500/50 bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_35px_rgba(168,85,247,0.6)]"
             >
               Tiếp tục mua sắm
             </Link>
@@ -294,13 +295,13 @@ export default function CartPage() {
                 ================================= */}
 
         {dangCoSanPham && (
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_360px]">
             {/* DANH SÁCH */}
 
             <section>
               {/* TIÊU ĐỀ CỘT */}
 
-              <div className="mb-5 hidden grid-cols-[minmax(0,1fr)_120px_130px] gap-5 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-widest text-[#00d9ff] sm:grid">
+              <div className="mb-5 hidden grid-cols-[minmax(0,1fr)_120px_130px] gap-5 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-widest text-purple-400 sm:grid">
                 <span>Sản phẩm</span>
 
                 <span className="text-center">Số lượng</span>
@@ -325,7 +326,7 @@ export default function CartPage() {
                       <div className="flex min-w-0 gap-4">
                         <Link
                           to={`/san-pham/${item.slug}`}
-                          className="h-32 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0d0d14] sm:h-40 sm:w-28"
+                          className="h-32 w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#0c0a14] sm:h-40 sm:w-28"
                         >
                           {item.duongDanAnh ? (
                             <img
@@ -345,7 +346,7 @@ export default function CartPage() {
 
                           <Link
                             to={`/san-pham/${item.slug}`}
-                            className="line-clamp-2 text-sm font-semibold text-white transition-colors hover:text-[#00d9ff]"
+                            className="line-clamp-2 text-sm font-semibold text-white transition-colors hover:text-purple-400"
                           >
                             {item.tenSanPham}
                           </Link>
@@ -387,7 +388,7 @@ export default function CartPage() {
 
                           {/* GIÁ TRÊN MOBILE */}
 
-                          <p className="mt-4 text-sm font-semibold text-[#00d9ff] sm:hidden">
+                          <p className="mt-4 text-sm font-semibold text-purple-400 sm:hidden">
                             {dinhDangTienVietNam(item.giaBan)}
                           </p>
 
@@ -415,7 +416,7 @@ export default function CartPage() {
                       {/* SỐ LƯỢNG */}
 
                       <div className="flex items-center justify-start sm:justify-center">
-                        <div className="flex items-center rounded border border-white/15 bg-white/[0.04]">
+                        <div className="flex items-center rounded-xl border border-white/15 bg-white/[0.04]">
                           {/* GIẢM */}
 
                           <button
@@ -457,7 +458,7 @@ export default function CartPage() {
                       {/* THÀNH TIỀN */}
 
                       <div className="hidden text-right sm:block">
-                        <p className="text-sm font-bold text-[#00d9ff]">
+                        <p className="text-sm font-bold text-purple-300">
                           {dinhDangTienVietNam(item.thanhTien)}
                         </p>
 
@@ -483,7 +484,7 @@ export default function CartPage() {
 
                 <Link
                   to="/san-pham"
-                  className="text-xs font-semibold uppercase tracking-widest text-white/60 underline underline-offset-4 transition-colors hover:text-[#00d9ff]"
+                  className="text-xs font-semibold uppercase tracking-widest text-white/60 underline underline-offset-4 transition-colors hover:text-purple-400"
                 >
                   ← Tiếp tục mua sắm
                 </Link>
@@ -505,8 +506,9 @@ export default function CartPage() {
                             TÓM TẮT ĐƠN HÀNG
                         ================================= */}
 
-            <aside className="h-fit rounded-2xl border border-white/10 bg-[#0d0d14]/80 p-6 backdrop-blur-xl sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#00d9ff]">
+            <aside className="h-fit rounded-2xl border border-white/10 bg-[#0c0a14]/80 p-6 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] sm:p-8">
+              <p className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-purple-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse" />
                 Order summary
               </p>
 
@@ -549,7 +551,7 @@ export default function CartPage() {
               <div className="flex items-center justify-between gap-4 py-6">
                 <span className="text-sm font-semibold text-white">Tổng cộng</span>
 
-                <span className="text-2xl font-extrabold text-[#00d9ff]">
+                <span className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-300">
                   {dinhDangTienVietNam(gioHang.tongTien)}
                 </span>
               </div>
@@ -559,9 +561,9 @@ export default function CartPage() {
               <div className="border-t border-white/10 pt-6">
                 <Link
                   to="/thanh-toan"
-                  className="block w-full rounded-lg border border-[#00d9ff]/50 bg-gradient-to-r from-[#00d9ff]/20 via-[#7c3aed]/20 to-[#00d9ff]/20 px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.15em] text-[#00d9ff] backdrop-blur-md transition-all duration-300 hover:border-[#00d9ff] hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_30px_rgba(0,217,255,0.4)]"
+                  className="block w-full rounded-full border border-purple-500/50 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.15em] text-white shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(168,85,247,0.6)]"
                 >
-                  Tiến hành thanh toán
+                  Tiến hành thanh toán →
                 </Link>
 
                 <p className="mt-3 text-center text-xs leading-6 text-white/40">

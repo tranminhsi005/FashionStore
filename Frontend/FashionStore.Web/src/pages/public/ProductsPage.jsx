@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
-
+import { Search, Sparkles, Filter, X, RefreshCw } from "lucide-react";
 import ProductCard from "../../components/products/ProductCard";
-
 import {
   layDanhSachSanPham,
   layDanhSachDanhMuc,
@@ -11,231 +9,112 @@ import {
   layDanhSachKichCo,
   layDanhSachMauSac,
 } from "../../services/productService";
-
 import { layThongBaoLoi } from "../../utils/apiError";
 
 export default function ProductsPage() {
-  // =============================================
-  // DANH SÁCH DỮ LIỆU
-  // =============================================
-
   const [sanPhams, setSanPhams] = useState([]);
-
   const [danhMucs, setDanhMucs] = useState([]);
-
   const [thuongHieus, setThuongHieus] = useState([]);
-
   const [kichCos, setKichCos] = useState([]);
-
   const [mauSacs, setMauSacs] = useState([]);
 
-  // =============================================
-  // TRẠNG THÁI GIAO DIỆN
-  // =============================================
-
   const [dangTai, setDangTai] = useState(true);
-
   const [loi, setLoi] = useState("");
-
   const [trang, setTrang] = useState(1);
-
   const [tongSoTrang, setTongSoTrang] = useState(0);
-
   const [tongSoSanPham, setTongSoSanPham] = useState(0);
-
   const [taiLai, setTaiLai] = useState(0);
-
-  // =============================================
-  // TÌM KIẾM
-  // =============================================
 
   const [tuKhoaNhap, setTuKhoaNhap] = useState("");
 
-  // =============================================
-  // BỘ LỌC
-  // =============================================
-
   const [boLoc, setBoLoc] = useState({
     tuKhoa: "",
-
     danhMucId: "",
-
     thuongHieuId: "",
-
     kichCoId: "",
-
     mauSacId: "",
-
     giaTu: "",
-
     giaDen: "",
-
     sapXep: "moi-nhat",
   });
 
-  // Giá nhập riêng, chỉ áp dụng khi nhấn nút lọc giá
   const [giaTuNhap, setGiaTuNhap] = useState("");
-
   const [giaDenNhap, setGiaDenNhap] = useState("");
 
-  // =============================================
-  // LẤY DANH MỤC, THƯƠNG HIỆU, KÍCH CỠ, MÀU SẮC
-  // =============================================
-
-  useEffect(function () {
-    let componentConTonTai = true;
-
+  useEffect(() => {
+    let alive = true;
     async function taiDuLieuBoLoc() {
       try {
-        const ketQua = await Promise.all([
+        const [dm, th, kc, ms] = await Promise.all([
           layDanhSachDanhMuc().catch(() => []),
-
           layDanhSachThuongHieu().catch(() => []),
-
           layDanhSachKichCo().catch(() => []),
-
           layDanhSachMauSac().catch(() => []),
         ]);
-
-        if (componentConTonTai) {
-          setDanhMucs(ketQua[0] || []);
-
-          setThuongHieus(ketQua[1] || []);
-
-          setKichCos(ketQua[2] || []);
-
-          setMauSacs(ketQua[3] || []);
+        if (alive) {
+          setDanhMucs(dm || []);
+          setThuongHieus(th || []);
+          setKichCos(kc || []);
+          setMauSacs(ms || []);
         }
       } catch (error) {
         console.error("Lỗi tải dữ liệu bộ lọc:", error);
       }
     }
-
     taiDuLieuBoLoc();
-
-    return function () {
-      componentConTonTai = false;
+    return () => {
+      alive = false;
     };
   }, []);
 
-  // =============================================
-  // LẤY DANH SÁCH SẢN PHẨM
-  // =============================================
+  useEffect(() => {
+    let alive = true;
+    async function taiDanhSach() {
+      setDangTai(true);
+      setLoi("");
+      try {
+        const params = {
+          trang,
+          kichThuocTrang: 12,
+          sapXep: boLoc.sapXep,
+        };
+        if (boLoc.tuKhoa) params.tuKhoa = boLoc.tuKhoa;
+        if (boLoc.danhMucId) params.danhMucId = boLoc.danhMucId;
+        if (boLoc.thuongHieuId) params.thuongHieuId = boLoc.thuongHieuId;
+        if (boLoc.kichCoId) params.kichCoId = boLoc.kichCoId;
+        if (boLoc.mauSacId) params.mauSacId = boLoc.mauSacId;
+        if (boLoc.giaTu !== "") params.giaTu = Number(boLoc.giaTu);
+        if (boLoc.giaDen !== "") params.giaDen = Number(boLoc.giaDen);
 
-  useEffect(
-    function () {
-      let componentConTonTai = true;
-
-      async function taiDanhSachSanPham() {
-        setDangTai(true);
-
-        setLoi("");
-
-        try {
-          const params = {
-            trang: trang,
-
-            kichThuocTrang: 12,
-
-            sapXep: boLoc.sapXep,
-          };
-
-          // Tìm kiếm
-          if (boLoc.tuKhoa) {
-            params.tuKhoa = boLoc.tuKhoa;
-          }
-
-          // Lọc danh mục
-          if (boLoc.danhMucId) {
-            params.danhMucId = boLoc.danhMucId;
-          }
-
-          // Lọc thương hiệu
-          if (boLoc.thuongHieuId) {
-            params.thuongHieuId = boLoc.thuongHieuId;
-          }
-
-          // Lọc kích cỡ
-          if (boLoc.kichCoId) {
-            params.kichCoId = boLoc.kichCoId;
-          }
-
-          // Lọc màu sắc
-          if (boLoc.mauSacId) {
-            params.mauSacId = boLoc.mauSacId;
-          }
-
-          // Giá thấp nhất
-          if (boLoc.giaTu !== "") {
-            params.giaTu = Number(boLoc.giaTu);
-          }
-
-          // Giá cao nhất
-          if (boLoc.giaDen !== "") {
-            params.giaDen = Number(boLoc.giaDen);
-          }
-
-          const ketQua = await layDanhSachSanPham(params);
-
-          if (!componentConTonTai) {
-            return;
-          }
-
-          setSanPhams(ketQua.items || []);
-
-          setTongSoTrang(ketQua.tongSoTrang || 0);
-
-          setTongSoSanPham(ketQua.tongSoBanGhi || 0);
-        } catch (error) {
-          if (componentConTonTai) {
-            setSanPhams([]);
-
-            setLoi(layThongBaoLoi(error));
-          }
-        } finally {
-          if (componentConTonTai) {
-            setDangTai(false);
-          }
+        const ketQua = await layDanhSachSanPham(params);
+        if (!alive) return;
+        setSanPhams(ketQua.items || []);
+        setTongSoTrang(ketQua.tongSoTrang || 0);
+        setTongSoSanPham(ketQua.tongSoBanGhi || 0);
+      } catch (error) {
+        if (alive) {
+          setSanPhams([]);
+          setLoi(layThongBaoLoi(error));
         }
+      } finally {
+        if (alive) setDangTai(false);
       }
-
-      taiDanhSachSanPham();
-
-      return function () {
-        componentConTonTai = false;
-      };
-    },
-    [boLoc, trang, taiLai],
-  );
-
-  // =============================================
-  // CẬP NHẬT BỘ LỌC
-  // =============================================
+    }
+    taiDanhSach();
+    return () => {
+      alive = false;
+    };
+  }, [boLoc, trang, taiLai]);
 
   function capNhatBoLoc(tenTruong, giaTri) {
-    setBoLoc(function (cu) {
-      return {
-        ...cu,
-        [tenTruong]: giaTri,
-      };
-    });
-
+    setBoLoc((cu) => ({ ...cu, [tenTruong]: giaTri }));
     setTrang(1);
   }
 
-  // =============================================
-  // TÌM KIẾM
-  // =============================================
-
-  function xuLyTimKiem(event) {
-    event.preventDefault();
-
+  function xuLyTimKiem(e) {
+    e.preventDefault();
     capNhatBoLoc("tuKhoa", tuKhoaNhap.trim());
   }
-
-  // =============================================
-  // ÁP DỤNG KHOẢNG GIÁ
-  // =============================================
 
   function xuLyLocGia() {
     if (
@@ -244,725 +123,352 @@ export default function ProductsPage() {
       Number(giaTuNhap) > Number(giaDenNhap)
     ) {
       setLoi("Giá thấp nhất không được lớn hơn giá cao nhất.");
-
       return;
     }
-
     setLoi("");
-
-    setBoLoc(function (cu) {
-      return {
-        ...cu,
-        giaTu: giaTuNhap,
-        giaDen: giaDenNhap,
-      };
-    });
-
+    setBoLoc((cu) => ({ ...cu, giaTu: giaTuNhap, giaDen: giaDenNhap }));
     setTrang(1);
   }
 
-  // =============================================
-  // XÓA TẤT CẢ BỘ LỌC
-  // =============================================
-
   function xoaBoLoc() {
     setTuKhoaNhap("");
-
     setGiaTuNhap("");
-
     setGiaDenNhap("");
-
     setTrang(1);
-
     setBoLoc({
       tuKhoa: "",
-
       danhMucId: "",
-
       thuongHieuId: "",
-
       kichCoId: "",
-
       mauSacId: "",
-
       giaTu: "",
-
       giaDen: "",
-
       sapXep: "moi-nhat",
     });
   }
 
-  // =============================================
-  // STYLES (inline để tránh cần custom CSS)
-  // =============================================
-
-  const glassPanel = {
-    background: "rgba(13,13,20,0.8)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    backdropFilter: "blur(16px)",
-    borderRadius: "8px",
-  };
-
-  const glassInput = {
-    background: "rgba(255,255,255,0.03)",
-    borderBottom: "1px solid rgba(255,255,255,0.1)",
-    color: "white",
-    outline: "none",
-    width: "100%",
-  };
-
-  const darkSelectStyle = {
-    background: "rgba(13,13,20,0.9)",
-    border: "1px solid rgba(255,255,255,0.1)",
-    color: "rgba(240,240,245,0.85)",
-    borderRadius: "6px",
-    padding: "10px 12px",
-    outline: "none",
-    width: "100%",
-    cursor: "pointer",
-  };
-
-  const sectionLabelStyle = {
-    display: "block",
-    marginBottom: "10px",
-    fontSize: "10px",
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: "0.2em",
-    color: "rgba(240,240,245,0.4)",
-  };
-
-  const dividerStyle = {
-    borderBottom: "1px solid rgba(255,255,255,0.06)",
-    marginBottom: "20px",
-    paddingBottom: "20px",
-  };
-
-  // =============================================
-  // HIỂN THỊ
-  // =============================================
-
   return (
-    <main
-      className="min-h-screen"
-      style={{ background: "#030303", color: "#f0f0f5", position: "relative" }}
-    >
-      {/* AMBIENT ORBS */}
+    <main className="relative min-h-screen overflow-x-hidden bg-[#060608] text-[#f3f0fa]">
+      {/* Top Giant Purple Aurora Radial Glow */}
       <div
+        className="pointer-events-none fixed inset-0 z-0"
         style={{
-          position: "fixed",
-          top: "-200px",
-          right: "-100px",
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(circle, rgba(0,217,255,0.06) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          pointerEvents: "none",
-          zIndex: 0,
+          background:
+            "radial-gradient(circle at 50% 5%, rgba(168, 85, 247, 0.18) 0%, rgba(99, 102, 241, 0.08) 35%, transparent 65%)",
         }}
       />
       <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-20"
         style={{
-          position: "fixed",
-          bottom: "-200px",
-          left: "-100px",
-          width: "500px",
-          height: "500px",
-          background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          pointerEvents: "none",
-          zIndex: 0,
+          backgroundImage:
+            "radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
 
-      <div
-        className="relative mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12"
-        style={{ zIndex: 1 }}
-      >
+      <div className="container-shell relative z-10 py-10">
         {/* BREADCRUMB */}
-
-        <div
-          className="mb-8 flex items-center gap-2 text-xs"
-          style={{ color: "rgba(240,240,245,0.35)" }}
-        >
-          <Link
-            to="/"
-            style={{ color: "rgba(240,240,245,0.35)", transition: "color 0.2s" }}
-            onMouseEnter={(e) => (e.target.style.color = "#00d9ff")}
-            onMouseLeave={(e) => (e.target.style.color = "rgba(240,240,245,0.35)")}
-          >
+        <div className="mb-6 flex items-center gap-2 text-xs text-white/40">
+          <Link to="/" className="transition-colors hover:text-purple-400">
             Trang chủ
           </Link>
-
           <span>/</span>
-
-          <span style={{ color: "rgba(240,240,245,0.7)" }}>Sản phẩm</span>
+          <span className="text-purple-300">Bộ sưu tập sản phẩm</span>
         </div>
 
-        {/* TIÊU ĐỀ */}
+        {/* HEADER SECTION */}
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-[11px] font-bold text-purple-300">
+              <Sparkles size={12} />
+              DISCOVER OUR CATALOG
+            </div>
+            <h1 className="mt-3 font-display text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+              Sản phẩm{" "}
+              <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                2026.
+              </span>
+            </h1>
+          </div>
 
-        <div
-          className="mb-10 pb-8"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-        >
-          <p
-            className="mb-3 text-[11px] font-semibold uppercase"
-            style={{ letterSpacing: "0.3em", color: "#00d9ff" }}
-          >
-            Explore our collection
-          </p>
-
-          <h1
-            className="text-4xl font-semibold tracking-tight sm:text-6xl"
-            style={{
-              background: "linear-gradient(135deg, #ffffff 0%, rgba(240,240,245,0.6) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            Sản phẩm
-          </h1>
-
-          <p
-            className="mt-4 max-w-xl text-sm leading-7"
-            style={{ color: "rgba(240,240,245,0.45)" }}
-          >
-            Khám phá các thiết kế thời trang được tuyển chọn dành cho phong cách
-            riêng của bạn.
+          <p className="max-w-md text-sm leading-7 text-white/60">
+            Khám phá các thiết kế thời trang thế hệ mới được tuyển chọn dành riêng
+            cho phong cách độc bản của bạn.
           </p>
         </div>
 
-        {/* TÌM KIẾM */}
-
-        <form
-          onSubmit={xuLyTimKiem}
-          className="mb-8 flex items-center"
-          style={glassInput}
-        >
-          <input
-            type="text"
-            value={tuKhoaNhap}
-            onChange={(event) => setTuKhoaNhap(event.target.value)}
-            placeholder="Tìm kiếm sản phẩm, tên hoặc SKU..."
-            style={{
-              flex: 1,
-              background: "transparent",
-              border: "none",
-              color: "white",
-              outline: "none",
-              padding: "16px 16px",
-              fontSize: "14px",
-            }}
-            className="placeholder-[rgba(255,255,255,0.4)]"
-            onFocus={(e) => {
-              e.target.closest("form").style.borderBottom = "1px solid #00d9ff";
-              e.target.closest("form").style.boxShadow = "0 4px 20px rgba(0,217,255,0.08)";
-            }}
-            onBlur={(e) => {
-              e.target.closest("form").style.borderBottom = "1px solid rgba(255,255,255,0.1)";
-              e.target.closest("form").style.boxShadow = "none";
-            }}
-          />
-
-          <button
-            type="submit"
-            className="shrink-0 px-5 text-xs font-semibold uppercase tracking-widest transition-colors"
-            style={{ color: "rgba(240,240,245,0.5)", letterSpacing: "0.15em" }}
-            onMouseEnter={(e) => (e.target.style.color = "#00d9ff")}
-            onMouseLeave={(e) => (e.target.style.color = "rgba(240,240,245,0.5)")}
-          >
-            Tìm kiếm
-          </button>
+        {/* SEARCH BAR (REACTBITS PILL SEARCH) */}
+        <form onSubmit={xuLyTimKiem} className="mb-10">
+          <div className="relative flex items-center overflow-hidden rounded-2xl border border-white/10 bg-[#0c0a14]/90 backdrop-blur-xl transition-all duration-300 focus-within:border-purple-500/60 focus-within:shadow-[0_0_25px_rgba(168,85,247,0.3)]">
+            <Search className="ml-5 text-purple-400 shrink-0" size={18} />
+            <input
+              type="text"
+              value={tuKhoaNhap}
+              onChange={(e) => setTuKhoaNhap(e.target.value)}
+              placeholder="Tìm kiếm sản phẩm theo tên, chất liệu, SKU..."
+              className="w-full bg-transparent px-4 py-4 text-sm text-white placeholder-white/35 outline-none"
+            />
+            <button
+              type="submit"
+              className="m-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all hover:from-purple-500 hover:to-indigo-500"
+            >
+              Tìm kiếm
+            </button>
+          </div>
         </form>
 
-        {/* NỘI DUNG */}
-
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[230px_minmax(0,1fr)]">
-          {/* =================================
-                        SIDEBAR BỘ LỌC
-                    ================================= */}
-
-          <aside>
-            <div style={glassPanel} className="p-5">
-              <div className="mb-6 flex items-center justify-between">
-                <h2
-                  className="text-sm font-semibold uppercase tracking-widest"
-                  style={{ color: "rgba(240,240,245,0.85)" }}
-                >
-                  Bộ lọc
-                </h2>
-
-                <button
-                  type="button"
-                  onClick={xoaBoLoc}
-                  className="text-xs underline underline-offset-4 transition-colors"
-                  style={{ color: "rgba(240,240,245,0.4)" }}
-                  onMouseEnter={(e) => (e.target.style.color = "#00d9ff")}
-                  onMouseLeave={(e) => (e.target.style.color = "rgba(240,240,245,0.4)")}
-                >
-                  Xóa tất cả
-                </button>
+        {/* MAIN GRID: SIDEBAR & PRODUCT LIST */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_minmax(0,1fr)]">
+          {/* SIDEBAR FILTERS (REACTBITS GLASS PANEL) */}
+          <aside className="h-fit rounded-2xl border border-white/10 bg-[#0c0a14]/80 p-6 backdrop-blur-xl">
+            <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-300">
+                <Filter size={14} />
+                <span>Bộ lọc</span>
               </div>
-
-              {/* DANH MỤC */}
-
-              <div style={dividerStyle}>
-                <label style={sectionLabelStyle}>Danh mục</label>
-
-                <select
-                  value={boLoc.danhMucId}
-                  onChange={(event) =>
-                    capNhatBoLoc("danhMucId", event.target.value)
-                  }
-                  style={darkSelectStyle}
-                >
-                  <option value="">Tất cả danh mục</option>
-
-                  {danhMucs.map(function (danhMuc) {
-                    return (
-                      <option key={danhMuc.id} value={danhMuc.id}>
-                        {danhMuc.ten}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-
-              {/* THƯƠNG HIỆU */}
-
-              <div style={dividerStyle}>
-                <label style={sectionLabelStyle}>Thương hiệu</label>
-
-                <select
-                  value={boLoc.thuongHieuId}
-                  onChange={(event) =>
-                    capNhatBoLoc("thuongHieuId", event.target.value)
-                  }
-                  style={darkSelectStyle}
-                >
-                  <option value="">Tất cả thương hiệu</option>
-
-                  {thuongHieus.map(function (thuongHieu) {
-                    return (
-                      <option key={thuongHieu.id} value={thuongHieu.id}>
-                        {thuongHieu.ten}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-
-              {/* KÍCH CỠ */}
-
-              <div style={dividerStyle}>
-                <label style={sectionLabelStyle}>Kích cỡ</label>
-
-                <div className="flex flex-wrap gap-2">
-                  {kichCos.map(function (kichCo) {
-                    const dangChon = boLoc.kichCoId === kichCo.id;
-
-                    return (
-                      <button
-                        key={kichCo.id}
-                        type="button"
-                        onClick={() =>
-                          capNhatBoLoc("kichCoId", dangChon ? "" : kichCo.id)
-                        }
-                        style={{
-                          minWidth: "40px",
-                          padding: "6px 12px",
-                          fontSize: "12px",
-                          border: dangChon
-                            ? "1px solid #00d9ff"
-                            : "1px solid rgba(255,255,255,0.12)",
-                          background: dangChon
-                            ? "rgba(0,217,255,0.1)"
-                            : "rgba(255,255,255,0.03)",
-                          color: dangChon ? "#00d9ff" : "rgba(240,240,245,0.7)",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          transition: "all 0.2s",
-                        }}
-                      >
-                        {kichCo.tenHienThi}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* MÀU SẮC */}
-
-              <div style={dividerStyle}>
-                <label style={sectionLabelStyle}>Màu sắc</label>
-
-                <div className="flex flex-wrap gap-3">
-                  {mauSacs.map(function (mauSac) {
-                    const dangChon = boLoc.mauSacId === mauSac.id;
-
-                    return (
-                      <button
-                        key={mauSac.id}
-                        type="button"
-                        title={mauSac.ten}
-                        aria-label={mauSac.ten}
-                        onClick={() =>
-                          capNhatBoLoc("mauSacId", dangChon ? "" : mauSac.id)
-                        }
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          borderRadius: "50%",
-                          backgroundColor: mauSac.maHex || "#cccccc",
-                          border: dangChon
-                            ? "2px solid #00d9ff"
-                            : "2px solid rgba(255,255,255,0.15)",
-                          boxShadow: dangChon
-                            ? "0 0 0 2px rgba(0,217,255,0.3)"
-                            : "none",
-                          transform: dangChon ? "scale(1.15)" : "scale(1)",
-                          cursor: "pointer",
-                          transition: "all 0.2s",
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* KHOẢNG GIÁ */}
-
-              <div>
-                <label style={sectionLabelStyle}>Khoảng giá</label>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="number"
-                    min="0"
-                    value={giaTuNhap}
-                    onChange={(event) => setGiaTuNhap(event.target.value)}
-                    placeholder="Từ"
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "white",
-                      borderRadius: "6px",
-                      padding: "10px 12px",
-                      fontSize: "13px",
-                      outline: "none",
-                      minWidth: 0,
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.border = "1px solid #00d9ff";
-                      e.target.style.boxShadow = "0 0 0 2px rgba(0,217,255,0.1)";
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.border = "1px solid rgba(255,255,255,0.1)";
-                      e.target.style.boxShadow = "none";
-                    }}
-                  />
-
-                  <input
-                    type="number"
-                    min="0"
-                    value={giaDenNhap}
-                    onChange={(event) => setGiaDenNhap(event.target.value)}
-                    placeholder="Đến"
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      color: "white",
-                      borderRadius: "6px",
-                      padding: "10px 12px",
-                      fontSize: "13px",
-                      outline: "none",
-                      minWidth: 0,
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.border = "1px solid #00d9ff";
-                      e.target.style.boxShadow = "0 0 0 2px rgba(0,217,255,0.1)";
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.border = "1px solid rgba(255,255,255,0.1)";
-                      e.target.style.boxShadow = "none";
-                    }}
-                  />
-                </div>
-
-                <button
-                  type="button"
-                  onClick={xuLyLocGia}
-                  className="mt-4 w-full px-4 py-3 text-xs font-semibold uppercase tracking-widest transition-all"
-                  style={{
-                    background: "rgba(0,217,255,0.05)",
-                    border: "1px solid rgba(0,217,255,0.3)",
-                    color: "#00d9ff",
-                    borderRadius: "6px",
-                    letterSpacing: "0.15em",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(0,217,255,0.12)";
-                    e.currentTarget.style.boxShadow = "0 0 20px rgba(0,217,255,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(0,217,255,0.05)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  Áp dụng giá
-                </button>
-              </div>
-            </div>
-          </aside>
-
-          {/* =================================
-                        DANH SÁCH SẢN PHẨM
-                    ================================= */}
-
-          <section>
-            {/* TOOLBAR */}
-
-            <div
-              className="mb-7 flex flex-wrap items-center justify-between gap-4 px-4 py-3"
-              style={{
-                background: "rgba(13,13,20,0.6)",
-                border: "1px solid rgba(255,255,255,0.06)",
-                borderRadius: "8px",
-              }}
-            >
-              <p className="text-sm" style={{ color: "rgba(240,240,245,0.5)" }}>
-                Hiển thị
-                <span
-                  className="mx-1 font-semibold"
-                  style={{ color: "#ffffff" }}
-                >
-                  {tongSoSanPham}
-                </span>
-                sản phẩm
-              </p>
-
-              <select
-                value={boLoc.sapXep}
-                onChange={(event) => capNhatBoLoc("sapXep", event.target.value)}
-                style={{
-                  background: "rgba(13,13,20,0.9)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(240,240,245,0.75)",
-                  borderRadius: "6px",
-                  padding: "8px 12px",
-                  fontSize: "12px",
-                  outline: "none",
-                  cursor: "pointer",
-                }}
+              <button
+                type="button"
+                onClick={xoaBoLoc}
+                className="text-xs text-white/40 underline underline-offset-4 transition-colors hover:text-purple-300"
               >
-                <option value="moi-nhat">Mới nhất</option>
+                Xóa tất cả
+              </button>
+            </div>
 
-                <option value="cu-nhat">Cũ nhất</option>
-
-                <option value="gia-tang">Giá tăng dần</option>
-
-                <option value="gia-giam">Giá giảm dần</option>
-
-                <option value="ten-a-z">Tên A - Z</option>
-
-                <option value="ten-z-a">Tên Z - A</option>
+            {/* DANH MỤC */}
+            <div className="mb-6 border-b border-white/10 pb-6">
+              <label className="mb-2.5 block text-[11px] font-bold uppercase tracking-wider text-white/50">
+                Danh mục
+              </label>
+              <select
+                value={boLoc.danhMucId}
+                onChange={(e) => capNhatBoLoc("danhMucId", e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] p-3 text-xs text-white outline-none transition-colors focus:border-purple-500"
+              >
+                <option value="">Tất cả danh mục</option>
+                {danhMucs.map((dm) => (
+                  <option key={dm.id} value={dm.id}>
+                    {dm.ten}
+                  </option>
+                ))}
               </select>
             </div>
 
-            {/* LỖI */}
-
-            {loi && (
-              <div
-                className="mb-6 flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm"
-                style={{
-                  background: "rgba(239,68,68,0.08)",
-                  border: "1px solid rgba(239,68,68,0.3)",
-                  color: "#fca5a5",
-                  borderRadius: "8px",
-                }}
+            {/* THƯƠNG HIỆU */}
+            <div className="mb-6 border-b border-white/10 pb-6">
+              <label className="mb-2.5 block text-[11px] font-bold uppercase tracking-wider text-white/50">
+                Thương hiệu
+              </label>
+              <select
+                value={boLoc.thuongHieuId}
+                onChange={(e) => capNhatBoLoc("thuongHieuId", e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-white/[0.04] p-3 text-xs text-white outline-none transition-colors focus:border-purple-500"
               >
-                <span>{loi}</span>
+                <option value="">Tất cả thương hiệu</option>
+                {thuongHieus.map((th) => (
+                  <option key={th.id} value={th.id}>
+                    {th.ten}
+                  </option>
+                ))}
+              </select>
+            </div>
 
+            {/* KÍCH CỠ */}
+            <div className="mb-6 border-b border-white/10 pb-6">
+              <label className="mb-3 block text-[11px] font-bold uppercase tracking-wider text-white/50">
+                Kích cỡ
+              </label>
+              <div className="flex flex-wrap gap-1.5">
+                {kichCos.map((kc) => {
+                  const dangChon = boLoc.kichCoId === kc.id;
+                  return (
+                    <button
+                      key={kc.id}
+                      type="button"
+                      onClick={() =>
+                        capNhatBoLoc("kichCoId", dangChon ? "" : kc.id)
+                      }
+                      className={`min-w-9 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-all duration-200 ${
+                        dangChon
+                          ? "border-purple-500 bg-purple-600/20 text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.35)]"
+                          : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/20 hover:text-white"
+                      }`}
+                    >
+                      {kc.tenHienThi}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* MÀU SẮC */}
+            <div className="mb-6 border-b border-white/10 pb-6">
+              <label className="mb-3 block text-[11px] font-bold uppercase tracking-wider text-white/50">
+                Màu sắc
+              </label>
+              <div className="flex flex-wrap gap-2.5">
+                {mauSacs.map((ms) => {
+                  const dangChon = boLoc.mauSacId === ms.id;
+                  return (
+                    <button
+                      key={ms.id}
+                      type="button"
+                      title={ms.ten}
+                      aria-label={ms.ten}
+                      onClick={() =>
+                        capNhatBoLoc("mauSacId", dangChon ? "" : ms.id)
+                      }
+                      className={`h-7 w-7 rounded-full border transition-all ${
+                        dangChon
+                          ? "scale-115 border-purple-400 ring-2 ring-purple-400/40 shadow-[0_0_15px_rgba(168,85,247,0.6)]"
+                          : "border-white/20 hover:scale-110 hover:border-white"
+                      }`}
+                      style={{ backgroundColor: ms.maHex || "#888888" }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* KHOẢNG GIÁ */}
+            <div>
+              <label className="mb-2.5 block text-[11px] font-bold uppercase tracking-wider text-white/50">
+                Khoảng giá (VNĐ)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="number"
+                  min="0"
+                  value={giaTuNhap}
+                  onChange={(e) => setGiaTuNhap(e.target.value)}
+                  placeholder="Từ"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-xs text-white outline-none focus:border-purple-500"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  value={giaDenNhap}
+                  onChange={(e) => setGiaDenNhap(e.target.value)}
+                  placeholder="Đến"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-xs text-white outline-none focus:border-purple-500"
+                />
+              </div>
+
+              <button
+                type="button"
+                onClick={xuLyLocGia}
+                className="mt-3.5 w-full rounded-xl border border-purple-500/40 bg-purple-500/10 py-2.5 text-xs font-bold uppercase tracking-wider text-purple-300 transition-all hover:bg-purple-600 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"
+              >
+                Áp dụng giá
+              </button>
+            </div>
+          </aside>
+
+          {/* PRODUCT LIST SECTION */}
+          <section>
+            {/* TOOLBAR */}
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#0c0a14]/60 px-5 py-3.5 backdrop-blur-xl">
+              <p className="text-xs text-white/60">
+                Hiển thị{" "}
+                <span className="font-bold text-purple-300">
+                  {tongSoSanPham}
+                </span>{" "}
+                sản phẩm
+              </p>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-white/40">Sắp xếp:</span>
+                <select
+                  value={boLoc.sapXep}
+                  onChange={(e) => capNhatBoLoc("sapXep", e.target.value)}
+                  className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white outline-none transition-colors focus:border-purple-500"
+                >
+                  <option value="moi-nhat">Mới nhất</option>
+                  <option value="cu-nhat">Cũ nhất</option>
+                  <option value="gia-tang">Giá tăng dần</option>
+                  <option value="gia-giam">Giá giảm dần</option>
+                  <option value="ten-a-z">Tên A - Z</option>
+                  <option value="ten-z-a">Tên Z - A</option>
+                </select>
+              </div>
+            </div>
+
+            {/* ERROR */}
+            {loi && (
+              <div className="mb-6 flex items-center justify-between rounded-xl border border-red-500/30 bg-red-950/40 p-4 text-xs text-red-300">
+                <span>{loi}</span>
                 <button
                   type="button"
-                  onClick={() => setTaiLai(taiLai + 1)}
-                  className="font-semibold underline underline-offset-4"
+                  onClick={() => setTaiLai((c) => c + 1)}
+                  className="font-bold underline"
                 >
                   Thử lại
                 </button>
               </div>
             )}
 
-            {/* LOADING */}
-
+            {/* LOADING SKELETON */}
             {dangTai && (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 xl:grid-cols-4">
-                {Array.from({ length: 8 }).map(function (_, index) {
-                  return (
-                    <div key={index}>
-                      <div
-                        className="aspect-[3/4] animate-pulse"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          borderRadius: "4px",
-                        }}
-                      />
-
-                      <div
-                        className="mt-4 h-3 w-1/3 animate-pulse"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          borderRadius: "2px",
-                        }}
-                      />
-
-                      <div
-                        className="mt-3 h-4 w-2/3 animate-pulse"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          borderRadius: "2px",
-                        }}
-                      />
-
-                      <div
-                        className="mt-3 h-3 w-1/2 animate-pulse"
-                        style={{
-                          background: "rgba(255,255,255,0.05)",
-                          borderRadius: "2px",
-                        }}
-                      />
-                    </div>
-                  );
-                })}
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-80 animate-pulse rounded-2xl border border-white/5 bg-white/[0.02]"
+                  />
+                ))}
               </div>
             )}
 
-            {/* DANH SÁCH */}
-
+            {/* PRODUCTS GRID */}
             {!dangTai && !loi && sanPhams.length > 0 && (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 xl:grid-cols-4">
-                {sanPhams.map(function (sanPham) {
-                  return <ProductCard key={sanPham.id} sanPham={sanPham} />;
-                })}
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+                {sanPhams.map((sp) => (
+                  <ProductCard key={sp.id} sanPham={sp} />
+                ))}
               </div>
             )}
 
-            {/* KHÔNG CÓ SẢN PHẨM */}
-
+            {/* EMPTY STATE */}
             {!dangTai && !loi && sanPhams.length === 0 && (
-              <div className="flex min-h-80 flex-col items-center justify-center text-center">
-                <p
-                  className="text-7xl font-light"
-                  style={{ color: "rgba(255,255,255,0.08)" }}
-                >
-                  ∅
-                </p>
-
-                <h3
-                  className="mt-5 text-lg font-semibold"
-                  style={{ color: "rgba(240,240,245,0.85)" }}
-                >
+              <div className="flex min-h-80 flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#0c0a14]/60 p-8 text-center backdrop-blur-xl">
+                <div className="text-6xl font-light text-white/10">0</div>
+                <h3 className="mt-4 text-base font-bold text-white">
                   Không tìm thấy sản phẩm
                 </h3>
-
-                <p
-                  className="mt-2 max-w-sm text-sm leading-6"
-                  style={{ color: "rgba(240,240,245,0.4)" }}
-                >
-                  Thử thay đổi từ khóa tìm kiếm hoặc xóa một số bộ lọc để xem
-                  thêm sản phẩm.
+                <p className="mt-1 text-xs text-white/40">
+                  Thử thay đổi từ khóa hoặc xóa bộ lọc để hiển thị thêm sản phẩm.
                 </p>
-
                 <button
                   type="button"
                   onClick={xoaBoLoc}
-                  className="mt-6 px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-all"
-                  style={{
-                    background: "rgba(0,217,255,0.05)",
-                    border: "1px solid rgba(0,217,255,0.3)",
-                    color: "#00d9ff",
-                    borderRadius: "6px",
-                    letterSpacing: "0.15em",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(0,217,255,0.12)";
-                    e.currentTarget.style.boxShadow = "0 0 20px rgba(0,217,255,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(0,217,255,0.05)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
+                  className="mt-5 rounded-full border border-purple-500/40 bg-purple-500/10 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-purple-300 hover:bg-purple-600 hover:text-white"
                 >
                   Xóa bộ lọc
                 </button>
               </div>
             )}
 
-            {/* PHÂN TRANG */}
-
+            {/* PAGINATION (REACTBITS PILL BUTTONS) */}
             {!dangTai && tongSoTrang > 1 && (
-              <div className="mt-14 flex items-center justify-center gap-2">
+              <div className="mt-12 flex items-center justify-center gap-2">
                 <button
                   type="button"
                   disabled={trang <= 1}
                   onClick={() => setTrang(trang - 1)}
-                  className="px-4 py-3 text-xs transition-all disabled:cursor-not-allowed disabled:opacity-30"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "rgba(240,240,245,0.7)",
-                    borderRadius: "6px",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!e.currentTarget.disabled) {
-                      e.currentTarget.style.borderColor = "rgba(0,217,255,0.4)";
-                      e.currentTarget.style.color = "#00d9ff";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.color = "rgba(240,240,245,0.7)";
-                  }}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/70 transition-all hover:border-purple-500/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   ← Trước
                 </button>
 
-                <span
-                  className="px-4 text-sm"
-                  style={{ color: "rgba(240,240,245,0.5)" }}
-                >
-                  Trang{" "}
-                  <span style={{ color: "#00d9ff", fontWeight: 600 }}>
-                    {trang}
-                  </span>{" "}
-                  / {tongSoTrang}
+                <span className="px-4 text-xs font-bold text-purple-300">
+                  Trang {trang} / {tongSoTrang}
                 </span>
 
                 <button
                   type="button"
                   disabled={trang >= tongSoTrang}
                   onClick={() => setTrang(trang + 1)}
-                  className="px-4 py-3 text-xs transition-all disabled:cursor-not-allowed disabled:opacity-30"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "rgba(240,240,245,0.7)",
-                    borderRadius: "6px",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!e.currentTarget.disabled) {
-                      e.currentTarget.style.borderColor = "rgba(0,217,255,0.4)";
-                      e.currentTarget.style.color = "#00d9ff";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                    e.currentTarget.style.color = "rgba(240,240,245,0.7)";
-                  }}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/70 transition-all hover:border-purple-500/50 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   Tiếp →
                 </button>
