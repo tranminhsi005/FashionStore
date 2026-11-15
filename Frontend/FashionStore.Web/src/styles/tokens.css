@@ -1,28 +1,63 @@
 @theme {
     /* =====================================
-       COLORS
+       DARK BASE
     ===================================== */
 
-    --color-paper: #f5f4ef;
-    --color-paper-dark: #eceae2;
+    --color-void: #030303;
+    --color-surface: #0d0d14;
+    --color-surface-2: #13131f;
+    --color-surface-3: #1a1a2e;
 
-    --color-ink: #171717;
-    --color-ink-light: #292929;
+    /* =====================================
+       BORDERS
+    ===================================== */
 
-    --color-muted: #77766f;
-    --color-muted-light: #a3a198;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-bright: rgba(255, 255, 255, 0.15);
 
-    --color-line: #e5e2d9;
+    /* =====================================
+       TEXT
+    ===================================== */
 
-    --color-accent: #c8f169;
-    --color-accent-dark: #8caf35;
+    --color-text: #f0f0f5;
+    --color-text-muted: rgba(240, 240, 245, 0.5);
+    --color-text-dim: rgba(240, 240, 245, 0.3);
+
+    /* =====================================
+       NEON ACCENTS
+    ===================================== */
+
+    --color-cyan: #00d9ff;
+    --color-cyan-glow: rgba(0, 217, 255, 0.15);
+    --color-purple: #7c3aed;
+    --color-purple-glow: rgba(124, 58, 237, 0.2);
+    --color-lime: #a3e635;
+    --color-lime-glow: rgba(163, 230, 53, 0.15);
+
+    /* =====================================
+       LEGACY ALIASES (preserve admin compatibility)
+    ===================================== */
+
+    --color-paper: #0d0d14;
+    --color-paper-dark: #13131f;
+
+    --color-ink: #f0f0f5;
+    --color-ink-light: #d0d0da;
+
+    --color-muted: rgba(240, 240, 245, 0.5);
+    --color-muted-light: rgba(240, 240, 245, 0.35);
+
+    --color-line: rgba(255, 255, 255, 0.08);
+
+    --color-accent: #a3e635;
+    --color-accent-dark: #7cb305;
 
     --color-white: #ffffff;
     --color-black: #000000;
 
-    --color-danger: #dc2626;
-    --color-success: #15803d;
-    --color-warning: #d97706;
+    --color-danger: #ef4444;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
 
     /* =====================================
        TYPOGRAPHY
@@ -43,9 +78,9 @@
        SHADOW
     ===================================== */
 
-    --shadow-soft:
-        0 10px 35px rgba(0, 0, 0, 0.06);
-
-    --shadow-dialog:
-        0 25px 80px rgba(0, 0, 0, 0.16);
+    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.4);
+    --shadow-dialog: 0 25px 80px rgba(0, 0, 0, 0.6);
+    --shadow-glow-cyan: 0 0 30px rgba(0, 217, 255, 0.25);
+    --shadow-glow-purple: 0 0 30px rgba(124, 58, 237, 0.3);
+    --shadow-glow-lime: 0 0 30px rgba(163, 230, 53, 0.2);
 }

@@ -353,11 +353,11 @@ export default function ProductDetailPage() {
 
   if (dangTai) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[70vh] items-center justify-center bg-[#030303] text-[#f0f0f5]">
         <div className="text-center">
-          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-white/10 border-t-[#00d9ff]"></div>
 
-          <p className="mt-4 text-sm text-gray-500">
+          <p className="mt-4 text-sm text-white/50">
             Đang tải thông tin sản phẩm...
           </p>
         </div>
@@ -371,20 +371,20 @@ export default function ProductDetailPage() {
 
   if (loi || !sanPham) {
     return (
-      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#f7f6f2] px-5 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-400">
+      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#030303] px-5 text-center text-[#f0f0f5]">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00d9ff]">
           Product not found
         </p>
 
         <h1 className="mt-4 text-3xl font-semibold">Không tìm thấy sản phẩm</h1>
 
-        <p className="mt-3 max-w-md text-sm leading-7 text-gray-500">
+        <p className="mt-3 max-w-md text-sm leading-7 text-white/50">
           {loi || "Sản phẩm có thể đã bị ẩn hoặc không còn được kinh doanh."}
         </p>
 
         <Link
           to="/san-pham"
-          className="mt-7 bg-black px-7 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-gray-800"
+          className="mt-7 rounded border border-[#00d9ff]/50 bg-[#00d9ff]/10 px-7 py-4 text-xs font-semibold uppercase tracking-widest text-[#00d9ff] transition-all hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_25px_rgba(0,217,255,0.4)]"
         >
           Quay lại cửa hàng
         </Link>
@@ -414,24 +414,28 @@ export default function ProductDetailPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
-      <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:px-12">
+    <main className="relative min-h-screen overflow-hidden bg-[#030303] text-[#f0f0f5]">
+      {/* Ambient background glow orbs */}
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[rgba(0,217,255,0.08)] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-[rgba(124,58,237,0.1)] blur-[140px]" />
+
+      <div className="relative z-10 mx-auto max-w-[1440px] px-5 py-10 sm:px-8 lg:px-12">
         {/* BREADCRUMB */}
 
-        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-          <Link to="/" className="hover:text-black">
+        <div className="mb-8 flex flex-wrap items-center gap-2 text-xs text-white/40">
+          <Link to="/" className="transition-colors hover:text-[#00d9ff]">
             Trang chủ
           </Link>
 
           <span>/</span>
 
-          <Link to="/san-pham" className="hover:text-black">
+          <Link to="/san-pham" className="transition-colors hover:text-[#00d9ff]">
             Sản phẩm
           </Link>
 
           <span>/</span>
 
-          <span className="text-black">{sanPham.ten}</span>
+          <span className="text-white/80">{sanPham.ten}</span>
         </div>
 
         {/* PRODUCT DETAIL */}
@@ -444,15 +448,15 @@ export default function ProductDetailPage() {
           <section>
             {/* ẢNH LỚN */}
 
-            <div className="relative aspect-[4/5] overflow-hidden bg-[#eae8e2]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-white/10 bg-[#0d0d14] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               {anhDangChon ? (
                 <img
                   src={anhDangChon}
                   alt={sanPham.ten}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center text-sm text-gray-400">
+                <div className="flex h-full items-center justify-center text-sm text-white/30">
                   Chưa có hình ảnh sản phẩm
                 </div>
               )}
@@ -470,8 +474,10 @@ export default function ProductDetailPage() {
                       key={anh.id}
                       type="button"
                       onClick={() => setAnhDangChon(anh.duongDanAnh)}
-                      className={`aspect-[3/4] overflow-hidden border-2 bg-[#eae8e2] ${
-                        dangChon ? "border-black" : "border-transparent"
+                      className={`aspect-[3/4] overflow-hidden rounded-lg border-2 bg-[#0d0d14] transition-all duration-300 ${
+                        dangChon
+                          ? "border-[#00d9ff] shadow-[0_0_15px_rgba(0,217,255,0.4)]"
+                          : "border-white/10 opacity-60 hover:border-white/30 hover:opacity-100"
                       }`}
                     >
                       <img
@@ -490,33 +496,35 @@ export default function ProductDetailPage() {
                         THÔNG TIN SẢN PHẨM
                     ================================= */}
 
-          <section className="lg:sticky lg:top-24 lg:self-start">
+          <section className="rounded-2xl border border-white/10 bg-[#0d0d14]/70 p-8 backdrop-blur-xl lg:sticky lg:top-24 lg:self-start">
             {/* THƯƠNG HIỆU */}
 
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-400">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#00d9ff]">
               {sanPham.tenThuongHieu || "FashionStore"}
             </p>
 
             {/* TÊN */}
 
-            <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
               {sanPham.ten}
             </h1>
 
             {/* DANH MỤC */}
 
-            <p className="mt-3 text-sm text-gray-500">
-              Danh mục: {sanPham.tenDanhMuc}
+            <p className="mt-2 text-xs uppercase tracking-widest text-white/40">
+              Danh mục: <span className="text-white/70">{sanPham.tenDanhMuc}</span>
             </p>
 
             {/* GIÁ */}
 
-            <div className="mt-7 border-y border-gray-200 py-6">
-              <p className="text-2xl font-semibold">{hienThiGia}</p>
+            <div className="mt-6 border-y border-white/10 py-5">
+              <p className="text-3xl font-extrabold text-[#00d9ff]">
+                {hienThiGia}
+              </p>
 
               {bienTheDangChon?.giaNiemYet &&
                 bienTheDangChon.giaNiemYet > bienTheDangChon.giaBan && (
-                  <p className="mt-2 text-sm text-gray-400 line-through">
+                  <p className="mt-2 text-sm text-white/40 line-through">
                     {dinhDangTienVietNam(bienTheDangChon.giaNiemYet)}
                   </p>
                 )}
@@ -524,23 +532,23 @@ export default function ProductDetailPage() {
 
             {/* CHẤT LIỆU VÀ ĐỐI TƯỢNG */}
 
-            <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+            <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg border border-white/5 bg-white/[0.02] p-4 text-sm">
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-400">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40">
                   Chất liệu
                 </p>
 
-                <p className="mt-2 font-medium">
+                <p className="mt-1 font-medium text-white/80">
                   {sanPham.chatLieu || "Chưa cập nhật"}
                 </p>
               </div>
 
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-400">
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40">
                   Đối tượng
                 </p>
 
-                <p className="mt-2 font-medium">
+                <p className="mt-1 font-medium text-white/80">
                   {sanPham.doiTuong || "Chưa cập nhật"}
                 </p>
               </div>
@@ -549,13 +557,13 @@ export default function ProductDetailPage() {
             {/* KÍCH CỠ */}
 
             {kichCos.length > 0 && (
-              <div className="mt-9">
-                <div className="mb-4 flex items-center justify-between">
-                  <p className="text-xs font-semibold uppercase tracking-widest">
+              <div className="mt-7">
+                <div className="mb-3 flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-white/80">
                     Kích cỡ
                   </p>
 
-                  <span className="text-xs text-gray-400">Chọn kích cỡ</span>
+                  <span className="text-xs text-white/40">Chọn kích cỡ</span>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -568,10 +576,10 @@ export default function ProductDetailPage() {
                         type="button"
                         disabled={!kichCo.conHang}
                         onClick={() => chonKichCo(kichCo.id)}
-                        className={`min-w-12 border px-4 py-3 text-xs transition-colors disabled:cursor-not-allowed disabled:opacity-30 ${
+                        className={`min-w-12 rounded border px-4 py-3 text-xs font-semibold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-20 ${
                           dangChon
-                            ? "border-black bg-black text-white"
-                            : "border-gray-300 hover:border-black"
+                            ? "border-[#00d9ff] bg-[#00d9ff]/15 text-[#00d9ff] shadow-[0_0_15px_rgba(0,217,255,0.3)]"
+                            : "border-white/15 bg-white/[0.03] text-white/70 hover:border-white/40 hover:text-white"
                         }`}
                       >
                         {kichCo.ten}
@@ -585,14 +593,14 @@ export default function ProductDetailPage() {
             {/* MÀU SẮC */}
 
             {mauSacs.length > 0 && (
-              <div className="mt-8">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-widest">
+              <div className="mt-7">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-white/80">
                   Màu sắc
                   {mauSacs.find(function (mauSac) {
                     return mauSac.id === mauSacId;
                   })?.ten && (
-                    <span className="ml-2 font-normal text-gray-400">
-                      -{" "}
+                    <span className="ml-2 font-normal text-[#00d9ff]">
+                      —{" "}
                       {
                         mauSacs.find(function (mauSac) {
                           return mauSac.id === mauSacId;
@@ -614,10 +622,10 @@ export default function ProductDetailPage() {
                         aria-label={mauSac.ten}
                         disabled={!mauSac.conHang}
                         onClick={() => chonMauSac(mauSac.id)}
-                        className={`h-9 w-9 rounded-full border-2 transition-all disabled:cursor-not-allowed disabled:opacity-30 ${
+                        className={`h-9 w-9 rounded-full border-2 transition-all disabled:cursor-not-allowed disabled:opacity-20 ${
                           dangChon
-                            ? "scale-110 border-black ring-2 ring-gray-300"
-                            : "border-white shadow-sm hover:scale-110"
+                            ? "scale-110 border-[#00d9ff] ring-2 ring-[#00d9ff]/40 shadow-[0_0_15px_rgba(0,217,255,0.5)]"
+                            : "border-white/30 hover:scale-110 hover:border-white"
                         }`}
                         style={{
                           backgroundColor: mauSac.maHex || "#cccccc",
@@ -631,30 +639,30 @@ export default function ProductDetailPage() {
 
             {/* TÌNH TRẠNG BIẾN THỂ */}
 
-            <div className="mt-8 border-t border-gray-200 pt-6">
+            <div className="mt-6 border-t border-white/10 pt-5">
               {bienTheDangChon ? (
                 bienTheDangChon.conHang ? (
-                  <p className="text-sm font-medium text-green-700">
+                  <p className="text-sm font-medium text-emerald-400">
                     ✓ Sản phẩm còn hàng
                   </p>
                 ) : (
-                  <p className="text-sm font-medium text-red-600">
-                    Biến thể này đã hết hàng
+                  <p className="text-sm font-medium text-red-400">
+                    ✕ Biến thể này đã hết hàng
                   </p>
                 )
               ) : (
-                <p className="text-sm text-red-600">
-                  Không có biến thể phù hợp với lựa chọn hiện tại.
+                <p className="text-sm text-amber-400">
+                  ⚠ Vui lòng chọn kích cỡ và màu sắc phù hợp.
                 </p>
               )}
             </div>
 
             {/* SỐ LƯỢNG */}
 
-            <div className="mt-8">
+            <div className="mt-6">
               <label
                 htmlFor="soLuongThem"
-                className="mb-3 block text-xs font-semibold uppercase tracking-widest"
+                className="mb-2 block text-xs font-semibold uppercase tracking-widest text-white/70"
               >
                 Số lượng
               </label>
@@ -684,14 +692,14 @@ export default function ProductDetailPage() {
                     setSoLuongThem(1);
                   }
                 }}
-                className="w-24 border border-gray-300 bg-transparent px-4 py-3 text-sm outline-none focus:border-black"
+                className="w-28 rounded border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none transition-colors focus:border-[#00d9ff] focus:ring-1 focus:ring-[#00d9ff]"
               />
             </div>
 
             {/* LỖI */}
 
             {loiGioHang && (
-              <div className="mt-4 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+              <div className="mt-4 rounded border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm text-red-300 backdrop-blur-md">
                 {loiGioHang}
               </div>
             )}
@@ -699,7 +707,7 @@ export default function ProductDetailPage() {
             {/* THÔNG BÁO THÀNH CÔNG */}
 
             {thongBaoGioHang && (
-              <div className="mt-4 border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+              <div className="mt-4 rounded border border-emerald-500/30 bg-emerald-950/40 px-4 py-3 text-sm text-emerald-300 backdrop-blur-md">
                 {thongBaoGioHang}
               </div>
             )}
@@ -712,7 +720,7 @@ export default function ProductDetailPage() {
                 dangThemVaoGio || !bienTheDangChon || !bienTheDangChon.conHang
               }
               onClick={xuLyThemVaoGioHang}
-              className="group mt-6 flex w-full items-center justify-center gap-3 bg-black px-6 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300"
+              className="group mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-[#00d9ff]/50 bg-gradient-to-r from-[#00d9ff]/20 via-[#7c3aed]/20 to-[#00d9ff]/20 px-6 py-5 text-xs font-bold uppercase tracking-[0.2em] text-[#00d9ff] backdrop-blur-md transition-all duration-300 hover:border-[#00d9ff] hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_30px_rgba(0,217,255,0.4)] disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-white/[0.03] disabled:text-white/20 disabled:shadow-none"
             >
               {dangThemVaoGio ? "Đang thêm..." : "Thêm vào giỏ hàng"}
 
@@ -727,7 +735,7 @@ export default function ProductDetailPage() {
 
             <Link
               to="/gio-hang"
-              className="mt-5 block text-center text-xs font-semibold uppercase tracking-widest text-gray-500 underline underline-offset-4 transition-colors hover:text-black"
+              className="mt-5 block text-center text-xs font-semibold uppercase tracking-widest text-white/50 underline underline-offset-4 transition-colors hover:text-[#00d9ff]"
             >
               Xem giỏ hàng
             </Link>
@@ -736,16 +744,16 @@ export default function ProductDetailPage() {
 
         {/* MÔ TẢ SẢN PHẨM */}
 
-        <section className="mt-20 border-t border-gray-200 pt-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gray-400">
+        <section className="mt-20 rounded-2xl border border-white/10 bg-[#0d0d14]/70 p-8 backdrop-blur-xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00d9ff]">
             Product information
           </p>
 
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight">
+          <h2 className="mt-3 text-2xl font-bold tracking-tight text-white">
             Mô tả sản phẩm
           </h2>
 
-          <p className="mt-6 max-w-3xl whitespace-pre-line text-sm leading-8 text-gray-500">
+          <p className="mt-6 max-w-4xl whitespace-pre-line text-sm leading-8 text-white/70">
             {sanPham.moTa || "Sản phẩm chưa có mô tả."}
           </p>
         </section>

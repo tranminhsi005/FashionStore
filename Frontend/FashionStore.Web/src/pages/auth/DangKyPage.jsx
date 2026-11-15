@@ -74,227 +74,411 @@ export default function DangKyPage() {
     }
   }
 
+  /* ── shared input style ── */
+  const inputStyle = {
+    width: "100%",
+    padding: "14px 16px",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: "8px",
+    color: "#f0f0f5",
+    fontSize: "14px",
+    outline: "none",
+    boxSizing: "border-box",
+    transition: "border-color 0.2s, box-shadow 0.2s",
+  };
+
+  const labelStyle = {
+    display: "block",
+    marginBottom: "8px",
+    fontSize: "12px",
+    fontWeight: 500,
+    letterSpacing: "0.08em",
+    color: "rgba(240,240,245,0.6)",
+    textTransform: "uppercase",
+  };
+
+  function handleInputFocus(e) {
+    e.target.style.borderColor = "#00d9ff";
+    e.target.style.boxShadow = "0 0 0 3px rgba(0,217,255,0.1)";
+  }
+
+  function handleInputBlur(e) {
+    e.target.style.borderColor = "rgba(255,255,255,0.1)";
+    e.target.style.boxShadow = "none";
+  }
+
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
-      <div className="mx-auto grid min-h-screen max-w-[1600px] lg:grid-cols-2">
-        {/* BÊN TRÁI: HÌNH ẢNH */}
+    <main
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#030303",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "inherit",
+      }}
+    >
+      {/* Ambient glow orb – purple, top-left */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: "-8%",
+          left: "-5%",
+          width: "520px",
+          height: "520px",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
 
-        <section className="relative hidden overflow-hidden bg-[#171717] lg:block">
-          <img
-            src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=85"
-            alt="Fashion shopping"
-            className="absolute inset-0 h-full w-full object-cover opacity-75"
-          />
+      {/* Ambient glow orb – cyan, bottom-right */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: "-8%",
+          right: "-5%",
+          width: "480px",
+          height: "480px",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(0,217,255,0.18) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+        }}
+      />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/10"></div>
-
-          <div className="absolute bottom-16 left-14 right-14 text-white">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-white/70">
-              Join our community
-            </p>
-
-            <h2 className="max-w-xl text-5xl font-semibold leading-tight tracking-tight">
-              A new chapter of style.
-            </h2>
-
-            <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">
-              Tạo tài khoản để khám phá bộ sưu tập và trải nghiệm mua sắm tại
-              FashionStore.
-            </p>
-          </div>
-        </section>
-
-        {/* BÊN PHẢI: FORM */}
-
-        <section className="flex flex-col px-6 py-8 sm:px-12 lg:px-20">
-          <Link
-            to="/"
-            className="inline-flex w-fit items-center gap-2 text-lg font-black tracking-[0.2em]"
+      {/* Glass card */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          width: "100%",
+          maxWidth: "460px",
+          margin: "24px",
+          background: "rgba(13,13,20,0.9)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderRadius: "16px",
+          padding: "48px",
+          boxShadow: "0 25px 80px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Logo */}
+        <Link
+          to="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            textDecoration: "none",
+            marginBottom: "32px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "18px",
+              fontWeight: 900,
+              letterSpacing: "0.18em",
+              background: "linear-gradient(135deg, #00d9ff, #7c3aed)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
           >
             FASHIONSTORE
-            <span className="h-2 w-2 rounded-full bg-black"></span>
-          </Link>
+          </span>
+          <span
+            style={{
+              width: "7px",
+              height: "7px",
+              borderRadius: "50%",
+              backgroundColor: "#00d9ff",
+              flexShrink: 0,
+            }}
+          />
+        </Link>
 
-          <div className="mx-auto my-auto w-full max-w-md py-12">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
-              Create your account
-            </p>
+        {/* Heading */}
+        <p
+          style={{
+            margin: "0 0 6px",
+            fontSize: "11px",
+            fontWeight: 600,
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            color: "rgba(240,240,245,0.4)",
+          }}
+        >
+          Create your account
+        </p>
 
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-              Đăng ký
-            </h1>
+        <h1
+          style={{
+            margin: "0 0 10px",
+            fontSize: "30px",
+            fontWeight: 700,
+            color: "#f0f0f5",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Đăng ký
+        </h1>
 
-            <p className="mt-4 text-sm leading-7 text-gray-500">
-              Tạo tài khoản FashionStore để bắt đầu trải nghiệm mua sắm.
-            </p>
+        <p
+          style={{
+            margin: "0 0 24px",
+            fontSize: "13px",
+            lineHeight: "1.7",
+            color: "rgba(240,240,245,0.45)",
+          }}
+        >
+          Tạo tài khoản FashionStore để bắt đầu trải nghiệm mua sắm.
+        </p>
 
-            {/* Lỗi */}
+        {/* Lỗi */}
+        {loi && (
+          <div
+            style={{
+              marginBottom: "16px",
+              padding: "12px 16px",
+              borderRadius: "8px",
+              background: "rgba(239,68,68,0.1)",
+              border: "1px solid rgba(239,68,68,0.3)",
+              fontSize: "13px",
+              color: "#f87171",
+            }}
+          >
+            {loi}
+          </div>
+        )}
 
-            {loi && (
-              <div className="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                {loi}
-              </div>
-            )}
-
-            <form onSubmit={xuLySubmit} className="mt-8 space-y-5">
-              {/* Họ tên */}
-
-              <div>
-                <label
-                  htmlFor="hoTen"
-                  className="mb-2 block text-sm font-medium"
-                >
-                  Họ và tên
-                </label>
-
-                <input
-                  id="hoTen"
-                  type="text"
-                  value={hoTen}
-                  onChange={(event) => setHoTen(event.target.value)}
-                  minLength={2}
-                  maxLength={150}
-                  placeholder="Nguyễn Văn A"
-                  autoComplete="name"
-                  required
-                  className="w-full border-b border-gray-300 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-black"
-                />
-              </div>
-
-              {/* Email */}
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-sm font-medium"
-                >
-                  Email
-                </label>
-
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="example@gmail.com"
-                  autoComplete="email"
-                  required
-                  className="w-full border-b border-gray-300 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-black"
-                />
-              </div>
-
-              {/* Số điện thoại */}
-
-              <div>
-                <label
-                  htmlFor="soDienThoai"
-                  className="mb-2 block text-sm font-medium"
-                >
-                  Số điện thoại
-                  <span className="ml-2 text-xs font-normal text-gray-400">
-                    (Không bắt buộc)
-                  </span>
-                </label>
-
-                <input
-                  id="soDienThoai"
-                  type="tel"
-                  value={soDienThoai}
-                  onChange={(event) => setSoDienThoai(event.target.value)}
-                  maxLength={30}
-                  placeholder="0912345678"
-                  autoComplete="tel"
-                  className="w-full border-b border-gray-300 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-black"
-                />
-              </div>
-
-              {/* Mật khẩu */}
-
-              <div>
-                <label
-                  htmlFor="matKhau"
-                  className="mb-2 block text-sm font-medium"
-                >
-                  Mật khẩu
-                </label>
-
-                <input
-                  id="matKhau"
-                  type={hienMatKhau ? "text" : "password"}
-                  value={matKhau}
-                  onChange={(event) => setMatKhau(event.target.value)}
-                  minLength={8}
-                  maxLength={128}
-                  placeholder="Tối thiểu 8 ký tự"
-                  autoComplete="new-password"
-                  required
-                  className="w-full border-b border-gray-300 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-black"
-                />
-              </div>
-
-              {/* Xác nhận mật khẩu */}
-
-              <div>
-                <div className="mb-2 flex items-center justify-between">
-                  <label
-                    htmlFor="xacNhanMatKhau"
-                    className="text-sm font-medium"
-                  >
-                    Xác nhận mật khẩu
-                  </label>
-
-                  <button
-                    type="button"
-                    onClick={() => setHienMatKhau(!hienMatKhau)}
-                    className="text-xs text-gray-500 hover:text-black"
-                  >
-                    {hienMatKhau ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
-                  </button>
-                </div>
-
-                <input
-                  id="xacNhanMatKhau"
-                  type={hienMatKhau ? "text" : "password"}
-                  value={xacNhanMatKhau}
-                  onChange={(event) => setXacNhanMatKhau(event.target.value)}
-                  autoComplete="new-password"
-                  required
-                  className="w-full border-b border-gray-300 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-black"
-                />
-              </div>
-
-              {/* Nút đăng ký */}
-
-              <button
-                type="submit"
-                disabled={dangGui}
-                className="group flex w-full items-center justify-center gap-3 bg-black px-6 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {dangGui ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
-
-                {!dangGui && (
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                )}
-              </button>
-            </form>
-
-            <p className="mt-7 text-center text-sm text-gray-500">
-              Đã có tài khoản?{" "}
-              <Link
-                to="/dang-nhap"
-                className="font-semibold text-black underline underline-offset-4"
-              >
-                Đăng nhập
-              </Link>
-            </p>
+        {/* Form */}
+        <form
+          onSubmit={xuLySubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+        >
+          {/* Họ tên */}
+          <div>
+            <label htmlFor="hoTen" style={labelStyle}>
+              Họ và tên
+            </label>
+            <input
+              id="hoTen"
+              type="text"
+              value={hoTen}
+              onChange={(event) => setHoTen(event.target.value)}
+              minLength={2}
+              maxLength={150}
+              placeholder="Nguyễn Văn A"
+              autoComplete="name"
+              required
+              style={inputStyle}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            />
           </div>
 
-          <p className="text-xs text-gray-400">
-            © 2026 FASHIONSTORE. ALL RIGHTS RESERVED.
-          </p>
-        </section>
+          {/* Email */}
+          <div>
+            <label htmlFor="email" style={labelStyle}>
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="example@gmail.com"
+              autoComplete="email"
+              required
+              style={inputStyle}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            />
+          </div>
+
+          {/* Số điện thoại */}
+          <div>
+            <label htmlFor="soDienThoai" style={labelStyle}>
+              Số điện thoại{" "}
+              <span
+                style={{
+                  fontWeight: 400,
+                  textTransform: "none",
+                  color: "rgba(240,240,245,0.3)",
+                  letterSpacing: 0,
+                  fontSize: "11px",
+                }}
+              >
+                (Không bắt buộc)
+              </span>
+            </label>
+            <input
+              id="soDienThoai"
+              type="tel"
+              value={soDienThoai}
+              onChange={(event) => setSoDienThoai(event.target.value)}
+              maxLength={30}
+              placeholder="0912345678"
+              autoComplete="tel"
+              style={inputStyle}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            />
+          </div>
+
+          {/* Mật khẩu */}
+          <div>
+            <label htmlFor="matKhau" style={labelStyle}>
+              Mật khẩu
+            </label>
+            <input
+              id="matKhau"
+              type={hienMatKhau ? "text" : "password"}
+              value={matKhau}
+              onChange={(event) => setMatKhau(event.target.value)}
+              minLength={8}
+              maxLength={128}
+              placeholder="Tối thiểu 8 ký tự"
+              autoComplete="new-password"
+              required
+              style={inputStyle}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            />
+          </div>
+
+          {/* Xác nhận mật khẩu */}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "8px",
+              }}
+            >
+              <label
+                htmlFor="xacNhanMatKhau"
+                style={{ ...labelStyle, margin: 0 }}
+              >
+                Xác nhận mật khẩu
+              </label>
+
+              <button
+                type="button"
+                onClick={() => setHienMatKhau(!hienMatKhau)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "11px",
+                  color: "rgba(240,240,245,0.4)",
+                  transition: "color 0.2s",
+                  padding: 0,
+                }}
+                onMouseEnter={(e) => (e.target.style.color = "#00d9ff")}
+                onMouseLeave={(e) =>
+                  (e.target.style.color = "rgba(240,240,245,0.4)")
+                }
+              >
+                {hienMatKhau ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+              </button>
+            </div>
+
+            <input
+              id="xacNhanMatKhau"
+              type={hienMatKhau ? "text" : "password"}
+              value={xacNhanMatKhau}
+              onChange={(event) => setXacNhanMatKhau(event.target.value)}
+              autoComplete="new-password"
+              required
+              style={inputStyle}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            />
+          </div>
+
+          {/* Submit button */}
+          <button
+            type="submit"
+            disabled={dangGui}
+            style={{
+              width: "100%",
+              padding: "15px 24px",
+              marginTop: "8px",
+              background: dangGui
+                ? "rgba(255,255,255,0.05)"
+                : "linear-gradient(135deg, #7c3aed 0%, #00d9ff 100%)",
+              border: "none",
+              borderRadius: "8px",
+              color: dangGui ? "rgba(240,240,245,0.4)" : "#fff",
+              fontSize: "13px",
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              cursor: dangGui ? "not-allowed" : "pointer",
+              opacity: dangGui ? 0.6 : 1,
+              transition: "opacity 0.2s",
+              boxShadow: dangGui ? "none" : "0 0 24px rgba(124,58,237,0.3)",
+            }}
+            onMouseEnter={(e) => {
+              if (!dangGui) e.target.style.opacity = "0.85";
+            }}
+            onMouseLeave={(e) => {
+              if (!dangGui) e.target.style.opacity = "1";
+            }}
+          >
+            {dangGui ? "Đang tạo tài khoản..." : "Tạo tài khoản →"}
+          </button>
+        </form>
+
+        {/* Link đăng nhập */}
+        <p
+          style={{
+            marginTop: "24px",
+            textAlign: "center",
+            fontSize: "13px",
+            color: "rgba(240,240,245,0.4)",
+          }}
+        >
+          Đã có tài khoản?{" "}
+          <Link
+            to="/dang-nhap"
+            style={{
+              color: "#00d9ff",
+              textDecoration: "none",
+              fontWeight: 600,
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => (e.target.style.opacity = "0.75")}
+            onMouseLeave={(e) => (e.target.style.opacity = "1")}
+          >
+            Đăng nhập
+          </Link>
+        </p>
+
+        {/* Footer copyright */}
+        <p
+          style={{
+            marginTop: "28px",
+            textAlign: "center",
+            fontSize: "11px",
+            color: "rgba(240,240,245,0.2)",
+            letterSpacing: "0.08em",
+          }}
+        >
+          © 2026 FASHIONSTORE. ALL RIGHTS RESERVED.
+        </p>
       </div>
     </main>
   );

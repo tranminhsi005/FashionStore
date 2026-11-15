@@ -150,11 +150,11 @@ export default function CartPage() {
 
   if (dangTaiGioHang) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[70vh] items-center justify-center bg-[#030303] text-[#f0f0f5]">
         <div className="text-center">
-          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-white/10 border-t-[#00d9ff]"></div>
 
-          <p className="mt-4 text-sm text-gray-500">Đang tải giỏ hàng...</p>
+          <p className="mt-4 text-sm text-white/50">Đang tải giỏ hàng...</p>
         </div>
       </main>
     );
@@ -166,17 +166,17 @@ export default function CartPage() {
 
   if (!gioHang && loiTaiGioHang) {
     return (
-      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#f7f6f2] px-5 text-center">
-        <h2 className="text-2xl font-semibold">Không thể tải giỏ hàng</h2>
+      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#030303] px-5 text-center text-[#f0f0f5]">
+        <h2 className="text-2xl font-bold">Không thể tải giỏ hàng</h2>
 
-        <p className="mt-3 text-sm text-gray-500">{loiTaiGioHang}</p>
+        <p className="mt-3 text-sm text-white/50">{loiTaiGioHang}</p>
 
         <button
           type="button"
           onClick={function () {
             taiGioHang().catch(() => {});
           }}
-          className="mt-6 bg-black px-7 py-4 text-xs font-semibold uppercase tracking-widest text-white"
+          className="mt-6 rounded border border-[#00d9ff]/50 bg-[#00d9ff]/10 px-7 py-4 text-xs font-semibold uppercase tracking-widest text-[#00d9ff] transition-all hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_25px_rgba(0,217,255,0.4)]"
         >
           Thử tải lại
         </button>
@@ -197,33 +197,37 @@ export default function CartPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
-      <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
+    <main className="relative min-h-screen overflow-hidden bg-[#030303] text-[#f0f0f5]">
+      {/* Ambient glow orbs */}
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[rgba(0,217,255,0.08)] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[600px] w-[600px] rounded-full bg-[rgba(124,58,237,0.1)] blur-[140px]" />
+
+      <div className="relative z-10 mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
         {/* BREADCRUMB */}
 
-        <div className="mb-8 flex items-center gap-2 text-xs text-gray-400">
-          <Link to="/" className="hover:text-black">
+        <div className="mb-8 flex items-center gap-2 text-xs text-white/40">
+          <Link to="/" className="transition-colors hover:text-[#00d9ff]">
             Trang chủ
           </Link>
 
           <span>/</span>
 
-          <span className="text-black">Giỏ hàng</span>
+          <span className="text-white/80">Giỏ hàng</span>
         </div>
 
         {/* TIÊU ĐỀ */}
 
-        <div className="mb-10 border-b border-gray-200 pb-8">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-gray-400">
+        <div className="mb-10 border-b border-white/10 pb-8">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#00d9ff]">
             Your selection
           </p>
 
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
               Giỏ hàng
             </h1>
 
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white/50">
               {gioHang?.tongSoLuong || 0} sản phẩm
             </p>
           </div>
@@ -232,7 +236,7 @@ export default function CartPage() {
         {/* THÔNG BÁO LỖI */}
 
         {loi && (
-          <div className="mb-6 flex items-center justify-between gap-4 border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-600">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-lg border border-red-500/30 bg-red-950/40 px-5 py-4 text-sm text-red-300 backdrop-blur-md">
             <span>{loi}</span>
 
             <button
@@ -248,7 +252,7 @@ export default function CartPage() {
         {/* THÔNG BÁO THÀNH CÔNG */}
 
         {thongBao && (
-          <div className="mb-6 flex items-center justify-between gap-4 border border-green-200 bg-green-50 px-5 py-4 text-sm text-green-700">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-lg border border-emerald-500/30 bg-emerald-950/40 px-5 py-4 text-sm text-emerald-300 backdrop-blur-md">
             <span>{thongBao}</span>
 
             <button
@@ -266,19 +270,19 @@ export default function CartPage() {
                 ================================= */}
 
         {!dangCoSanPham && (
-          <div className="flex min-h-[400px] flex-col items-center justify-center text-center">
-            <div className="text-7xl font-light text-gray-200">0</div>
+          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-white/10 bg-[#0d0d14]/70 p-12 text-center backdrop-blur-xl">
+            <div className="text-7xl font-extralight text-white/20">0</div>
 
-            <h2 className="mt-6 text-2xl font-semibold">Giỏ hàng đang trống</h2>
+            <h2 className="mt-6 text-2xl font-bold text-white">Giỏ hàng đang trống</h2>
 
-            <p className="mt-3 max-w-sm text-sm leading-7 text-gray-500">
+            <p className="mt-3 max-w-sm text-sm leading-7 text-white/50">
               Bạn chưa thêm sản phẩm nào vào giỏ hàng. Hãy khám phá bộ sưu tập
               của FashionStore.
             </p>
 
             <Link
               to="/san-pham"
-              className="mt-8 bg-black px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-gray-800"
+              className="mt-8 rounded border border-[#00d9ff]/50 bg-[#00d9ff]/10 px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#00d9ff] transition-all hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_25px_rgba(0,217,255,0.4)]"
             >
               Tiếp tục mua sắm
             </Link>
@@ -296,7 +300,7 @@ export default function CartPage() {
             <section>
               {/* TIÊU ĐỀ CỘT */}
 
-              <div className="mb-5 hidden grid-cols-[minmax(0,1fr)_120px_130px] gap-5 border-b border-gray-200 pb-4 text-[10px] font-semibold uppercase tracking-widest text-gray-400 sm:grid">
+              <div className="mb-5 hidden grid-cols-[minmax(0,1fr)_120px_130px] gap-5 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-widest text-[#00d9ff] sm:grid">
                 <span>Sản phẩm</span>
 
                 <span className="text-center">Số lượng</span>
@@ -306,7 +310,7 @@ export default function CartPage() {
 
               {/* CÁC DÒNG SẢN PHẨM */}
 
-              <div className="divide-y divide-gray-200">
+              <div className="divide-y divide-white/10">
                 {items.map(function (item) {
                   const dangXuLy =
                     dangXuLyId === item.id || dangXuLyId === "tat-ca";
@@ -321,7 +325,7 @@ export default function CartPage() {
                       <div className="flex min-w-0 gap-4">
                         <Link
                           to={`/san-pham/${item.slug}`}
-                          className="h-32 w-24 shrink-0 overflow-hidden bg-[#eae8e2] sm:h-40 sm:w-28"
+                          className="h-32 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-[#0d0d14] sm:h-40 sm:w-28"
                         >
                           {item.duongDanAnh ? (
                             <img
@@ -330,7 +334,7 @@ export default function CartPage() {
                               className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                             />
                           ) : (
-                            <div className="flex h-full items-center justify-center text-xs text-gray-400">
+                            <div className="flex h-full items-center justify-center text-xs text-white/30">
                               No image
                             </div>
                           )}
@@ -341,20 +345,20 @@ export default function CartPage() {
 
                           <Link
                             to={`/san-pham/${item.slug}`}
-                            className="line-clamp-2 text-sm font-semibold hover:text-gray-500"
+                            className="line-clamp-2 text-sm font-semibold text-white transition-colors hover:text-[#00d9ff]"
                           >
                             {item.tenSanPham}
                           </Link>
 
                           {/* SKU */}
 
-                          <p className="mt-2 text-xs text-gray-400">
+                          <p className="mt-2 text-xs text-white/40">
                             SKU: {item.sku}
                           </p>
 
                           {/* SIZE VÀ MÀU */}
 
-                          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
+                          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-white/60">
                             {item.tenKichCo && (
                               <span>Size: {item.tenKichCo}</span>
                             )}
@@ -369,13 +373,13 @@ export default function CartPage() {
                           {item.maHex && (
                             <div className="mt-3 flex items-center gap-2">
                               <span
-                                className="h-4 w-4 rounded-full border border-gray-300"
+                                className="h-4 w-4 rounded-full border border-white/20"
                                 style={{
                                   backgroundColor: item.maHex,
                                 }}
                               />
 
-                              <span className="text-[10px] text-gray-400">
+                              <span className="text-[10px] text-white/50">
                                 {item.tenMauSac}
                               </span>
                             </div>
@@ -383,14 +387,14 @@ export default function CartPage() {
 
                           {/* GIÁ TRÊN MOBILE */}
 
-                          <p className="mt-4 text-sm font-semibold sm:hidden">
+                          <p className="mt-4 text-sm font-semibold text-[#00d9ff] sm:hidden">
                             {dinhDangTienVietNam(item.giaBan)}
                           </p>
 
                           {/* TÌNH TRẠNG */}
 
                           {!item.conTheMua && (
-                            <p className="mt-3 text-xs font-medium text-red-600">
+                            <p className="mt-3 text-xs font-medium text-red-400">
                               Sản phẩm hiện không thể mua
                             </p>
                           )}
@@ -401,7 +405,7 @@ export default function CartPage() {
                             type="button"
                             disabled={dangXuLy}
                             onClick={() => xuLyXoaSanPham(item)}
-                            className="mt-auto pt-4 text-xs text-gray-400 underline underline-offset-4 transition-colors hover:text-red-600 disabled:opacity-40"
+                            className="mt-auto pt-4 text-xs text-white/40 underline underline-offset-4 transition-colors hover:text-red-400 disabled:opacity-40"
                           >
                             {dangXuLy ? "Đang xử lý..." : "Xóa sản phẩm"}
                           </button>
@@ -411,7 +415,7 @@ export default function CartPage() {
                       {/* SỐ LƯỢNG */}
 
                       <div className="flex items-center justify-start sm:justify-center">
-                        <div className="flex items-center border border-gray-300">
+                        <div className="flex items-center rounded border border-white/15 bg-white/[0.04]">
                           {/* GIẢM */}
 
                           <button
@@ -420,14 +424,14 @@ export default function CartPage() {
                             onClick={() =>
                               xuLyCapNhatSoLuong(item, item.soLuong - 1)
                             }
-                            className="px-3 py-2 text-sm transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                            className="px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             −
                           </button>
 
                           {/* SỐ LƯỢNG HIỆN TẠI */}
 
-                          <span className="min-w-10 text-center text-sm">
+                          <span className="min-w-10 text-center text-sm font-semibold text-white">
                             {item.soLuong}
                           </span>
 
@@ -443,7 +447,7 @@ export default function CartPage() {
                             onClick={() =>
                               xuLyCapNhatSoLuong(item, item.soLuong + 1)
                             }
-                            className="px-3 py-2 text-sm transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
+                            className="px-3 py-2 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
                           >
                             +
                           </button>
@@ -453,12 +457,12 @@ export default function CartPage() {
                       {/* THÀNH TIỀN */}
 
                       <div className="hidden text-right sm:block">
-                        <p className="text-sm font-semibold">
+                        <p className="text-sm font-bold text-[#00d9ff]">
                           {dinhDangTienVietNam(item.thanhTien)}
                         </p>
 
                         {item.giaNiemYet && item.giaNiemYet > item.giaBan && (
-                          <p className="mt-1 text-xs text-gray-400 line-through">
+                          <p className="mt-1 text-xs text-white/40 line-through">
                             {dinhDangTienVietNam(
                               item.giaNiemYet * item.soLuong,
                             )}
@@ -479,7 +483,7 @@ export default function CartPage() {
 
                 <Link
                   to="/san-pham"
-                  className="text-xs font-semibold uppercase tracking-widest text-gray-500 underline underline-offset-4 hover:text-black"
+                  className="text-xs font-semibold uppercase tracking-widest text-white/60 underline underline-offset-4 transition-colors hover:text-[#00d9ff]"
                 >
                   ← Tiếp tục mua sắm
                 </Link>
@@ -490,7 +494,7 @@ export default function CartPage() {
                   type="button"
                   disabled={dangXuLyId !== null}
                   onClick={xuLyXoaTatCa}
-                  className="text-xs text-red-500 underline underline-offset-4 hover:text-red-700 disabled:opacity-40"
+                  className="text-xs text-red-400 underline underline-offset-4 transition-colors hover:text-red-300 disabled:opacity-40"
                 >
                   Xóa toàn bộ giỏ hàng
                 </button>
@@ -501,22 +505,22 @@ export default function CartPage() {
                             TÓM TẮT ĐƠN HÀNG
                         ================================= */}
 
-            <aside className="h-fit border border-gray-200 bg-white p-6 sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
+            <aside className="h-fit rounded-2xl border border-white/10 bg-[#0d0d14]/80 p-6 backdrop-blur-xl sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#00d9ff]">
                 Order summary
               </p>
 
-              <h2 className="mt-3 text-2xl font-semibold">Tóm tắt giỏ hàng</h2>
+              <h2 className="mt-3 text-2xl font-bold text-white">Tóm tắt giỏ hàng</h2>
 
               {/* THÔNG TIN */}
 
-              <div className="mt-8 space-y-5 border-b border-gray-200 pb-6">
+              <div className="mt-8 space-y-5 border-b border-white/10 pb-6">
                 {/* SỐ LƯỢNG */}
 
                 <div className="flex justify-between gap-4 text-sm">
-                  <span className="text-gray-500">Số lượng</span>
+                  <span className="text-white/50">Số lượng</span>
 
-                  <span className="font-medium">
+                  <span className="font-medium text-white">
                     {gioHang.tongSoLuong} sản phẩm
                   </span>
                 </div>
@@ -524,9 +528,9 @@ export default function CartPage() {
                 {/* TẠM TÍNH */}
 
                 <div className="flex justify-between gap-4 text-sm">
-                  <span className="text-gray-500">Tạm tính</span>
+                  <span className="text-white/50">Tạm tính</span>
 
-                  <span className="font-medium">
+                  <span className="font-semibold text-white">
                     {dinhDangTienVietNam(gioHang.tongTien)}
                   </span>
                 </div>
@@ -534,39 +538,34 @@ export default function CartPage() {
                 {/* PHÍ VẬN CHUYỂN */}
 
                 <div className="flex justify-between gap-4 text-sm">
-                  <span className="text-gray-500">Phí vận chuyển</span>
+                  <span className="text-white/50">Phí vận chuyển</span>
 
-                  <span className="font-medium">Tính tại bước thanh toán</span>
+                  <span className="font-medium text-white/70">Tính tại bước thanh toán</span>
                 </div>
               </div>
 
               {/* TỔNG CỘNG */}
 
               <div className="flex items-center justify-between gap-4 py-6">
-                <span className="text-sm font-semibold">Tổng cộng</span>
+                <span className="text-sm font-semibold text-white">Tổng cộng</span>
 
-                <span className="text-xl font-semibold">
+                <span className="text-2xl font-extrabold text-[#00d9ff]">
                   {dinhDangTienVietNam(gioHang.tongTien)}
                 </span>
               </div>
 
-              {/* THANH TOÁN - PHASE 7 */}
+              {/* THANH TOÁN */}
 
-              <div className="border-t border-gray-200 pt-6">
+              <div className="border-t border-white/10 pt-6">
                 <Link
                   to="/thanh-toan"
-                  className="block w-full bg-black px-6 py-4 text-center text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-gray-800"
+                  className="block w-full rounded-lg border border-[#00d9ff]/50 bg-gradient-to-r from-[#00d9ff]/20 via-[#7c3aed]/20 to-[#00d9ff]/20 px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.15em] text-[#00d9ff] backdrop-blur-md transition-all duration-300 hover:border-[#00d9ff] hover:bg-[#00d9ff] hover:text-[#030303] hover:shadow-[0_0_30px_rgba(0,217,255,0.4)]"
                 >
                   Tiến hành thanh toán
                 </Link>
 
-                <p className="mt-3 text-center text-xs leading-6 text-gray-400">
+                <p className="mt-3 text-center text-xs leading-6 text-white/40">
                   Thanh toán tiền mặt khi nhận hàng (COD).
-                </p>
-
-                <p className="mt-3 text-center text-xs leading-6 text-gray-400">
-                  Chức năng địa chỉ giao hàng và đặt hàng sẽ được tích hợp ở
-                  Phase 7.
                 </p>
               </div>
             </aside>
