@@ -267,3 +267,96 @@ img {
         transition-duration: 0.01ms !important;
     }
 }
+
+
+/* =========================================
+   REACTBITS ADMIN GLOBAL OVERRIDES
+========================================= */
+
+/* Admin containers & cards */
+main .border-line,
+main .bg-white,
+main section.border,
+main div.border {
+    background-color: rgba(13, 13, 20, 0.75) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Admin inputs, selects, textareas */
+main input,
+main select,
+main textarea {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #f0f0f5 !important;
+    border-radius: 8px !important;
+    transition: all 0.25s ease !important;
+}
+
+main select option {
+    background-color: #0d0d14 !important;
+    color: #f0f0f5 !important;
+}
+
+main input:focus,
+main select:focus,
+main textarea:focus {
+    border-color: #00d9ff !important;
+    box-shadow: 0 0 16px rgba(0, 217, 255, 0.25) !important;
+    outline: none !important;
+}
+
+/* Admin Tables */
+main table {
+    background-color: transparent !important;
+    color: #f0f0f5 !important;
+}
+
+main thead tr {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+main tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: background-color 0.2s ease !important;
+}
+
+main tbody tr:hover {
+    background-color: rgba(0, 217, 255, 0.04) !important;
+}
+
+/* Admin primary buttons */
+main button.bg-ink,
+main a.bg-ink,
+main .bg-black {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%) !important;
+    border: 1px solid rgba(0, 217, 255, 0.4) !important;
+    color: #00d9ff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+main button.bg-ink:hover,
+main a.bg-ink:hover,
+main .bg-black:hover {
+    background: #00d9ff !important;
+    color: #030303 !important;
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.45) !important;
+}
+
+/* Modals & Dialogs */
+.modal-overlay,
+div[role="dialog"] {
+    background-color: rgba(3, 3, 3, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+div[role="dialog"] > div {
+    background-color: #0d0d14 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 217, 255, 0.1) !important;
+}

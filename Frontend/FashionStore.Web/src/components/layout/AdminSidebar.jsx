@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-
 import {
   LayoutDashboard,
   Package,
@@ -9,6 +8,7 @@ import {
   ClipboardList,
   Ruler,
   Palette,
+  Sparkles,
 } from "lucide-react";
 
 // =============================================
@@ -70,30 +70,31 @@ const adminMenus = [
 
 function AdminSidebar() {
   return (
-    <aside className="z-40 w-full shrink-0 bg-ink text-white lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:flex-col">
+    <aside className="z-40 w-full shrink-0 border-b border-white/10 bg-[#08080e]/90 text-white backdrop-blur-2xl lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:flex-col lg:border-b-0 lg:border-r">
       {/* LOGO */}
-
-      <div className="flex h-[76px] shrink-0 items-center border-b border-white/10 px-6">
+      <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-white/10 px-6">
         <div>
           <p className="font-display text-xl font-extrabold tracking-[-0.07em]">
             FASHIONSTORE
-            <span className="text-accent">.</span>
+            <span className="text-[#00d9ff]">.</span>
           </p>
 
-          <p className="mt-1 text-[9px] font-semibold tracking-[0.22em] text-white/40">
-            ADMINISTRATION
-          </p>
+          <div className="mt-1 flex items-center gap-1.5">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#00d9ff]" />
+            <p className="text-[9px] font-bold tracking-[0.22em] text-[#00d9ff]">
+              ADMIN CONSOLE
+            </p>
+          </div>
         </div>
       </div>
 
       {/* MENU */}
-
       <nav
         aria-label="Điều hướng quản trị"
-        className="flex gap-2 overflow-x-auto px-3 py-3 lg:block lg:flex-1 lg:space-y-2 lg:overflow-y-auto lg:overflow-x-hidden lg:px-4 lg:py-7"
+        className="flex gap-1.5 overflow-x-auto px-3 py-3 lg:block lg:flex-1 lg:space-y-1.5 lg:overflow-y-auto lg:overflow-x-hidden lg:px-3 lg:py-6"
       >
-        <p className="hidden px-3 pb-3 text-[10px] font-semibold tracking-[0.2em] text-white/35 lg:block">
-          MENU QUẢN TRỊ
+        <p className="hidden px-3 pb-3 text-[10px] font-bold tracking-[0.2em] text-white/30 lg:block">
+          HỆ THỐNG QUẢN LÝ
         </p>
 
         {adminMenus.map(function (item) {
@@ -105,27 +106,42 @@ function AdminSidebar() {
               to={item.path}
               end={item.end}
               className={function ({ isActive }) {
-                return `flex shrink-0 items-center gap-3 whitespace-nowrap rounded-control px-3 py-3 text-sm font-medium transition ${
+                return `group flex shrink-0 items-center gap-3 whitespace-nowrap rounded-lg px-3.5 py-3 text-xs font-semibold transition-all duration-300 ${
                   isActive
-                    ? "bg-accent text-ink"
-                    : "text-white/60 hover:bg-white/10 hover:text-white"
+                    ? "border border-[#00d9ff]/30 bg-gradient-to-r from-[#00d9ff]/20 via-[#7c3aed]/10 to-transparent text-white shadow-[0_0_20px_rgba(0,217,255,0.15)]"
+                    : "text-white/60 hover:bg-white/[0.05] hover:text-white"
                 }`;
               }}
             >
-              <Icon size={18} />
-
-              <span>{item.label}</span>
+              {({ isActive }) => (
+                <>
+                  <Icon
+                    size={17}
+                    className={`transition-colors duration-300 ${
+                      isActive
+                        ? "text-[#00d9ff] drop-shadow-[0_0_8px_rgba(0,217,255,0.8)]"
+                        : "text-white/40 group-hover:text-white"
+                    }`}
+                  />
+                  <span>{item.label}</span>
+                </>
+              )}
             </NavLink>
           );
         })}
       </nav>
 
       {/* FOOTER */}
-
       <div className="mt-auto hidden shrink-0 border-t border-white/10 p-5 lg:block">
-        <p className="text-xs text-white/40">FashionStore Admin</p>
-
-        <p className="mt-1 text-[10px] text-white/25">Management Workspace</p>
+        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 backdrop-blur-md">
+          <div className="flex items-center gap-2">
+            <Sparkles size={14} className="text-[#00d9ff]" />
+            <span className="text-[11px] font-bold text-white">ReactBits Engine</span>
+          </div>
+          <p className="mt-1 text-[10px] text-white/40">
+            UI Version 2.0 • Cyber Active
+          </p>
+        </div>
       </div>
     </aside>
   );
