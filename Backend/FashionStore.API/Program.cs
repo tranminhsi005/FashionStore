@@ -190,19 +190,45 @@ var danhSachNguon = builder.Configuration
     .GetSection("Cors:AllowedOrigins")
     .Get<string[]>() ?? Array.Empty<string>();
 
-if (danhSachNguon.Length == 0)
-{
-    throw new InvalidOperationException(
-        "Chua cau hinh Cors:AllowedOrigins."
-    );
-}
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy
-            .WithOrigins(danhSachNguon)
+            .SetIsOriginAllowed(origin =>
+            {
+                if (string.IsNullOrWhiteSpace(origin))
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var uri = new Uri(origin);
+
+                    // Cho phep localhost voi moi port (5173, 3000, ...)
+                    if (uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) ||
+                        uri.Host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+
+                    // Cho phep tat ca domain va subdomain cua Cloudflare Pages (*.pages.dev)
+                    if (uri.Host.EndsWith(".pages.dev", StringComparison.OrdinalIgnoreCase) ||
+                        uri.Host.Equals("pages.dev", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+
+                    // Cho phep tat ca origin trong danh sach duoc cau hinh tu appsettings hoac Bien moi truong
+                    return danhSachNguon.Any(allowed =>
+                        string.Equals(allowed.TrimEnd('/'), origin.TrimEnd('/'), StringComparison.OrdinalIgnoreCase));
+                }
+                catch
+                {
+                    return false;
+                }
+            })
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
