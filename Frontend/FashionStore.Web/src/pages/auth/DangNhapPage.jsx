@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { useState } from "react";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -51,10 +52,14 @@ export default function DangNhapPage() {
   }
 
   return (
-    <main
+    <motion.main
+      className="auth-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.45 }}
       style={{
         minHeight: "100vh",
-        backgroundColor: "#030303",
+        backgroundColor: "transparent",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -74,7 +79,7 @@ export default function DangNhapPage() {
           height: "520px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(0,217,255,0.18) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(139,216,232,0.11) 0%, transparent 70%)",
           filter: "blur(60px)",
           pointerEvents: "none",
         }}
@@ -91,25 +96,29 @@ export default function DangNhapPage() {
           height: "480px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(182,140,255,0.17) 0%, transparent 70%)",
           filter: "blur(60px)",
           pointerEvents: "none",
         }}
       />
 
       {/* Glass card */}
-      <div
+      <motion.div
+        className="auth-card"
+        initial={{ opacity: 0, y: 22, scale: 0.975, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+        transition={{ type: "spring", stiffness: 170, damping: 23, delay: 0.08 }}
         style={{
           position: "relative",
           zIndex: 10,
           width: "100%",
           maxWidth: "440px",
           margin: "24px",
-          background: "rgba(13,13,20,0.9)",
+          background: "rgba(18,15,26,0.78)",
           border: "1px solid rgba(255,255,255,0.1)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          borderRadius: "16px",
+          borderRadius: "26px",
           padding: "48px",
           boxShadow: "0 25px 80px rgba(0,0,0,0.5)",
         }}
@@ -415,7 +424,7 @@ export default function DangNhapPage() {
         >
           © 2026 FASHIONSTORE. ALL RIGHTS RESERVED.
         </p>
-      </div>
-    </main>
+      </motion.div>
+    </motion.main>
   );
 }

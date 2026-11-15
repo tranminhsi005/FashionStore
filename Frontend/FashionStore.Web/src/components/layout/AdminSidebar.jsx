@@ -73,17 +73,14 @@ function AdminSidebar() {
     <aside className="z-40 w-full shrink-0 border-b border-white/10 bg-[#08080e]/90 text-white backdrop-blur-2xl lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:flex-col lg:border-b-0 lg:border-r">
       {/* LOGO */}
       <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-white/10 px-6">
-        <div>
-          <p className="font-display text-xl font-extrabold tracking-[-0.07em]">
-            FASHIONSTORE
-            <span className="text-purple-400">.</span>
-          </p>
-
-          <div className="mt-1 flex items-center gap-1.5">
-            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-purple-400" />
-            <p className="text-[9px] font-bold tracking-[0.22em] text-purple-400">
-              ADMIN CONSOLE
-            </p>
+        <div className="flex items-center gap-3">
+          <span className="brand-mark">F<span>.</span></span>
+          <div>
+            <p className="font-display text-sm font-extrabold tracking-[0.12em] text-white">FASHIONSTORE</p>
+            <div className="mt-1 flex items-center gap-1.5">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
+              <p className="text-[8px] font-bold tracking-[0.2em] text-white/40">ADMIN STUDIO</p>
+            </div>
           </div>
         </div>
       </div>
@@ -136,10 +133,10 @@ function AdminSidebar() {
         <div className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-3 backdrop-blur-md">
           <div className="flex items-center gap-2">
             <Sparkles size={14} className="text-purple-400" />
-            <span className="text-[11px] font-bold text-white">ReactBits Engine</span>
+            <span className="text-[11px] font-bold text-white">FashionStore Studio</span>
           </div>
           <p className="mt-1 text-[10px] text-purple-300/50">
-            UI Version 2.0 • Cyber Active
+            CONTROL PANEL • SYSTEM ONLINE
           </p>
         </div>
       </div>

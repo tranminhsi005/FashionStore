@@ -15,7 +15,7 @@ export default function AccountPage() {
 
   if (dangKhoiTao) {
     return (
-      <main className="flex min-h-[60vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[60vh] items-center justify-center customer-dark-page bg-void">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black" />
       </main>
     );
@@ -23,7 +23,7 @@ export default function AccountPage() {
 
   if (!nguoiDung) {
     return (
-      <main className="flex min-h-[60vh] flex-col items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[60vh] flex-col items-center justify-center customer-dark-page bg-void">
         <h1 className="text-2xl font-semibold">
           Không tìm thấy thông tin tài khoản
         </h1>
@@ -39,7 +39,7 @@ export default function AccountPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
+    <main className="min-h-screen customer-dark-page bg-void text-white">
       <div className="mx-auto max-w-[1100px] px-5 py-12 sm:px-8">
         {/* HEADER */}
 

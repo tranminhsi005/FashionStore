@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useReducedMotion } from "motion/react";
 
+/**
+ * Decorative particle field used in the homepage hero.
+ * Pauses in background tabs and becomes static when reduced motion is enabled.
+ */
 export default function ParticlesCanvas({
   particleCount = 50,
   speed = 0.5,
@@ -9,128 +14,194 @@ export default function ParticlesCanvas({
   secondaryColor = "rgba(99, 102, 241, 0.7)",
 }) {
   const canvasRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const parent = canvas?.parentElement;
+    if (!canvas || !parent) return undefined;
 
-    let animationFrameId;
-    let width = (canvas.width = canvas.parentElement.offsetWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement.offsetHeight || window.innerHeight);
+    const context = canvas.getContext("2d");
+    if (!context) return undefined;
 
-    const mouse = { x: -1000, y: -1000, radius: 150 };
+    let width = 1;
+    let height = 1;
+    let pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    let animationFrameId = null;
 
-    // Create particles with 3D depth simulation
+    const mouse = { x: -1000, y: -1000, radius: 145 };
     const particles = Array.from({ length: particleCount }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      z: Math.random() * 2 + 0.5, // 3D depth layer
+      x: Math.random(),
+      y: Math.random(),
+      z: Math.random() * 1.5 + 0.5,
       vx: (Math.random() - 0.5) * speed,
       vy: (Math.random() - 0.5) * speed,
-      radius: Math.random() * 2 + 1,
-      color: Math.random() > 0.4 ? glowColor : secondaryColor,
+      radius: Math.random() * 1.5 + 0.8,
+      color: Math.random() > 0.42 ? glowColor : secondaryColor,
     }));
 
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    };
+    function resizeCanvas() {
+      const previousWidth = width;
+      const previousHeight = height;
+      const bounds = parent.getBoundingClientRect();
+      width = Math.max(1, bounds.width || window.innerWidth);
+      height = Math.max(1, bounds.height || window.innerHeight);
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-    const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    };
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    };
-
-    window.addEventListener("resize", handleResize);
-    if (interactive) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseleave", handleMouseLeave);
+      const scaleX = width / previousWidth;
+      const scaleY = height / previousHeight;
+      particles.forEach((particle) => {
+        particle.x *= scaleX;
+        particle.y *= scaleY;
+      });
     }
 
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
+    function handlePointerMove(event) {
+      const bounds = canvas.getBoundingClientRect();
+      const insideCanvas = event.clientX >= bounds.left
+        && event.clientX <= bounds.right
+        && event.clientY >= bounds.top
+        && event.clientY <= bounds.bottom;
 
-      // Draw connecting lines (constellation / 3D web effect)
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      if (!insideCanvas) {
+        handlePointerLeave();
+        return;
+      }
 
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.strokeStyle = lineColor;
-            ctx.lineWidth = 0.7 * (1 - dist / 110);
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
+      mouse.x = event.clientX - bounds.left;
+      mouse.y = event.clientY - bounds.top;
+    }
+
+    function handlePointerLeave() {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    }
+
+    function drawFrame(animate = true) {
+      context.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i += 1) {
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const first = particles[i];
+          const second = particles[j];
+          const dx = first.x - second.x;
+          const dy = first.y - second.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < 112) {
+            context.beginPath();
+            context.strokeStyle = lineColor;
+            context.lineWidth = 0.7 * (1 - distance / 112);
+            context.moveTo(first.x, first.y);
+            context.lineTo(second.x, second.y);
+            context.stroke();
           }
         }
       }
 
-      // Update and draw particles
-      particles.forEach((p) => {
-        // Mouse interaction
-        if (interactive) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < mouse.radius) {
-            const force = (mouse.radius - dist) / mouse.radius;
-            p.x -= (dx / dist) * force * 3;
-            p.y -= (dy / dist) * force * 3;
+      particles.forEach((particle) => {
+        if (animate && interactive) {
+          const dx = mouse.x - particle.x;
+          const dy = mouse.y - particle.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance > 0.001 && distance < mouse.radius) {
+            const force = (mouse.radius - distance) / mouse.radius;
+            particle.x -= (dx / distance) * force * 2.2;
+            particle.y -= (dy / distance) * force * 2.2;
           }
         }
 
-        p.x += p.vx * p.z;
-        p.y += p.vy * p.z;
+        if (animate) {
+          particle.x += particle.vx * particle.z;
+          particle.y += particle.vy * particle.z;
 
-        // Wrap around boundaries
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+          if (particle.x < 0) particle.x = width;
+          if (particle.x > width) particle.x = 0;
+          if (particle.y < 0) particle.y = height;
+          if (particle.y > height) particle.y = 0;
+        }
 
-        // Draw particle with glow
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * p.z, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 8 * p.z;
-        ctx.fill();
-        ctx.restore();
+        context.save();
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.radius * particle.z, 0, Math.PI * 2);
+        context.fillStyle = particle.color;
+        context.shadowColor = particle.color;
+        context.shadowBlur = 8 * particle.z;
+        context.fill();
+        context.restore();
       });
+    }
 
-      animationFrameId = requestAnimationFrame(render);
-    };
+    function stopAnimation() {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
 
-    render();
+    function animate() {
+      drawFrame(true);
+      if (!reduceMotion && !document.hidden) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    }
+
+    function startAnimation() {
+      stopAnimation();
+      if (reduceMotion) {
+        drawFrame(false);
+        return;
+      }
+      if (!document.hidden) animate();
+    }
+
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        startAnimation();
+      }
+    }
+
+    resizeCanvas();
+    startAnimation();
+
+    const resizeObserver = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(() => {
+          resizeCanvas();
+          if (reduceMotion) drawFrame(false);
+        })
+      : null;
+
+    resizeObserver?.observe(parent);
+    window.addEventListener("resize", resizeCanvas);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    if (interactive && !reduceMotion) {
+      window.addEventListener("pointermove", handlePointerMove, { passive: true });
+      canvas.addEventListener("pointerleave", handlePointerLeave);
+    }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-      if (interactive) {
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseleave", handleMouseLeave);
-      }
+      stopAnimation();
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", resizeCanvas);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pointermove", handlePointerMove);
+      canvas.removeEventListener("pointerleave", handlePointerLeave);
     };
-  }, [particleCount, speed, interactive, glowColor, lineColor, secondaryColor]);
+  }, [particleCount, speed, interactive, glowColor, lineColor, secondaryColor, reduceMotion]);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60"
     />
   );
 }
-

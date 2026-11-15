@@ -461,12 +461,12 @@ export default function ProductDetailPage() {
           <section>
             {/* ẢNH LỚN */}
 
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0a14] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+            <div className="product-image-frame relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 bg-[#0c0a14] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
               {anhDangChon ? (
                 <img
                   src={anhDangChon}
                   alt={sanPham.ten}
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                  className="product-detail-image h-full w-full object-cover transition-transform duration-700 hover:scale-[1.045]"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-sm text-white/30">

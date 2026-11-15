@@ -91,19 +91,12 @@ function Modal({
               y: 10,
               scale: 0.98,
             }}
-            transition={{ duration: 0.2 }}
+            transition={{ type: "spring", stiffness: 260, damping: 25 }}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={description ? descriptionId : undefined}
-            className={`
-                            w-full
-                            ${sizes[size] || sizes.medium}
-                            overflow-hidden
-                            rounded-xl
-                            bg-white
-                            shadow-dialog
-                        `}
+            className={`w-full ${sizes[size] || sizes.medium} overflow-hidden rounded-[22px] border border-white/10 bg-[#171320] text-white shadow-dialog`}
           >
             {/* HEADER */}
 

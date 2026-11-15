@@ -1,38 +1,27 @@
 import { Link, NavLink } from "react-router-dom";
+import { motion } from "motion/react";
 
 const navigationItems = [
-  {
-    label: "Trang chủ",
-    to: "/",
-    end: true,
-  },
-  {
-    label: "Sản phẩm",
-    to: "/san-pham",
-  },
-  {
-    label: "Về thương hiệu",
-    to: "/#about",
-  },
+  { label: "Trang chủ", to: "/", end: true },
+  { label: "Sản phẩm", to: "/san-pham" },
+  { label: "Về thương hiệu", to: "/#about", isAnchor: true },
 ];
 
 function Navigation({ mobile = false, onNavigate }) {
   const baseClass = mobile
-    ? "flex flex-col gap-4"
-    : "flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1.5 backdrop-blur-xl";
+    ? "flex flex-col gap-2"
+    : "navigation-glass flex items-center gap-1 rounded-full p-1.5";
 
   return (
     <nav aria-label="Điều hướng chính" className={baseClass}>
       {navigationItems.map((item) => {
-        if (item.to === "/#about") {
+        if (item.isAnchor) {
           return (
             <Link
               key={item.to}
               to={item.to}
               onClick={onNavigate}
-              className={`rounded-full px-4 py-2 text-xs font-semibold text-white/60 transition-all duration-300 hover:text-white ${
-                mobile ? "text-base py-2.5" : ""
-              }`}
+              className={`navigation-link ${mobile ? "navigation-link-mobile" : ""}`}
             >
               {item.label}
             </Link>
@@ -40,22 +29,19 @@ function Navigation({ mobile = false, onNavigate }) {
         }
 
         return (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.end}
-            onClick={onNavigate}
-            className={({ isActive }) => `
-              relative rounded-full px-4 py-2 text-xs font-semibold transition-all duration-300
-              ${
-                isActive
-                  ? "bg-purple-600/20 text-purple-300 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.25)]"
-                  : "text-white/60 hover:text-white hover:bg-white/[0.04]"
-              }
-              ${mobile ? "text-base py-2.5" : ""}
-            `}
-          >
-            {item.label}
+          <NavLink key={item.to} to={item.to} end={item.end} onClick={onNavigate}>
+            {({ isActive }) => (
+              <span className={`navigation-link ${mobile ? "navigation-link-mobile" : ""} ${isActive ? "is-active" : ""}`}>
+                {isActive && !mobile && (
+                  <motion.span
+                    layoutId="fashionstore-navigation-active"
+                    className="navigation-active-pill"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
+              </span>
+            )}
           </NavLink>
         );
       })}

@@ -174,7 +174,7 @@ export default function OrderDetailPage() {
 
   if (dangTai) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[70vh] items-center justify-center customer-dark-page bg-void">
         <div className="text-center">
           <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
 
@@ -192,7 +192,7 @@ export default function OrderDetailPage() {
 
   if (loi || !donHang) {
     return (
-      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#f7f6f2] px-5 text-center">
+      <main className="flex min-h-[70vh] flex-col items-center justify-center customer-dark-page bg-void px-5 text-center">
         <h1 className="text-3xl font-semibold">Không tìm thấy đơn hàng</h1>
 
         <p className="mt-4 max-w-xl text-sm leading-7 text-gray-500">
@@ -224,7 +224,7 @@ export default function OrderDetailPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
+    <main className="min-h-screen customer-dark-page bg-void text-white">
       <div className="mx-auto max-w-[1100px] px-5 py-12 sm:px-8 lg:px-12">
         {/* =====================================
             THÔNG BÁO ĐẶT HÀNG THÀNH CÔNG

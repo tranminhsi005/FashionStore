@@ -8,93 +8,38 @@ function AdminHeader() {
   const { nguoiDung, dangXuat } = useAuth();
   const [dangXuLyDangXuat, setDangXuLyDangXuat] = useState(false);
 
-  // =============================================
-  // ĐĂNG XUẤT
-  // =============================================
-
   async function xuLyDangXuat() {
-    if (dangXuLyDangXuat) {
-      return;
-    }
-
+    if (dangXuLyDangXuat) return;
     setDangXuLyDangXuat(true);
-
     try {
       await dangXuat();
-      navigate("/dang-nhap", {
-        replace: true,
-      });
+      navigate("/dang-nhap", { replace: true });
     } finally {
       setDangXuLyDangXuat(false);
     }
   }
 
-  // =============================================
-  // GIAO DIỆN
-  // =============================================
-
   return (
-    <header className="sticky top-0 z-30 flex min-h-[76px] items-center justify-between gap-4 border-b border-white/10 bg-[#08080e]/80 px-4 py-3 backdrop-blur-2xl md:px-8">
-      {/* LEFT */}
+    <header className="admin-topbar sticky top-0 z-30 flex min-h-[76px] items-center justify-between gap-4 px-4 py-3 md:px-8">
       <div className="min-w-0">
-        <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-purple-400">
-          <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse" />
-          FASHIONSTORE CONTROL PANEL
-        </p>
-
-        <h1 className="mt-1 font-display text-base font-extrabold tracking-tight text-white md:text-lg">
-          Không gian quản trị
-        </h1>
+        <p className="admin-overline"><span /> FASHIONSTORE / CONTROL ROOM</p>
+        <h1 className="mt-1 font-display text-base font-bold tracking-tight text-white md:text-lg">Không gian quản trị</h1>
       </div>
 
-      {/* RIGHT */}
-      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-        {/* ADMIN ROLE */}
-        <div className="hidden items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 text-xs font-semibold text-purple-300 lg:flex">
-          <ShieldCheck size={14} />
-          <span>Root Admin</span>
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="admin-role-pill hidden items-center gap-2 rounded-full px-3 py-2 text-[11px] font-semibold text-purple-200 lg:flex">
+          <ShieldCheck size={14} /> Quản trị viên
         </div>
-
-        {/* ADMIN INFORMATION */}
-        <div className="hidden items-center gap-3 border-l border-white/10 pl-4 sm:flex">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.25)]">
-            <UserRound size={17} />
-          </div>
-
-          <div className="max-w-[180px]">
-            <p className="truncate text-xs font-bold text-white">
-              {nguoiDung?.hoTen || "Quản trị viên"}
-            </p>
-
-            <p className="truncate text-[10px] text-white/40">
-              {nguoiDung?.email || ""}
-            </p>
+        <div className="admin-user-chip hidden items-center gap-2.5 rounded-full px-2.5 py-1.5 sm:flex">
+          <div className="admin-avatar"><UserRound size={16} /></div>
+          <div className="max-w-[160px]">
+            <p className="truncate text-[11px] font-semibold text-white">{nguoiDung?.hoTen || "Quản trị viên"}</p>
+            <p className="truncate text-[10px] text-white/45">{nguoiDung?.email || ""}</p>
           </div>
         </div>
-
-        {/* RETURN TO WEBSITE */}
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-xs font-semibold text-white/80 transition-all hover:border-purple-500/50 hover:bg-purple-500/10 hover:text-purple-300 hover:shadow-[0_0_20px_rgba(168,85,247,0.25)]"
-        >
-          <span className="hidden sm:inline">Xem Website</span>
-          <ExternalLink size={14} />
-        </Link>
-
-        {/* LOGOUT */}
-        <button
-          type="button"
-          onClick={xuLyDangXuat}
-          disabled={dangXuLyDangXuat}
-          title="Đăng xuất"
-          aria-label="Đăng xuất khỏi khu vực quản trị"
-          className="inline-flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-950/20 px-3.5 py-2 text-xs font-semibold text-red-400 transition-all hover:border-red-500 hover:bg-red-900/40 hover:text-red-200 hover:shadow-[0_0_15px_rgba(239,68,68,0.2)] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <LogOut size={15} />
-
-          <span className="hidden md:inline">
-            {dangXuLyDangXuat ? "Đang thoát..." : "Đăng xuất"}
-          </span>
+        <Link to="/" className="admin-header-action"><span className="hidden sm:inline">Xem Website</span><ExternalLink size={14} /></Link>
+        <button type="button" onClick={xuLyDangXuat} disabled={dangXuLyDangXuat} className="admin-logout-button" title="Đăng xuất" aria-label="Đăng xuất">
+          <LogOut size={15} /><span className="hidden md:inline">{dangXuLyDangXuat ? "Đang thoát..." : "Đăng xuất"}</span>
         </button>
       </div>
     </header>

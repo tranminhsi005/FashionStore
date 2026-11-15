@@ -245,7 +245,7 @@ export default function AddressPage() {
 
   if (dangTai) {
     return (
-      <main className="flex min-h-[60vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[60vh] items-center justify-center customer-dark-page bg-void">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
       </main>
     );
@@ -256,7 +256,7 @@ export default function AddressPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
+    <main className="min-h-screen customer-dark-page bg-void text-white">
       <div className="mx-auto max-w-[1100px] px-5 py-12 sm:px-8">
         {/* BREADCRUMB */}
 

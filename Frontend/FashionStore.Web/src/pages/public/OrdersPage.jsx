@@ -169,7 +169,7 @@ export default function OrdersPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
+    <main className="min-h-screen customer-dark-page bg-void text-white">
       <div className="mx-auto max-w-[1200px] px-5 py-12 sm:px-8 lg:px-12">
         {/* HEADER */}
 

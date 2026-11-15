@@ -10,7 +10,7 @@ import {
   Layers,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SpotlightCard } from "../../components/ui";
+import { Reveal, SpotlightCard } from "../../components/ui";
 
 const dashboardItems = [
   {
@@ -95,11 +95,12 @@ function DashboardPage() {
 
       {/* MODULE CARDS (REACTBITS SPOTLIGHT CARDS) */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        {dashboardItems.map((item) => {
+        {dashboardItems.map((item, index) => {
           const Icon = item.icon;
 
           return (
-            <Link key={item.title} to={item.href} className="block">
+            <Reveal key={item.title} className="h-full" delay={index * 0.055} y={18}>
+              <Link to={item.href} className="group block h-full">
               <SpotlightCard
                 spotlightColor={`${item.color}25`}
                 hoverBorderColor={`${item.color}60`}
@@ -145,7 +146,8 @@ function DashboardPage() {
                   <span className="font-semibold text-emerald-400">● Hoạt động</span>
                 </div>
               </SpotlightCard>
-            </Link>
+              </Link>
+            </Reveal>
           );
         })}
       </div>

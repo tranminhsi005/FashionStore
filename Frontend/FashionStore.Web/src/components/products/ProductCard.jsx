@@ -1,90 +1,64 @@
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "motion/react";
+import { ArrowUpRight, ImageOff } from "lucide-react";
 import { dinhDangTienVietNam } from "../../utils/formatCurrency";
-import { ArrowUpRight } from "lucide-react";
 
 export default function ProductCard({ sanPham }) {
+  const reduceMotion = useReducedMotion();
   const giaThapNhat = Number(sanPham.giaThapNhat || 0);
   const giaCaoNhat = Number(sanPham.giaCaoNhat || 0);
-
-  let hienThiGia = "";
-  if (giaThapNhat === giaCaoNhat) {
-    hienThiGia = dinhDangTienVietNam(giaThapNhat);
-  } else {
-    hienThiGia =
-      dinhDangTienVietNam(giaThapNhat) + " - " + dinhDangTienVietNam(giaCaoNhat);
-  }
+  const hienThiGia = giaThapNhat === giaCaoNhat
+    ? dinhDangTienVietNam(giaThapNhat)
+    : `${dinhDangTienVietNam(giaThapNhat)} – ${dinhDangTienVietNam(giaCaoNhat)}`;
 
   return (
     <Link to={`/san-pham/${sanPham.slug}`} className="group block h-full">
-      {/* REACTBITS STYLE CARD CONTAINER */}
-      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0c0a14]/90 p-3 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-purple-500/60 hover:shadow-[0_0_35px_rgba(168,85,247,0.25)]">
-        {/* IMAGE CONTAINER */}
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-[#120f1e]">
+      <motion.article
+        whileHover={reduceMotion ? undefined : { y: -6 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+        transition={{ type: "spring", stiffness: 280, damping: 25 }}
+        className="product-card flex h-full flex-col"
+      >
+        <div className="product-card-media">
           {sanPham.duongDanAnhChinh ? (
             <img
               src={sanPham.duongDanAnhChinh}
               alt={sanPham.ten}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.055]"
+              onError={(event) => { event.currentTarget.style.opacity = "0"; }}
             />
           ) : (
-            <div className="flex h-full items-center justify-center text-xs text-white/30">
-              Chưa có hình ảnh
+            <div className="flex h-full flex-col items-center justify-center gap-2 text-white/25">
+              <ImageOff size={24} strokeWidth={1.3} />
+              <span className="text-[10px] uppercase tracking-[0.18em]">Chưa có hình ảnh</span>
             </div>
           )}
 
-          {/* BADGES */}
-          <div className="absolute left-2.5 top-2.5 flex flex-col gap-1.5">
-            {sanPham.noiBat && (
-              <span className="rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-2.5 py-0.5 text-[9px] font-extrabold tracking-wider text-white shadow-[0_0_12px_rgba(168,85,247,0.8)]">
-                FEATURED
-              </span>
-            )}
-
-            {!sanPham.conHang && (
-              <span className="rounded-full border border-white/20 bg-black/60 px-2.5 py-0.5 text-[9px] font-bold tracking-wider text-white/60 backdrop-blur-md">
-                SOLD OUT
-              </span>
-            )}
+          <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+            {sanPham.noiBat && <span className="product-badge product-badge-featured">FEATURED</span>}
+            {!sanPham.conHang && <span className="product-badge">SOLD OUT</span>}
           </div>
 
-          {/* HOVER OVERLAY BUTTON (REACTBITS PILL) */}
-          <div className="absolute inset-x-3 bottom-3 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-            <div className="flex items-center justify-center gap-1.5 rounded-full border border-purple-400/50 bg-[#0c0a18]/90 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest text-purple-200 shadow-[0_0_20px_rgba(168,85,247,0.5)] backdrop-blur-md">
-              <span>Xem chi tiết</span>
-              <ArrowUpRight size={13} className="text-purple-400" />
-            </div>
-          </div>
+          <span className="product-card-open"><span>Xem chi tiết</span><ArrowUpRight size={14} /></span>
         </div>
 
-        {/* INFO SECTION */}
-        <div className="flex flex-1 flex-col p-2.5 pt-3.5">
-          <div className="flex items-center justify-between gap-2 text-[10px] font-bold uppercase tracking-widest text-purple-400/80">
+        <div className="flex flex-1 flex-col px-1.5 pb-1 pt-4">
+          <div className="flex items-center justify-between gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-purple-200/65">
             <span className="truncate">{sanPham.tenThuongHieu || "FashionStore"}</span>
-            <span className="text-white/40">{sanPham.tenDanhMuc}</span>
+            <span className="truncate text-white/35">{sanPham.tenDanhMuc}</span>
           </div>
-
-          <h3 className="mt-1.5 line-clamp-2 text-sm font-semibold text-white/90 transition-colors group-hover:text-purple-300">
+          <h3 className="mt-2 line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-white/90 transition-colors group-hover:text-purple-200">
             {sanPham.ten}
           </h3>
-
-          <div className="mt-auto pt-3 flex items-center justify-between">
-            <p className="text-sm font-extrabold text-white">
-              {hienThiGia}
-            </p>
-            <span
-              className={`text-[10px] font-semibold ${
-                sanPham.conHang ? "text-emerald-400" : "text-red-400"
-              }`}
-            >
-              {sanPham.conHang ? "● Còn hàng" : "○ Hết hàng"}
+          <div className="mt-auto flex items-end justify-between gap-2 pt-4">
+            <p className="text-sm font-bold tracking-tight text-white">{hienThiGia}</p>
+            <span className={`shrink-0 text-[10px] font-medium ${sanPham.conHang ? "text-emerald-300/80" : "text-rose-300/80"}`}>
+              {sanPham.conHang ? "Còn hàng" : "Hết hàng"}
             </span>
           </div>
         </div>
-      </div>
+      </motion.article>
     </Link>
   );
 }

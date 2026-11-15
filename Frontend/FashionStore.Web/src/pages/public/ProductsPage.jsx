@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Sparkles, Filter, X, RefreshCw } from "lucide-react";
 import ProductCard from "../../components/products/ProductCard";
+import { Reveal } from "../../components/ui";
 import {
   layDanhSachSanPham,
   layDanhSachDanhMuc,
@@ -148,7 +149,7 @@ export default function ProductsPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#060608] text-[#f3f0fa]">
+    <main className="catalog-page relative min-h-screen overflow-x-hidden bg-[#060608] text-[#f3f0fa]">
       {/* Top Giant Purple Aurora Radial Glow */}
       <div
         className="pointer-events-none fixed inset-0 z-0"
@@ -177,7 +178,7 @@ export default function ProductsPage() {
         </div>
 
         {/* HEADER SECTION */}
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
+        <div className="catalog-heading mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-[11px] font-bold text-purple-300">
               <Sparkles size={12} />
@@ -199,7 +200,7 @@ export default function ProductsPage() {
 
         {/* SEARCH BAR (REACTBITS PILL SEARCH) */}
         <form onSubmit={xuLyTimKiem} className="mb-10">
-          <div className="relative flex items-center overflow-hidden rounded-2xl border border-white/10 bg-[#0c0a14]/90 backdrop-blur-xl transition-all duration-300 focus-within:border-purple-500/60 focus-within:shadow-[0_0_25px_rgba(168,85,247,0.3)]">
+          <div className="catalog-search-box relative flex items-center overflow-hidden rounded-2xl border border-white/10 bg-[#0c0a14]/90 backdrop-blur-xl transition-all duration-300 focus-within:border-purple-500/60 focus-within:shadow-[0_0_25px_rgba(168,85,247,0.3)]">
             <Search className="ml-5 text-purple-400 shrink-0" size={18} />
             <input
               type="text"
@@ -220,7 +221,7 @@ export default function ProductsPage() {
         {/* MAIN GRID: SIDEBAR & PRODUCT LIST */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_minmax(0,1fr)]">
           {/* SIDEBAR FILTERS (REACTBITS GLASS PANEL) */}
-          <aside className="h-fit rounded-2xl border border-white/10 bg-[#0c0a14]/80 p-6 backdrop-blur-xl">
+          <aside className="catalog-filter-panel h-fit rounded-2xl border border-white/10 bg-[#0c0a14]/80 p-6 backdrop-blur-xl">
             <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-300">
                 <Filter size={14} />
@@ -421,9 +422,11 @@ export default function ProductsPage() {
 
             {/* PRODUCTS GRID */}
             {!dangTai && !loi && sanPhams.length > 0 && (
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-                {sanPhams.map((sp) => (
-                  <ProductCard key={sp.id} sanPham={sp} />
+              <div className="catalog-product-grid grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+                {sanPhams.map((sp, index) => (
+                  <Reveal key={sp.id} className="h-full" delay={(index % 4) * 0.045} y={18}>
+                    <ProductCard sanPham={sp} />
+                  </Reveal>
                 ))}
               </div>
             )}

@@ -1,95 +1,57 @@
 @theme {
-    /* =====================================
-       REACTBITS DARK THEME BASE
-    ===================================== */
+  /* FashionStore — nocturne / liquid glass design system */
+  --color-void: #08070d;
+  --color-surface: #100e17;
+  --color-surface-2: #171320;
+  --color-surface-3: #211a2d;
 
-    --color-void: #060608;
-    --color-surface: #0c0a14;
-    --color-surface-2: #120e20;
-    --color-surface-3: #1a152e;
+  --color-border: rgba(255, 255, 255, 0.09);
+  --color-border-bright: rgba(196, 156, 255, 0.34);
 
-    /* =====================================
-       BORDERS (ReactBits Ultra-thin Glass)
-    ===================================== */
+  --color-text: #f5f1fa;
+  --color-text-muted: rgba(245, 241, 250, 0.62);
+  --color-text-dim: rgba(245, 241, 250, 0.38);
 
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-border-bright: rgba(168, 85, 247, 0.35);
+  --color-purple: #b68cff;
+  --color-purple-light: #d3b8ff;
+  --color-purple-dark: #8754d8;
+  --color-purple-glow: rgba(182, 140, 255, 0.25);
 
-    /* =====================================
-       TEXT
-    ===================================== */
+  --color-indigo: #818cf8;
+  --color-indigo-glow: rgba(129, 140, 248, 0.2);
+  --color-cyan: #8bd8e8;
+  --color-cyan-glow: rgba(139, 216, 232, 0.16);
+  --color-lime: #b6d89b;
+  --color-lime-glow: rgba(182, 216, 155, 0.16);
 
-    --color-text: #f3f0fa;
-    --color-text-muted: rgba(243, 240, 250, 0.55);
-    --color-text-dim: rgba(243, 240, 250, 0.35);
+  /* Compatibility aliases used by existing pages */
+  --color-paper: #100e17;
+  --color-paper-dark: #171320;
+  --color-ink: #f5f1fa;
+  --color-ink-light: #d3b8ff;
+  --color-muted: rgba(245, 241, 250, 0.62);
+  --color-muted-light: rgba(245, 241, 250, 0.38);
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-accent: #b68cff;
+  --color-accent-dark: #8754d8;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-danger: #fb7185;
+  --color-success: #75d6ae;
+  --color-warning: #f2c879;
 
-    /* =====================================
-       REACTBITS PURPLE / VIOLET SIGNATURE
-    ===================================== */
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
-    --color-purple: #a855f7;
-    --color-purple-light: #c084fc;
-    --color-purple-dark: #7e22ce;
-    --color-purple-glow: rgba(168, 85, 247, 0.35);
+  --radius-editorial: 10px;
+  --radius-control: 14px;
+  --radius-pill: 9999px;
 
-    --color-indigo: #6366f1;
-    --color-indigo-glow: rgba(99, 102, 241, 0.3);
-
-    --color-cyan: #38bdf8;
-    --color-cyan-glow: rgba(56, 189, 248, 0.25);
-
-    --color-lime: #a3e635;
-    --color-lime-glow: rgba(163, 230, 53, 0.2);
-
-    /* =====================================
-       LEGACY ALIASES
-    ===================================== */
-
-    --color-paper: #0c0a14;
-    --color-paper-dark: #120e20;
-
-    --color-ink: #f3f0fa;
-    --color-ink-light: #d8b4fe;
-
-    --color-muted: rgba(243, 240, 250, 0.55);
-    --color-muted-light: rgba(243, 240, 250, 0.35);
-
-    --color-line: rgba(255, 255, 255, 0.08);
-
-    --color-accent: #a855f7;
-    --color-accent-dark: #9333ea;
-
-    --color-white: #ffffff;
-    --color-black: #000000;
-
-    --color-danger: #ef4444;
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-
-    /* =====================================
-       TYPOGRAPHY (ReactBits Font Stack)
-    ===================================== */
-
-    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-
-    /* =====================================
-       BORDER RADIUS
-    ===================================== */
-
-    --radius-editorial: 6px;
-    --radius-control: 12px;
-    --radius-pill: 9999px;
-
-    /* =====================================
-       SHADOWS & GLOWS (ReactBits Purple Glow)
-    ===================================== */
-
-    --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.5);
-    --shadow-dialog: 0 25px 80px rgba(0, 0, 0, 0.8);
-    --shadow-glow-purple: 0 0 35px rgba(168, 85, 247, 0.35);
-    --shadow-glow-indigo: 0 0 35px rgba(99, 102, 241, 0.3);
-    --shadow-glow-cyan: 0 0 30px rgba(56, 189, 248, 0.25);
-    --shadow-glow-lime: 0 0 30px rgba(163, 230, 53, 0.2);
+  --shadow-soft: 0 18px 54px rgba(0, 0, 0, 0.34);
+  --shadow-dialog: 0 28px 90px rgba(0, 0, 0, 0.62);
+  --shadow-glow-purple: 0 0 36px rgba(182, 140, 255, 0.2);
+  --shadow-glow-indigo: 0 0 34px rgba(129, 140, 248, 0.18);
+  --shadow-glow-cyan: 0 0 30px rgba(139, 216, 232, 0.14);
+  --shadow-glow-lime: 0 0 28px rgba(182, 216, 155, 0.12);
 }

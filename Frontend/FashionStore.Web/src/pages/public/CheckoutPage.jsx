@@ -223,7 +223,7 @@ export default function CheckoutPage() {
 
   if (dangTaiTrang || dangTaiGioHang) {
     return (
-      <main className="flex min-h-[70vh] items-center justify-center bg-[#f7f6f2]">
+      <main className="flex min-h-[70vh] items-center justify-center customer-dark-page bg-void">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-gray-300 border-t-black"></div>
       </main>
     );
@@ -235,7 +235,7 @@ export default function CheckoutPage() {
 
   if (!gioHang || !gioHang.items || gioHang.items.length === 0) {
     return (
-      <main className="flex min-h-[70vh] flex-col items-center justify-center bg-[#f7f6f2] px-5 text-center">
+      <main className="flex min-h-[70vh] flex-col items-center justify-center customer-dark-page bg-void px-5 text-center">
         <h1 className="text-3xl font-semibold">Giỏ hàng đang trống</h1>
 
         <p className="mt-4 text-sm text-gray-500">
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
   // =============================================
 
   return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171717]">
+    <main className="min-h-screen customer-dark-page bg-void text-white">
       <div className="mx-auto max-w-[1200px] px-5 py-12 sm:px-8 lg:px-12">
         {/* BREADCRUMB */}
 
